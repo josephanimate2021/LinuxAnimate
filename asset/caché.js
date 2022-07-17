@@ -183,8 +183,8 @@ module.exports = {
 			if (fs.existsSync(propPath)) {
 				return fs.unlinkSync(propPath);
 			}
-			delete localCaché[mId];
 		}
+		delete localCaché[mId];
 	},
 	/**
 	 *
