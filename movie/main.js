@@ -57,21 +57,21 @@ module.exports = {
 					res(data.subarray(data.indexOf(80)));
 					break;
 				}
-                case "s":
+				case "s":
 				case "m": {
 					let numId = Number.parseInt(suffix);
 					if (isNaN(numId)) res();
-                    var filePath;
-                    switch (prefix) {
-                        case "m": {
-                            filePath = fUtil.getFileIndex("movie-", ".xml", numId);
-                            break;
-                        }
-                        case "s": {
-                            filePath = fUtil.getFileIndex("starter-", ".xml", numId);
-                            break;
-                        }
-                    }
+					var filePath;
+					switch (prefix) {
+						case "m": {
+							filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+							break;
+						}
+						case "s": {
+							filePath = fUtil.getFileIndex("starter-", ".xml", numId);
+							break;
+						}
+					}
 					if (!fs.existsSync(filePath)) res();
 
 					const buffer = fs.readFileSync(filePath);
@@ -104,7 +104,7 @@ module.exports = {
 					else rej();
 					break;
 				}
-                case "s": {
+				case "s": {
 					const fn = fUtil.getFileIndex("starter-", ".xml", suffix);
 					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
 					else rej();
@@ -132,7 +132,7 @@ module.exports = {
 			isNaN(n) ? rej() : res(fs.readFileSync(fn));
 		});
 	},
-    loadStarterImg(movieId) {
+	loadStarterImg(movieId) {
 		return new Promise(async (res, rej) => {
 			if (!movieId.startsWith("s-")) return;
 			const n = Number.parseInt(movieId.substr(2));
@@ -142,33 +142,43 @@ module.exports = {
 	},
 	list(starter) {
 		if (starter) {
-            const array = [];
-            const last = fUtil.getLastFileIndex("starter-", ".xml");
-            for (let c = last; c >= 0; c--) {
-                const movie = fs.existsSync(fUtil.getFileIndex("starter-", ".xml", c));
-                const thumb = fs.existsSync(fUtil.getFileIndex("starter-", ".png", c));
-                if (movie && thumb) array.push(`s-${c}`);
-            }
-            return array;
-        } else {
-            const array = [];
-            const last = fUtil.getLastFileIndex("movie-", ".xml");
-            for (let c = last; c >= 0; c--) {
-                const movie = fs.existsSync(fUtil.getFileIndex("movie-", ".xml", c));
-                const thumb = fs.existsSync(fUtil.getFileIndex("thumb-", ".png", c));
-                if (movie && thumb) array.push(`m-${c}`);
-            }
-            return array;
-        }
+			const array = [];
+			const last = fUtil.getLastFileIndex("starter-", ".xml");
+			for (let c = last; c >= 0; c--) {
+				const movie = fs.existsSync(fUtil.getFileIndex("starter-", ".xml", c));
+				const thumb = fs.existsSync(fUtil.getFileIndex("starter-", ".png", c));
+				if (movie && thumb) array.push(`s-${c}`);
+			}
+			return array;
+		} else {
+			const array = [];
+			const last = fUtil.getLastFileIndex("movie-", ".xml");
+			for (let c = last; c >= 0; c--) {
+				const movie = fs.existsSync(fUtil.getFileIndex("movie-", ".xml", c));
+				const thumb = fs.existsSync(fUtil.getFileIndex("thumb-", ".png", c));
+				if (movie && thumb) array.push(`m-${c}`);
+			}
+			return array;
+		}
 	},
-    listStarters() {
-        var table = [];
-        var ids = fUtil.getValidFileIndicies("starter-", ".xml");
-        for (const i in ids) {
-            var id = `s-${ids[i]}`;
-            table.unshift({ id: id });
-        }
-        return table;
+	listCharacters() {
+		const array = [];
+		const last = fUtil.getLastFileIndex("char-", ".xml");
+		for (let c = last; c >= 0; c--) {
+			const char = fs.existsSync(fUtil.getFileIndex("char-", ".xml", c));
+			const thumb = fs.existsSync(fUtil.getFileIndex("char-", ".png", c));
+			if (char && thumb) array.push(`c-${c}`);
+		}
+		return array;
+	},
+	listStarters() {
+		var table = [];
+		var ids = fUtil.getValidFileIndicies("starter-", ".xml");
+		for (const i in ids) {
+			var id = `s-${ids[i]}`;
+			table.unshift({ id: id });
+		}
+		return table;
 	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
