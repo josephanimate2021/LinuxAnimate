@@ -52,17 +52,22 @@ module.exports = function (req, res, url) {
 						const aId = data.assetId || data.enc_asset_id;
 						const mode = data.subtype || data.type;
 						
-						const b = false;
-						if (data.original_asset_id) {
-							b = character.delete(data.assetId || data.original_asset_id);
+						if (data.type == "char") {
+							const b = character.delete(data.assetId || data.original_asset_id);
+							if (b) {
+								res.end(b);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
 						} else {
-							b = asset.delete(mode, mId, aId);
-						}
-						if (b) {
-							res.end(b);
-						} else {
-							res.statusCode = 404;
-							res.end();
+							const b = asset.delete(mode, mId, aId);
+							if (b) {
+								res.end(b);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
 						}
 					});
 					return true;
