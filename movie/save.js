@@ -1,5 +1,6 @@
 const loadPost = require("../misc/post_body");
 const movie = require("./main");
+const starter = require("../starter/main");
 const http = require("http");
 const fs = require("fs");
 
@@ -10,9 +11,9 @@ const fs = require("fs");
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-    var thumb;
+	var thumb;
 	if (req.method != "POST") return;
-    switch (url.pathname) {
+	switch (url.pathname) {
         case "/goapi/saveMovie/": {
             loadPost(req, res).then(([data, mId]) => {
                 const trigAutosave = data.is_triggered_by_autosave;
@@ -31,7 +32,7 @@ module.exports = function (req, res, url) {
             loadPost(req, res).then(([data]) => {
                 thumb = data.thumbnail_large && Buffer.from(data.thumbnail_large, "base64");
                 var body = Buffer.from(data.body_zip, "base64");
-                movie.save('starter', body, thumb).then((nId) => res.end("0" + nId));
+                starter.save(body, thumb).then((nId) => res.end("0" + nId));
             });
             return true;
         }
