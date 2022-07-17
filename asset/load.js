@@ -50,24 +50,16 @@ module.exports = function (req, res, url) {
 				case "/goapi/deleteAsset/": {
 					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
-						const mode = data.subtype || data.type;
-						
-						if (data.type == "char") {
-							const b = character.delete(data.assetId || data.original_asset_id);
-							if (b) {
-								res.end(b);
-							} else {
-								res.statusCode = 404;
-								res.end();
-							}
+						/* 
+						honestly, char deleting is for the dev channel anyway and it may break on you anyway as well. 
+						So lets just delete regular assets instead.
+						*/
+						const b = asset.delete(mId, aId);
+						if (b) {
+							res.end(b);
 						} else {
-							const b = asset.delete(mode, mId, aId);
-							if (b) {
-								res.end(b);
-							} else {
-								res.statusCode = 404;
-								res.end();
-							}
+							res.statusCode = 404;
+							res.end();
 						}
 					});
 					return true;
