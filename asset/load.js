@@ -66,6 +66,7 @@ module.exports = function (req, res, url) {
 						const c = character.delete(data.assetId || data.original_asset_id);
 						const b = asset.delete(mId, aId);
 						if (data.original_asset_id) {
+							character.deleteThumb(data.assetId || data.original_asset_id);
 							if (c) {
 								res.end(c);
 							} else {
