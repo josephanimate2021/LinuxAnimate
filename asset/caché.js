@@ -166,6 +166,29 @@ module.exports = {
 	},
 	/**
 	 *
+	 * @param {string} mId
+	 * @param {string} aId
+	 * @returns {Buffer}
+	 */
+	delete(mode, mId, aId) {
+		if (!this.validAssetId(aId)) return;
+		const stored = localCaché[mId];
+		if (!stored) return null;
+
+		const path = `${cachéFolder}/${mId}.${aId}`;
+		const propPath = `${propsFolder}/${aId}`;
+		stored.time = new Date();
+		if (stored.includes(aId)) {
+			if (mode == "prop") {
+				return fs.unlinkSync(path, propPath);
+			} else {
+				return fs.unlinkSync(path);
+			}
+			delete localCaché[mId];
+		}
+	},
+	/**
+	 *
 	 * @summary Transfers all caché data as if 'old' had never existed.
 	 * @param {string} old
 	 * @param {string} nëw
