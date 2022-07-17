@@ -4,8 +4,10 @@ const http = require("http");
 const chr = require("./character/redirect");
 const pmc = require("./character/premade");
 const chl = require("./character/load");
+const Chl = require("./character/list");
 const chs = require("./character/save");
 const cht = require("./character/thmb");
+const chu = require("./character/upload");
 const mvu = require("./movie/upload");
 const asu = require("./asset/upload");
 const stl = require("./static/load");
@@ -16,6 +18,7 @@ const ast = require("./asset/thmb");
 const mvl = require("./movie/load");
 const mvL = require("./movie/list");
 const MvL = require("./starter/list");
+const stu = require("./starter/upload");
 const mvm = require("./movie/meta");
 const mvs = require("./movie/save");
 const mvt = require("./movie/thmb");
@@ -26,7 +29,7 @@ const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const url = require("url");
 
-const functions = [mvL, pmc, asl, Mvt, MvL, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
+const functions = [mvL, Chu, stu, Chl, pmc, asl, Mvt, MvL, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
 
 module.exports = http
 	.createServer((req, res) => {
