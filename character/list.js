@@ -10,6 +10,6 @@ const http = require("http");
  */
 module.exports = function (req, res, url) {
 	if (req.method != "GET" || url.pathname != "/charList") return;
-	Promise.all(movie.listCharacter().map(character.meta)).then((a) => res.end(JSON.stringify(a)));
+	Promise.all(movie.listCharacters().map(character.meta)).then((a) => res.end(JSON.stringify(a)));
 	return true;
 };
