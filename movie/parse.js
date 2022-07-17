@@ -562,6 +562,7 @@ module.exports = {
 					fs.writeFileSync(fUtil.getFileIndex("thumb-", ".png", suffix), sub);
 				}
 				fs.writeFileSync(fUtil.getFileIndex("movie-", ".xml", suffix), xml);
+				break;
 			}
 			case "s": {
 				var beg = xml.lastIndexOf("<thumb>");
@@ -571,9 +572,11 @@ module.exports = {
 					fs.writeFileSync(fUtil.getFileIndex("starter-", ".png", suffix), sub);
 				}
 				fs.writeFileSync(fUtil.getFileIndex("starter-", ".xml", suffix), xml);
+				break;
 			}
 			case "c": {
 				fs.writeFileSync(fUtil.getFileIndex("char-", ".xml", suffix), xml);
+				break;
 			}
 		}
 	},
