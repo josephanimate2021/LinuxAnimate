@@ -47,11 +47,11 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/deleteAsset/": {
-					loadPost(req, res).then(data => {
+					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
 						const mode = data.subtype || data.type;
 
-						const b = asset.delete(mode, aId);
+						const b = asset.delete(mode, mId, aId);
 						if (b) {
 							res.end(b);
 						} else {
