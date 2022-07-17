@@ -167,23 +167,15 @@ module.exports = {
 	/**
 	 *
 	 * @param {string} mId
-	 * @param {string} aId
-	 * @returns {Buffer}
+	 * @param {boolean} setToEmpty
+	 * @returns {void}
 	 */
-	delete(mId, aId) {
-		if (!this.validAssetId(aId)) return;
+	delete(mId, aId, setToEmpty = true) {
 		const stored = localCaché[mId];
-		if (!stored) return null;
-
-		const path = `${cachéFolder}/${mId}.${aId}`;
-		const propPath = `${propsFolder}/${aId}`;
-		stored.time = new Date();
-		if (stored.includes(aId)) {
-			return fs.unlinkSync(path);
-			if (fs.existsSync(propPath)) {
-				return fs.unlinkSync(propPath);
-			}
-		}
+		if (!stored) return;
+		var path = `${cachéFolder}/${mId}.${aId}`;
+		size -= fs.statSync(path).size;
+		fs.unlinkSync(path);
 		delete localCaché[mId];
 	},
 	/**
