@@ -123,6 +123,13 @@ module.exports = {
 		this.addToZip(zip, zipName, buffer);
 		return zip.zip();
 	},
+    zippy(fileName, zipName) {
+		if (!fs.existsSync(fileName)) return Promise.reject();
+		const buffer = fs.readFileSync(fileName);
+		const zip = nodezip.create();
+		this.addToZip(zip, zipName, buffer);
+		return zip.zip();
+	},
 	/**
 	 *
 	 * @summary Fixed version of ZipFile.add
