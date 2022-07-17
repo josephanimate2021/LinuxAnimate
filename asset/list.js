@@ -5,9 +5,11 @@ const nodezip = require("node-zip");
 const base = Buffer.alloc(1, 0);
 const asset = require("./main");
 const http = require("http");
+const fs = require("fs");
 
 async function listAssets(data, makeZip) {
-	var xmlString;
+	var mId = data.movieId;
+	var xmlString, files;
 	switch (data.type) {
 		case "char": {
 			const chars = await asset.chars(data.themeId);
@@ -20,14 +22,14 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		case "bg": {
-			var files = asset.list(data.movieId, "bg");
+			files = asset.list(mId, "bg");
 			xmlString = `${header}<ugc more="0">${files
 				.map((v) => `<background subtype="0" id="${v.id}" name="${v.name}" enable="Y"/>`)
 				.join("")}</ugc>`;
 			break;
 		}
 		case "sound": {
-			var files = asset.list(data.movieId, "voiceover");
+			files = asset.list(mId, "voiceover");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
@@ -37,7 +39,7 @@ async function listAssets(data, makeZip) {
 			break;
 		}	
 		case "movie": {
-			var files = asset.list(data.movieId, "starter");
+			files = asset.list(mId, "starter");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
@@ -46,13 +48,29 @@ async function listAssets(data, makeZip) {
 				.join("")}</ugc>`;
 			break;
 		}
-		case "prop":
-		default: {
-			var files = asset.list(data.movieId, "prop");
+		case "prop": {
+			files = asset.list(mId, "prop");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
-						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" duration="0"/>`
+						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="${process.env.CACHÉ_FOLDER}/${mId}.${v.id}"/>`
+				)
+				.join("")}</ugc>`;
+			break;
+		}
+		default: {
+			xmlString = `${header}<ugc more="0"></ugc>`;
+			break;
+		}
+	}
+	
+	switch (data.subtype) {
+		case "video": {
+			files = asset.list(mId, "video");
+			xmlString = `${header}<ugc more="0">${files
+				.map(
+					(v) =>
+						`<prop subtype="video" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="10" height="10" thumbnail_url=""/>`
 				)
 				.join("")}</ugc>`;
 			break;
@@ -61,30 +79,19 @@ async function listAssets(data, makeZip) {
 
 	if (makeZip) {
 		const zip = nodezip.create();
-		const files = asset.listAll(data.movieId);
 		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
 
 		files.forEach((file) => {
 			switch (file.mode) {
-				case "bg": {
-					const buffer = asset.load(data.movieId, file.id);
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
-					break;
-				}
-				case "movie": {
-					const buffer = asset.load(data.movieId, file.id);
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
-					break;
-				}
+				case "bg":
+				case "movie": 
 				case "sound": {
-					const buffer = asset.load(data.movieId, file.id);
+					const buffer = asset.load(mId, file.id);
 					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
 					break;
 				}
-				case "effect":
 				case "prop": {
-					const buffer = asset.load(data.movieId, file.id);
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.CACHÉ_FOLDER}/${mId}.${file.id}`));
 					break;
 				}
 			}
