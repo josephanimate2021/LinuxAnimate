@@ -2,6 +2,7 @@ const loadPost = require("../misc/post_body");
 const header = process.env.XML_HEADER;
 const fUtil = require("../misc/file");
 const nodezip = require("node-zip");
+const movie = require("../movie/main");
 const base = Buffer.alloc(1, 0);
 const asset = require("./main");
 const http = require("http");
@@ -36,11 +37,11 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		case "movie": {
-			files = asset.list(mId, "starter");
+			files = movie.listStarters();
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
-						`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="${v.name}" thumbnail_url="/movie_thumbs/${v.id}.png"><tags></tags></movie>`
+						`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="Untitled" thumbnail_url="/starter_thumbs/${v.id}.png"><tags></tags></movie>`
 				)
 				.join("")}</ugc>`;
 			break;

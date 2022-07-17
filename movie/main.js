@@ -13,38 +13,55 @@ module.exports = {
 	 * @param {string} oldId
 	 * @returns {Promise<string>}
 	 */
-	save(movieZip, thumb, oldId, nëwId = oldId) {
-		// Saves the thumbnail of the respective video.
-		if (thumb && nëwId.startsWith("m-")) {
-			const n = Number.parseInt(nëwId.substr(2));
-			const thumbFile = fUtil.getFileIndex("thumb-", ".png", n);
-			fs.writeFileSync(thumbFile, thumb);
-		}
+	save(starter, starterZip, movieZip, thumb, oldId, nëwId = oldId) {
+        if (starter) {
+            return new Promise(async (res, rej) => {
+                var zip = nodezip.unzip(starterZip);
+                var id = fUtil.getNextFileId("starter-", ".xml");
+                const thumbFile = fUtil.getFileIndex("starter-", ".png", id);
+                fs.writeFileSync(thumbFile, thumb);
+                var path = fUtil.getFileIndex("starter-", ".xml", id);
+                var writeStream = fs.createWriteStream(path);
+                var assetBuffers = caché.loadTable("s-" + id);
+                parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
+                    writeStream.write(data, () => {
+                        writeStream.close();
+                        res("s-" + id);
+                    });
+                });
+            });
+        } else {
+            // Saves the thumbnail of the respective video.
+            if (thumb && nëwId.startsWith("m-")) {
+                const n = Number.parseInt(nëwId.substr(2));
+                const thumbFile = fUtil.getFileIndex("thumb-", ".png", n);
+                fs.writeFileSync(thumbFile, thumb);
+            }
 
-		return new Promise(async (res, rej) => {
-			caché.transfer(oldId, nëwId);
-			var i = nëwId.indexOf("-");
-			var prefix = nëwId.substr(0, i);
-			var suffix = nëwId.substr(i + 1);
-			var zip = nodezip.unzip(movieZip);
-			switch (prefix) {
-				case "m": {
-					var path = fUtil.getFileIndex("movie-", ".xml", suffix);
-					var writeStream = fs.createWriteStream(path);
-					var assetBuffers = caché.loadTable(nëwId);
-					parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
-						writeStream.write(data, () => {
-							writeStream.close();
-							res(nëwId);
-						});
-					});
-					break;
-				}
-				default:
-					rej();
-			}
-		});
-	},
+            return new Promise(async (res, rej) => {
+                caché.transfer(oldId, nëwId);
+                var i = nëwId.indexOf("-");
+                var prefix = nëwId.substr(0, i);
+                var suffix = nëwId.substr(i + 1);
+                var zip = nodezip.unzip(movieZip);
+                switch (prefix) {
+                    case "m": {
+                        var path = fUtil.getFileIndex("movie-", ".xml", suffix);
+                        var writeStream = fs.createWriteStream(path);
+                        var assetBuffers = caché.loadTable(nëwId);
+                        parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
+                            writeStream.write(data, () => {
+                                writeStream.close();
+                                res(nëwId);
+                            });
+                        });
+                        break;
+                    }
+                    default: rej();
+                }
+            });
+        }
+    },
 	loadZip(mId) {
 		return new Promise((res) => {
 			const i = mId.indexOf("-");
@@ -57,10 +74,21 @@ module.exports = {
 					res(data.subarray(data.indexOf(80)));
 					break;
 				}
+                case "s":
 				case "m": {
 					let numId = Number.parseInt(suffix);
 					if (isNaN(numId)) res();
-					let filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+                    var filePath;
+                    switch (prefix) {
+                        case "m": {
+                            filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+                            break;
+                        }
+                        case "s": {
+                            filePath = fUtil.getFileIndex("starter-", ".xml", numId);
+                            break;
+                        }
+                    }
 					if (!fs.existsSync(filePath)) res();
 
 					const buffer = fs.readFileSync(filePath);
@@ -93,6 +121,12 @@ module.exports = {
 					else rej();
 					break;
 				}
+                case "s": {
+					const fn = fUtil.getFileIndex("starter-", ".xml", suffix);
+					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
+					else rej();
+					break;
+				}
 				case "e": {
 					const fn = `${exFolder}/${suffix}.zip`;
 					if (!fs.existsSync(fn)) return rej();
@@ -115,15 +149,43 @@ module.exports = {
 			isNaN(n) ? rej() : res(fs.readFileSync(fn));
 		});
 	},
-	list() {
-		const array = [];
-		const last = fUtil.getLastFileIndex("movie-", ".xml");
-		for (let c = last; c >= 0; c--) {
-			const movie = fs.existsSync(fUtil.getFileIndex("movie-", ".xml", c));
-			const thumb = fs.existsSync(fUtil.getFileIndex("thumb-", ".png", c));
-			if (movie && thumb) array.push(`m-${c}`);
-		}
-		return array;
+    loadStarterImg(movieId) {
+		return new Promise(async (res, rej) => {
+			if (!movieId.startsWith("s-")) return;
+			const n = Number.parseInt(movieId.substr(2));
+			const fn = fUtil.getFileIndex("starter-", ".png", n);
+			isNaN(n) ? rej() : res(fs.readFileSync(fn));
+		});
+	},
+	list(starter) {
+		if (starter) {
+            const array = [];
+            const last = fUtil.getLastFileIndex("starter-", ".xml");
+            for (let c = last; c >= 0; c--) {
+                const movie = fs.existsSync(fUtil.getFileIndex("starter-", ".xml", c));
+                const thumb = fs.existsSync(fUtil.getFileIndex("starter-", ".png", c));
+                if (movie && thumb) array.push(`s-${c}`);
+            }
+            return array;
+        } else {
+            const array = [];
+            const last = fUtil.getLastFileIndex("movie-", ".xml");
+            for (let c = last; c >= 0; c--) {
+                const movie = fs.existsSync(fUtil.getFileIndex("movie-", ".xml", c));
+                const thumb = fs.existsSync(fUtil.getFileIndex("thumb-", ".png", c));
+                if (movie && thumb) array.push(`m-${c}`);
+            }
+            return array;
+        }
+	},
+    listStarters() {
+        var table = [];
+        var ids = fUtil.getValidFileIndicies("starter-", ".xml");
+        for (const i in ids) {
+            var id = `s-${ids[i]}`;
+            table.unshift({ id: id });
+        }
+        return table;
 	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {

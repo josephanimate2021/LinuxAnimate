@@ -18,13 +18,14 @@ const mvL = require("./movie/list");
 const mvm = require("./movie/meta");
 const mvs = require("./movie/save");
 const mvt = require("./movie/thmb");
+const Mvt = require("./starter/thmb");
 const thL = require("./theme/list");
 const thl = require("./theme/load");
 const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const url = require("url");
 
-const functions = [mvL, pmc, asl, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
+const functions = [mvL, pmc, asl, Mvt, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
 
 module.exports = http
 	.createServer((req, res) => {
