@@ -1,5 +1,6 @@
 const loadPost = require("../misc/post_body");
 const asset = require("./main");
+const character = require("../character/main");
 const http = require("http");
 
 /**
@@ -51,9 +52,12 @@ module.exports = function (req, res, url) {
 						const aId = data.assetId || data.enc_asset_id;
 						const mode = data.subtype || data.type;
 						
+						var b;
 						if (data.original_asset_id) {
-							character.delete
-						const b = asset.delete(mode, mId, aId);
+							b = character.delete(data.assetId || data.original_asset_id);
+						} else {
+							b = asset.delete(mode, mId, aId);
+						}
 						if (b) {
 							res.end(b);
 						} else {
