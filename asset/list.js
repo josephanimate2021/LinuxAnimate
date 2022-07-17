@@ -16,7 +16,7 @@ async function listAssets(data, makeZip) {
 			xmlString = `${header}<ugc more="0">${chars
 				.map(
 					(v) =>
-						`<char id="${v.id}" name="Untitled" cc_theme_id="${v.theme}" thumbnail_url="http://localhost/char_thumbs/${v.id}.png" copyable="Y"><tags/></char>`
+						`<char id="${v.id}" name="Untitled" cc_theme_id="${v.theme}" thumbnail_url="/char_thumbs/${v.id}.png" copyable="Y"><tags/></char>`
 				)
 				.join("")}</ugc>`;
 			break;
@@ -53,7 +53,7 @@ async function listAssets(data, makeZip) {
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
-						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="${process.env.CACHÉ_FOLDER}/${mId}.${v.id}"/>`
+						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="${process.env.PROPS_FOLDER}/${v.id}"/>`
 				)
 				.join("")}</ugc>`;
 			break;
@@ -91,7 +91,7 @@ async function listAssets(data, makeZip) {
 					break;
 				}
 				case "prop": {
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.CACHÉ_FOLDER}/${mId}.${file.id}`));
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`));
 					break;
 				}
 			}

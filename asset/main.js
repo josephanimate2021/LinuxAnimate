@@ -8,7 +8,12 @@ module.exports = {
 	},
 	save(buffer, mId, mode, ext) {
 		var suffix = `-${mode}.${ext}`;
-		return caché.newItem(buffer, mId, "", suffix);
+        if (mode == "prop") {
+            return caché.newProp(buffer, mId, "", suffix);
+            return caché.newItem(buffer, mId, "", suffix);
+        } else {
+            return caché.newItem(buffer, mId, "", suffix);
+        }
 	},
 	list(mId, mode) {
 		var ret = [];

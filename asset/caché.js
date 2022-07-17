@@ -1,4 +1,5 @@
 const cachéFolder = process.env.CACHÉ_FOLDER;
+const propsFolder = process.env.PROPS_FOLDER;
 const fs = require("fs");
 
 /**
@@ -61,6 +62,25 @@ module.exports = {
 		size += buffer.size;
 		return buffer;
 	},
+    /**
+	 *
+	 * @summary Saves a buffer in the props folder with a given ID.
+	 * @param {string} mId
+	 * @param {string} aId
+	 * @param {Buffer} buffer
+	 */
+	saveProp(mId, aId, buffer) {
+		if (!this.validAssetId(aId)) return;
+		localCaché[mId] = localCaché[mId] || [];
+		var stored = localCaché[mId];
+		const path = `${propsFolder}/${aId}`;
+
+		if (!stored.includes(aId)) stored.push(aId);
+		if (fs.existsSync(path)) size -= fs.statSync(path).size;
+		fs.writeFileSync(path, buffer);
+		size += buffer.size;
+		return buffer;
+	},
 	/**
 	 *
 	 * @summary Saves a given dictionary of buffers to caché.
@@ -108,6 +128,22 @@ module.exports = {
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		var aId = this.generateId(prefix, suffix, stored);
+		this.save(mId, aId, buffer);
+		return aId;
+	},
+    /**
+	 *
+	 * @summary Generates a new id for the props so that the fs module can read it later.
+	 * @param {Buffer} buffer
+	 * @param {string} mId
+	 * @param {string} prefix
+	 * @param {string} suffix
+	 */
+	newProp(buffer, mId, prefix = "", suffix = "") {
+		localCaché[mId] = localCaché[mId] || [];
+		var stored = localCaché[mId];
+		var aId = this.generateId(prefix, suffix, stored);
+        this.saveProp(mId, aId, buffer);
 		this.save(mId, aId, buffer);
 		return aId;
 	},

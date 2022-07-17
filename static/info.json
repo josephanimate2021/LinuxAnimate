@@ -35,6 +35,16 @@
 			},
 			"content": ""
 		},
+        "_PROPS/(.*)(jpg|JPG|jpeg|JPEG)$": {
+			"headers": {
+				"Content-Type": "image/jpg"
+			}
+		},
+        "_PROPS/(.*)": {
+			"headers": {
+				"Content-Type": "image/png"
+			}
+		},
 		"/html/([^?]+html).*": {
 			"contentReplace": true,
 			"regexLink": "/html/$1",
