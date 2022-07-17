@@ -15,6 +15,7 @@ const asL = require("./asset/list");
 const ast = require("./asset/thmb");
 const mvl = require("./movie/load");
 const mvL = require("./movie/list");
+const MvL = require("./starter/list");
 const mvm = require("./movie/meta");
 const mvs = require("./movie/save");
 const mvt = require("./movie/thmb");
@@ -25,7 +26,7 @@ const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const url = require("url");
 
-const functions = [mvL, pmc, asl, Mvt, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
+const functions = [mvL, pmc, asl, Mvt, Mvl, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
 
 module.exports = http
 	.createServer((req, res) => {
