@@ -8,8 +8,8 @@ module.exports = {
 	load(mId, aId) {
 		return caché.load(mId, aId);
 	},
-	delete(mode, mId, aId) {
-		return caché.delete(mode, mId, aId);
+	delete(mId, aId) {
+		return caché.delete(mId, aId);
 	},
 	save(buffer, mId, mode, ext) {
 		var suffix;
