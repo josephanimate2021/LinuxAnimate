@@ -6,6 +6,23 @@ const parse = require("../movie/parse");
 const fs = require("fs");
 
 module.exports = {
+	save(starterZip, thumb) {
+		return new Promise(async (res, rej) => {
+                var zip = nodezip.unzip(starterZip);
+                var id = fUtil.getNextFileId("starter-", ".xml");
+                const thumbFile = fUtil.getFileIndex("starter-", ".png", id);
+                fs.writeFileSync(thumbFile, thumb);
+                var path = fUtil.getFileIndex("starter-", ".xml", id);
+                var writeStream = fs.createWriteStream(path);
+                var assetBuffers = caché.loadTable("s-" + id);
+                parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
+                    writeStream.write(data, () => {
+                        writeStream.close();
+                        res("s-" + id);
+                    });
+                });
+            });
+	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
 			if (!movieId.startsWith("s-")) return;
