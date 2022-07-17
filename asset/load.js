@@ -25,7 +25,7 @@ module.exports = function (req, res, url) {
 				res.statusCode = 404;
 				res.end(e);
 			}
-            const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
+			const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
 			if (!charMatch) return;
 
 			var id = charMatch[1];
@@ -65,21 +65,21 @@ module.exports = function (req, res, url) {
 						const aId = data.assetId || data.enc_asset_id;
 						const c = character.delete(data.assetId || data.original_asset_id);
 						const b = asset.delete(mId, aId);
-                        if (data.original_asset_id) {
-                            if (c) {
-                                res.end(c);
-                            } else {
-                                res.statusCode = 404;
-                                res.end();
-                            }
-                        } else {
-                            if (b) {
-                                res.end(b);
-                            } else {
-                                res.statusCode = 404;
-                                res.end();
-                            }
-                        }
+						if (data.original_asset_id) {
+							if (c) {
+								res.end(c);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
+						} else {
+							if (b) {
+								res.end(b);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
+						}
 					});
 					return true;
 				}
