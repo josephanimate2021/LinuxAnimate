@@ -21,7 +21,7 @@ module.exports = function (req, res, url) {
 		fs.unlinkSync(path);
 
 		res.statusCode = 302;
-		var url = `/`;
+		var url = `/cc?original_asset_id=${numId}`;
 		res.setHeader("Location", url);
 		res.end();
 	});
