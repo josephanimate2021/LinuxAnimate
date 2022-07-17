@@ -46,6 +46,21 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
+				case "/goapi/deleteAsset/": {
+					loadPost(req, res).then(data => {
+						const aId = data.assetId || data.enc_asset_id;
+						const mode = data.subtype || data.type;
+
+						const b = asset.delete(mode, aId);
+						if (b) {
+							res.end(b);
+						} else {
+							res.statusCode = 404;
+							res.end();
+						}
+					});
+					return true;
+				}
 				default:
 					return;
 			}
