@@ -50,7 +50,9 @@ module.exports = function (req, res, url) {
 					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
 						const mode = data.subtype || data.type;
-
+						
+						if (data.original_asset_id) {
+							character.delete
 						const b = asset.delete(mode, mId, aId);
 						if (b) {
 							res.end(b);
