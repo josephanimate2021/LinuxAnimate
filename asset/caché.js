@@ -170,7 +170,7 @@ module.exports = {
 	 * @param {string} aId
 	 * @returns {Buffer}
 	 */
-	delete(mode, mId, aId) {
+	delete(mId, aId) {
 		if (!this.validAssetId(aId)) return;
 		const stored = localCaché[mId];
 		if (!stored) return null;
@@ -179,10 +179,9 @@ module.exports = {
 		const propPath = `${propsFolder}/${aId}`;
 		stored.time = new Date();
 		if (stored.includes(aId)) {
-			if (mode == "prop") {
-				return fs.unlinkSync(path, propPath);
-			} else {
-				return fs.unlinkSync(path);
+			return fs.unlinkSync(path);
+			if (fs.existsSync(propPath)) {
+				return fs.unlinkSync(propPath);
 			}
 			delete localCaché[mId];
 		}
