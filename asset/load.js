@@ -12,7 +12,7 @@ const http = require("http");
 module.exports = function (req, res, url) {
 	switch (req.method) {
 		case "GET": {
-			const match = req.url.match(/\/assets\/([^/]+)\/([^.]+)(?:\.xml)?$/);
+			const match = req.url.match(/\/(assets|goapi\/getAsset)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
 			if (!match) return;
 
 			const mId = match[1];
@@ -52,7 +52,7 @@ module.exports = function (req, res, url) {
 						const aId = data.assetId || data.enc_asset_id;
 						const mode = data.subtype || data.type;
 						
-						var b;
+						const b = false;
 						if (data.original_asset_id) {
 							b = character.delete(data.assetId || data.original_asset_id);
 						} else {
