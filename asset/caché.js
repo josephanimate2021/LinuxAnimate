@@ -143,7 +143,7 @@ module.exports = {
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		var aId = this.generateId(prefix, suffix, stored);
-        this.saveProp(mId, aId, buffer);
+		this.saveProp(mId, aId, buffer);
 		this.save(mId, aId, buffer);
 		return aId;
 	},
@@ -170,7 +170,7 @@ module.exports = {
 	 * @param {boolean} setToEmpty
 	 * @returns {void}
 	 */
-	delete(mId, aId, setToEmpty = true) {
+	delete(mId, aId) {
 		const stored = localCaché[mId];
 		if (!stored) return;
 		var path = `${cachéFolder}/${mId}.${aId}`;
