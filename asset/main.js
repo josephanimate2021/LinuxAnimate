@@ -1,19 +1,36 @@
+var mp3Duration = require("mp3-duration");
 const chars = require("../character/main");
 const fUtil = require("../misc/file");
 const caché = require("./caché");
 
 module.exports = {
+
 	load(mId, aId) {
 		return caché.load(mId, aId);
 	},
 	save(buffer, mId, mode, ext) {
-		var suffix = `-${mode}.${ext}`;
-		if (mode == "prop") {
-			return caché.newProp(buffer, mId, "", suffix);
-			return caché.newItem(buffer, mId, "", suffix);
-		} else {
-			return caché.newItem(buffer, mId, "", suffix);
-		}
+		var suffix;
+                switch (mode) { 
+                         case "prop": { 
+                                 suffix = `-${mode}.${ext}`;
+                                 return caché.newProp(buffer, mId, "", suffix); 
+                                 break;
+                         }
+                         case "video": { 
+                                 suffix = `-${mode}.${ext}`;
+                                 if (mode == "dontimport") {
+                                         console.log;
+                                 } else {
+                                         return caché.newVideo(buffer, mId, "", suffix); 
+                                 }
+                                 break;
+                         }
+                         default: {
+                                 suffix = `-${mode}.${ext}`;
+                                 return caché.newItem(buffer, mId, "", suffix);
+                                 break;
+                         }
+                }
 	},
 	list(mId, mode) {
 		var ret = [];
@@ -71,6 +88,7 @@ module.exports = {
 	});
 		return ret;
 	},
+
 	listAll(mId) {
 		var ret = [];
 		var files = caché.list(mId);
