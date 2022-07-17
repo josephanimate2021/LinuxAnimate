@@ -29,15 +29,12 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		case "sound": {
-			files = asset.list(mId, "voiceover");
+			files = asset.list(mId, "sound");
 			xmlString = `${header}<ugc more="0">${files
-				.map(
-					(v) =>
-						`<sound subtype="${v.subtype}" id="${v.id}" name="${v.name}" enable="Y" duration="${v.duration}" downloadtype="progressive"/>`
-				)
+				.map((v) =>`<sound subtype="${v.subtype}" id="${v.id}" name="${v.name}" enable="Y" duration="${v.duration}" downloadtype="progressive"/>`)
 				.join("")}</ugc>`;
 			break;
-		}	
+		}
 		case "movie": {
 			files = asset.list(mId, "starter");
 			xmlString = `${header}<ugc more="0">${files
