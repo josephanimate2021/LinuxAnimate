@@ -154,6 +154,22 @@ module.exports = {
 		});
 	},
 	/**
+	 * @param {string} id
+	 * @returns {Promise<Buffer>}
+	 */
+	deleteThumb(id) {
+		return new Promise((res, rej) => {
+			fs.unlinkSync(getThumbPath(id), (e, b) => {
+				if (e) {
+					var fXml = util.xmlFail();
+					rej(Buffer.from(fXml));
+				} else {
+					res(b);
+				}
+			});
+		});
+	},
+	/**
 	 * @param {Buffer} data
 	 * @param {string} id
 	 * @returns {Promise<string>}
