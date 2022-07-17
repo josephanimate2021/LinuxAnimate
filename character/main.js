@@ -129,6 +129,31 @@ module.exports = {
 		});
 	},
 	/**
+	 * @param {string} id
+	 * @returns {Promise<Buffer>}
+	 */
+	delete(id) {
+		return new Promise((res, rej) => {
+			var i = id.indexOf("-");
+			var prefix = id.substr(0, i);
+			var suffix = id.substr(i + 1);
+
+			switch (prefix) {
+				case "c":
+				case "C":
+					fs.unlinkSync(getCharPath(id), (e, b) => {
+						if (e) {
+							var fXml = util.xmlFail();
+							rej(Buffer.from(fXml));
+						} else {
+							res(b);
+						}
+					});
+					break;
+			}
+		});
+	},
+	/**
 	 * @param {Buffer} data
 	 * @param {string} id
 	 * @returns {Promise<string>}
