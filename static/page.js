@@ -140,7 +140,7 @@ module.exports = function (req, res, url) {
 					isLogin: "Y",
 					retut: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-					themeId: "business",
+					themeId: query.tray,
 					tlang: "en_US",
 					presaveId: presave,
 					goteam_draft_only: 1,
