@@ -92,6 +92,86 @@ module.exports = {
 			}
 		});
 	},
+	delete(mId) {
+		return new Promise((res, rej) => {
+			const i = mId.indexOf("-");
+			const prefix = mId.substr(0, i);
+			const suffix = mId.substr(i + 1);
+			switch (prefix) {
+				case "e": {
+					caché.clearTable(mId);
+					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
+					res(data.subarray(data.indexOf(80)));
+					break;
+				}
+				case "s":
+				case "c":
+				case "m": {
+					let numId = Number.parseInt(suffix);
+					if (isNaN(numId)) res();
+					switch (prefix) {
+						case "s": {
+							var filePath = fUtil.getFileIndex("starter-", ".xml", numId);
+							break;
+						}
+						case "c": {
+							var filePath = fUtil.getFileIndex("char-", ".xml", numId);
+							break;
+						}
+						case "m": {
+							var filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+							break;
+						}
+					}
+					if (!fs.existsSync(filePath)) res();
+
+					fs.unlinkSync(filePath);
+				}
+				default:
+					res();
+			}
+		});
+	},
+	deleteThumb(mId) {
+		return new Promise((res, rej) => {
+			const i = mId.indexOf("-");
+			const prefix = mId.substr(0, i);
+			const suffix = mId.substr(i + 1);
+			switch (prefix) {
+				case "e": {
+					caché.clearTable(mId);
+					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
+					res(data.subarray(data.indexOf(80)));
+					break;
+				}
+				case "s":
+				case "c":
+				case "m": {
+					let numId = Number.parseInt(suffix);
+					if (isNaN(numId)) res();
+					switch (prefix) {
+						case "s": {
+							var filePath = fUtil.getFileIndex("starter-", ".png", numId);
+							break;
+						}
+						case "c": {
+							var filePath = fUtil.getFileIndex("char-", ".png", numId);
+							break;
+						}
+						case "m": {
+							var filePath = fUtil.getFileIndex("thumb-", ".png", numId);
+							break;
+						}
+					}
+					if (!fs.existsSync(filePath)) res();
+
+					fs.unlinkSync(filePath);
+				}
+				default:
+					res();
+			}
+		});
+	},
 	loadXml(movieId) {
 		return new Promise(async (res, rej) => {
 			const i = movieId.indexOf("-");
