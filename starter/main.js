@@ -1,9 +1,44 @@
+const cachéFolder = process.env.CACHÉ_FOLDER;
 const exFolder = process.env.EXAMPLE_FOLDER;
 const caché = require("../asset/caché");
 const fUtil = require("../misc/file");
 const nodezip = require("node-zip");
 const parse = require("../movie/parse");
+const util = require("../misc/util");
 const fs = require("fs");
+
+/**
+ * @param {string} id
+ * @returns {string}
+ */
+function getStarterPath(id) {
+	var i = id.indexOf("-");
+	var prefix = id.substr(0, i);
+	var suffix = id.substr(i + 1);
+	switch (prefix) {
+		case "s":
+			return fUtil.getFileIndex("starter-", ".xml", suffix);
+		case "S":
+		default:
+			return `${cachéFolder}/starter.${id}.xml`;
+	}
+}
+/**
+ * @param {string} id
+ * @returns {string}
+ */
+function getThumbPath(id) {
+	var i = id.indexOf("-");
+	var prefix = id.substr(0, i);
+	var suffix = id.substr(i + 1);
+	switch (prefix) {
+		case "s":
+			return fUtil.getFileIndex("starter-", ".png", suffix);
+		case "S":
+		default:
+			return `${cachéFolder}/starter.${id}.png`;
+	}
+}
 
 module.exports = {
 	save(starterZip, thumb) {
@@ -43,5 +78,99 @@ module.exports = {
 				id: movieId,
 			});
 		});
+	},
+	delete(html, id, mId) {
+		if (html) {
+			return new Promise((res, rej) => {
+				const i = mId.indexOf("-");
+				const prefix = mId.substr(0, i);
+				const suffix = mId.substr(i + 1);
+				switch (prefix) {
+					case "e": {
+						caché.clearTable(mId);
+						let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
+						res(data.subarray(data.indexOf(80)));
+						break;
+					}
+					case "s":
+					case "m": {
+						let numId = Number.parseInt(suffix);
+						if (isNaN(numId)) res();
+						switch (prefix) {
+							case "s": {
+								var filePath = fUtil.getFileIndex("starter-", ".xml", numId);
+								break;
+							}
+							case "m": {
+								var filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+								break;
+							}
+						}
+						if (!fs.existsSync(filePath)) res();
+
+						fs.unlinkSync(filePath);
+					}
+					default: res();
+				}
+			});
+		} else {
+			return new Promise((res, rej) => {
+				fs.unlinkSync(getStarterPath(id), (e, b) => {
+					if (e) {
+						var fXml = util.xmlFail();
+						rej(Buffer.from(fXml));
+					} else {
+						res(b);
+					}
+				});
+			});
+		}
+	},
+	deleteThumb(html, id, mId) {
+		if (html) {
+			return new Promise((res, rej) => {
+				const i = mId.indexOf("-");
+				const prefix = mId.substr(0, i);
+				const suffix = mId.substr(i + 1);
+				switch (prefix) {
+					case "e": {
+						caché.clearTable(mId);
+						let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
+						res(data.subarray(data.indexOf(80)));
+						break;
+					}
+					case "s":
+					case "m": {
+						let numId = Number.parseInt(suffix);
+						if (isNaN(numId)) res();
+						switch (prefix) {
+							case "s": {
+								var filePath = fUtil.getFileIndex("starter-", ".png", numId);
+								break;
+							}
+							case "m": {
+								var filePath = fUtil.getFileIndex("thumb-", ".png", numId);
+								break;
+							}
+						}
+						if (!fs.existsSync(filePath)) res();
+
+						fs.unlinkSync(filePath);
+					}
+					default: res();
+				}
+			});
+		} else {
+			return new Promise((res, rej) => {
+				fs.unlinkSync(getThumbPath(id), (e, b) => {
+					if (e) {
+						var fXml = util.xmlFail();
+						rej(Buffer.from(fXml));
+					} else {
+						res(b);
+					}
+				});
+			});
+		}
 	},
 };
