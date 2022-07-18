@@ -1,6 +1,7 @@
 const loadPost = require("../misc/post_body");
 const asset = require("./main");
 const character = require("../character/main");
+const starter = require("../starter/main");
 const http = require("http");
 
 /**
@@ -38,6 +39,37 @@ module.exports = function (req, res, url) {
 				.catch((e) => {
 					(res.statusCode = 404), res.end(e);
 				});
+			const movieMatch = req.url.match(/\/movies\/([^.]+)(?:\.(zip|xml))?$/);
+			if (!movieMatch) return;
+
+			var id = movieMatch[1];
+			var ext = movieMatch[2];
+			switch (ext) {
+				case "zip":
+					res.setHeader("Content-Type", "application/zip");
+					movie.loadZip(id).then((v) => {
+						if (v) {
+							res.statusCode = 200;
+							res.end(v);
+						} else {
+							res.statusCode = 404;
+							res.end();
+						}
+					});
+					break;
+				default:
+					res.setHeader("Content-Type", "text/xml");
+					movie.loadXml(id).then((v) => {
+						if (v) {
+							res.statusCode = 200;
+							res.end(v);
+						} else {
+							res.statusCode = 404;
+							res.end();
+						}
+					});
+					break;
+			}
 			return true;
 		}
 
@@ -80,6 +112,19 @@ module.exports = function (req, res, url) {
 								res.statusCode = 404;
 								res.end();
 							}
+						}
+					});
+					return true;
+				}
+				case "/goapi/deleteUserTemplate/": {
+					loadPost(req, res).then(async ([data]) => {
+						const sId = data.movieId;
+						const b = starter.delete(sId);
+						if (b) {
+							res.end(b);
+						} else {
+							res.statusCode = 404;
+							res.end();
 						}
 					});
 					return true;
