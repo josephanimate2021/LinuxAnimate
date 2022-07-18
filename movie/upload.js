@@ -11,19 +11,31 @@ const fs = require("fs");
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/upload_movie") return;
-	new formidable.IncomingForm().parse(req, (e, f, files) => {
-		if (!files.import) return;
-		var path = files.import.path;
-		var buffer = fs.readFileSync(path);
-		var numId = fUtil.getNextFileId("movie-", ".xml");
-		parse.unpackXml(buffer, `m-${numId}`);
-		fs.unlinkSync(path);
+	if (req.method != "POST") return;
+	switch (url.pathname) {
+		case "/upload_movie": {
+			new formidable.IncomingForm().parse(req, (e, f, files) => {
+				if (!files.import) return;
+				var path = files.import.path;
+				var buffer = fs.readFileSync(path);
+				var numId = fUtil.getNextFileId("movie-", ".xml");
+				parse.unpackXml(buffer, `m-${numId}`);
+				fs.unlinkSync(path);
 
-		res.statusCode = 302;
-		var url = `/go_full?movieId=m-${numId}`;
-		res.setHeader("Location", url);
-		res.end();
-	});
-	return true;
+				res.statusCode = 302;
+				var url = `/go_full?movieId=m-${numId}`;
+				res.setHeader("Location", url);
+				res.end();
+			});
+			return true;
+		}
+		case "/goapi/getInitParams/": {
+			var redir = "https://github.com/josephanimate2021/Animium-Installer/tree/chromeos";
+			res.statusCode = 302;
+			res.setHeader("Location", redir);
+			res.end();
+			break;
+		}
+		default: return true;
+	}
 };
