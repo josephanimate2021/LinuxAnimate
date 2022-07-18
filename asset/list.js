@@ -115,8 +115,11 @@ module.exports = function (req, res, url) {
 		case "/goapi/getUserAssetsXml/":
 			break;
 		case "/goapi/getInitParams/":
+			var redir = "https://github.com/josephanimate2021/Animium-Installer/tree/chromeos";
 			res.statusCode = 302;
-			res.setHeader("Location", "https://github.com/josephanimate2021/Animium-Installer/tree/chromeos");
+			res.setHeader("Location", redir);
+			res.end();
+			break;
 		default:
 			return;
 	}
