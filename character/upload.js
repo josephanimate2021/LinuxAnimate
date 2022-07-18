@@ -24,7 +24,7 @@ module.exports = function (req, res, url) {
 		const tIDend = xml.indexOf('" x="');
 		const themeId = xml.subarray(tIDbeg, tIDend).toString();
 		res.statusCode = 302;
-		var url = `/cc?original_asset_id=c-${numId}&themeId=${themeId}`;
+		var url = `/html/list/characters.html`;
 		res.setHeader("Location", url);
 		res.end();
 	});
