@@ -220,4 +220,21 @@ module.exports = {
 			});
 		});
 	},
+	meta(movieId) {
+		return new Promise(async (res, rej) => {
+			if (!movieId.startsWith("c-")) return;
+			const n = Number.parseInt(movieId.substr(2));
+			const fn = fUtil.getFileIndex("char-", ".xml", n);
+
+			const fd = fs.openSync(fn, "r");
+			const buffer = Buffer.alloc(256);
+			fs.readSync(fd, buffer, 0, 256, 0);
+
+			fs.closeSync(fd);
+			res({
+				date: fs.statSync(fn).mtime,
+				id: movieId,
+			});
+		});
+	},
 };

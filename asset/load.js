@@ -84,6 +84,10 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
+				case "/goapi/deleteUserTemplate/": {
+					console.log('Please delete your starter in html form.');
+					return true;
+				}
 				default:
 					return;
 			}

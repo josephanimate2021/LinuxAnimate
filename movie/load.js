@@ -46,14 +46,21 @@ module.exports = function (req, res, url) {
 		}
 
 		case "POST": {
-			if (!url.path.startsWith("/goapi/getMovie/")) return;
-			res.setHeader("Content-Type", "application/zip");
+			switch (url.pathname) {
+				case "/goapi/getMovie/": {
+					res.setHeader("Content-Type", "application/zip");
 
-			movie
-				.loadZip(url.query.movieId)
-				.then((b) => res.end(Buffer.concat([base, b])))
-				.catch(() => res.end("1"));
-			return true;
+					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
+					return true;
+				}
+				case "/ajax/deleteStarter/":
+				case "/ajax/deleteChar/":
+				case "/ajax/deleteMovie/": {
+					movie.delete(url.query.movieId);
+					movie.deleteThumb(url.query.movieId);
+					return true;
+				}
+			}
 		}
 		default:
 			return;
