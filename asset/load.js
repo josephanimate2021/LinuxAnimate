@@ -1,8 +1,6 @@
 const loadPost = require("../misc/post_body");
 const asset = require("./main");
 const character = require("../character/main");
-const starter = require("../starter/main");
-const movie = require("../movie/main");
 const http = require("http");
 
 /**
