@@ -95,7 +95,7 @@
 				const tbl = json[c];
 				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 				tbody.insertAdjacentHTML('beforeend',
-					'<tr><td><img src="/char_thumbs/' + tbl.id + '.png"></td><td><div>Char #' + tbl.id + '</div><div>Char Id: ' + tbl.id + '</div></div></td><td><span>' + date + '</span></td><td><a href="/characters/' + tbl.id + '.xml" download="Char #' + tbl.id + '"></a><a href="javascript:deleteChar(\'' + tbl.id + '\')"></a></td></tr>');
+					'<tr id="' + tbl.id + '"><td><img src="/char_thumbs/' + tbl.id + '.png"></td><td><div>Char #' + tbl.id + '</div><div>Char Id: ' + tbl.id + '</div></div></td><td><span>' + date + '</span></td><td><a href="/characters/' + tbl.id + '.xml" download="Char #' + tbl.id + '"></a><a href="javascript:deleteChar(\'' + tbl.id + '\')"></a></td></tr>');
 			}
 		}
 
