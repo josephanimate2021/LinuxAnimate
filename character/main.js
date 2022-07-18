@@ -227,7 +227,7 @@ module.exports = {
 			const fn = fUtil.getFileIndex("char-", ".xml", n);
 			
 			const fd = fs.openSync(fn, "r");
-			const buffer = Buffer.alloc(256);
+			const buffer = fs.readFileSync(fUtil.getFileIndex("char-", ".xml", n));
 			fs.readSync(fd, buffer, 0, 256, 0);
 
 			const tIDbeg = buffer.indexOf('" theme_id="') + 12;
