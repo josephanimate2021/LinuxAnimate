@@ -95,7 +95,7 @@
 				const tbl = json[c];
 				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 				tbody.insertAdjacentHTML('beforeend',
-					'<tr><td><img src="/starter_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>Starter Id: ' + tbl.id + '</div></div></td><td><span>' + date + '</span></td><td><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a></td></tr>');
+					'<tr id="' + tbl.id + '"><td><img src="/starter_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>Starter Id: ' + tbl.id + '</div></div></td><td><span>' + date + '</span></td><td><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a href="javascript:deleteStarter(\'' + tbl.id + '\')"></a></td></tr>');
 			}
 		}
 
@@ -107,7 +107,10 @@
 		}
 
 		function deleteStarter(id) {
-			// i am working on this soon.
+			const xhttp = new XMLHttpRequest();
+		        xhttp.open('POST', `/ajax/deleteStarter/?movieId=${id}`);
+		        xhttp.send();
+                        document.getElementById(`${id}`).style.display = "none";
 		}
 	</script>
 	<style>
