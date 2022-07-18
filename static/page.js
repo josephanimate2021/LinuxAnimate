@@ -31,7 +31,7 @@ module.exports = function (req, res, url) {
 	if (req.method != "GET") return;
 	const query = url.query;
 
-	var attrs, params, title, ut;
+	var attrs, params, title, ut, trayQuery;
 	switch (process.env.PROJECT_RELEASE) {
 		case "stable": {
 			ut = "10";
@@ -46,6 +46,7 @@ module.exports = function (req, res, url) {
 			break;
 		}
 	}
+	var trayQuery = query.tray;
 	switch (url.pathname) {
 		case "/cc": {
 			title = "Character Creator";
@@ -140,14 +141,14 @@ module.exports = function (req, res, url) {
 					isLogin: "Y",
 					retut: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-					themeId: "custom",
+					themeId: trayQuery,
 					tlang: "en_US",
 					presaveId: presave,
 					goteam_draft_only: 1,
 					isWide: 1,
 					collab: 0,
 					nextUrl: "/html/list.html",
-					tray: "custom",
+					tray: trayQuery,
 				},
 				allowScriptAccess: "always",
 			};
