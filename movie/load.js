@@ -57,6 +57,7 @@ module.exports = function (req, res, url) {
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
 					movie.delete(url.query.movieId);
+					movie.deleteThumb(url.query.movieId);
 					return true;
 				}
 			}
