@@ -38,7 +38,7 @@ module.exports = function (req, res, url) {
         }
 	case "/goapi/deleteUserTemplate/": {
             loadPost(req, res).then(([data, mId]) => {
-                starter.delete(mId).then((nId) => res.end("0" + nId));
+                starter.delete(thumb, mId).then((nId) => res.end("0" + nId));
             });
             return true;
         }
