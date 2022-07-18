@@ -32,28 +32,20 @@ module.exports = function (req, res, url) {
 	const query = url.query;
 
 	var attrs, params, title, ut;
-    switch (process.env.PROJECT_RELEASE) {
-        case "stable": {
-            if (url.pathname == "/cc") {
-                ut = "60";
-            } else {
-                ut = "10";
-            }
-            break;
-        }
-        case "goproduction": {
-            ut = "25";
-            break;
-        }
-        case "beta": {
-            ut = "23";
-            break;
-        }
-        case "dev": {
-            ut = "60";
-            break;
-        }
-    }
+	switch (process.env.PROJECT_RELEASE) {
+		case "stable": {
+			ut = "10";
+			break;
+		}
+		case "goproduction": {
+			ut = "25";
+			break;
+		}
+		case "dev": {
+			ut = "60";
+			break;
+		}
+	}
 	switch (url.pathname) {
 		case "/cc": {
 			title = "Character Creator";
