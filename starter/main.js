@@ -53,7 +53,7 @@ module.exports = {
 	 * @param {string} oldId
 	 * @returns {Promise<string>}
 	 */
-	delete(oldId, nëwId = oldId) {
+	delete(thumb, oldId, nëwId = oldId) {
 		return new Promise(async (res, rej) => {
 			caché.transfer(oldId, nëwId);
 			var i = nëwId.indexOf("-");
@@ -62,7 +62,11 @@ module.exports = {
 			switch (prefix) {
 				case "s": {
 					var path = fUtil.getFileIndex("starter-", ".xml", suffix);
-					fs.unlinkSync(path);
+					var starterThumbPath = fUtil.getFileIndex("starter-", ".png", suffix);
+					if (thumb && nëwId.startsWith("s-")) {
+						fs.unlinkSync(starterThumbPath);
+						fs.unlinkSync(path);
+					}
 					break;
 				}
 				default:
