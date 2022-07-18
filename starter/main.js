@@ -6,6 +6,11 @@ const nodezip = require("node-zip");
 const parse = require("../movie/parse");
 const util = require("../misc/util");
 const fs = require("fs");
+const xNumWidth = process.env.XML_NUM_WIDTH;
+const baseUrl = process.env.CHAR_BASE_URL;
+const get = require("../misc/get");
+const fw = process.env.FILE_WIDTH;
+const themes = {};
 
 /**
  * @param {string} id
