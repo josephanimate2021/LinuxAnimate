@@ -26,7 +26,6 @@ module.exports = function (req, res, url) {
 				var url = `/go_full?movieId=m-${numId}`;
 				res.setHeader("Location", url);
 				res.end();
-				break;
 			});
 			return true;
 		}
