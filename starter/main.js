@@ -6,44 +6,6 @@ const nodezip = require("node-zip");
 const parse = require("../movie/parse");
 const util = require("../misc/util");
 const fs = require("fs");
-const xNumWidth = process.env.XML_NUM_WIDTH;
-const baseUrl = process.env.CHAR_BASE_URL;
-const get = require("../misc/get");
-const fw = process.env.FILE_WIDTH;
-const themes = {};
-
-/**
- * @param {string} id
- * @returns {string}
- */
-function getStarterPath(id) {
-	var i = id.indexOf("-");
-	var prefix = id.substr(0, i);
-	var suffix = id.substr(i + 1);
-	switch (prefix) {
-		case "s":
-			return fUtil.getFileIndex("starter-", ".xml", suffix);
-		case "S":
-		default:
-			return `${cachéFolder}/starter.${id}.xml`;
-	}
-}
-/**
- * @param {string} id
- * @returns {string}
- */
-function getThumbPath(id) {
-	var i = id.indexOf("-");
-	var prefix = id.substr(0, i);
-	var suffix = id.substr(i + 1);
-	switch (prefix) {
-		case "s":
-			return fUtil.getFileIndex("starter-", ".png", suffix);
-		case "S":
-		default:
-			return `${cachéFolder}/starter.${id}.png`;
-	}
-}
 
 module.exports = {
 	save(starterZip, thumb) {
@@ -98,6 +60,7 @@ module.exports = {
 						break;
 					}
 					case "s":
+					case "c":
 					case "m": {
 						let numId = Number.parseInt(suffix);
 						if (isNaN(numId)) res();
@@ -108,6 +71,10 @@ module.exports = {
 							}
 							case "m": {
 								var filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+								break;
+							}
+							case "c": {
+								var filePath = fUtil.getFileIndex("char-", ".xml", numId);
 								break;
 							}
 						}
@@ -145,6 +112,7 @@ module.exports = {
 						break;
 					}
 					case "s":
+					case "c":
 					case "m": {
 						let numId = Number.parseInt(suffix);
 						if (isNaN(numId)) res();
@@ -155,6 +123,10 @@ module.exports = {
 							}
 							case "m": {
 								var filePath = fUtil.getFileIndex("thumb-", ".png", numId);
+								break;
+							}
+							case "c": {
+								var filePath = fUtil.getFileIndex("char-", ".png", numId);
 								break;
 							}
 						}
