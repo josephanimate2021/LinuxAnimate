@@ -1,5 +1,4 @@
 const movie = require("./main");
-const starter = require("../starter/main");
 const base = Buffer.alloc(1, 0);
 const http = require("http");
 
@@ -57,7 +56,7 @@ module.exports = function (req, res, url) {
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
-					starter.delete('html', url.query.movieId);
+					movie.delete(url.query.movieId);
 					return true;
 				}
 			}
