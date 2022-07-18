@@ -7,3 +7,6 @@ You also cannot save starters in linuxanimate using this channel. i would say th
 
 ## Limitations in other releases.
 N/A
+
+## How to run
+you can get this project using the animium installer. once you have it, do cd LinuxAnimate and sudo bash run.sh in the ternimal.
