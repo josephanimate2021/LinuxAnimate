@@ -46,108 +46,52 @@ module.exports = {
 			});
 		});
 	},
-	delete(html, id, mId) {
-		if (html) {
-			return new Promise((res, rej) => {
-				const i = mId.indexOf("-");
-				const prefix = mId.substr(0, i);
-				const suffix = mId.substr(i + 1);
-				switch (prefix) {
-					case "e": {
-						caché.clearTable(mId);
-						let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-						res(data.subarray(data.indexOf(80)));
-						break;
-					}
-					case "s":
-					case "c":
-					case "m": {
-						let numId = Number.parseInt(suffix);
-						if (isNaN(numId)) res();
-						switch (prefix) {
-							case "s": {
-								var filePath = fUtil.getFileIndex("starter-", ".xml", numId);
-								break;
-							}
-							case "m": {
-								var filePath = fUtil.getFileIndex("movie-", ".xml", numId);
-								break;
-							}
-							case "c": {
-								var filePath = fUtil.getFileIndex("char-", ".xml", numId);
-								break;
-							}
-						}
-						if (!fs.existsSync(filePath)) res();
-
-						fs.unlinkSync(filePath);
-					}
-					default: res();
+	/**
+	 *
+	 * @param {Buffer} movieZip
+	 * @param {string} nëwId
+	 * @param {string} oldId
+	 * @returns {Promise<string>}
+	 */
+	delete(oldId, nëwId = oldId) {
+		return new Promise(async (res, rej) => {
+			caché.transfer(oldId, nëwId);
+			var i = nëwId.indexOf("-");
+			var prefix = nëwId.substr(0, i);
+			var suffix = nëwId.substr(i + 1);
+			switch (prefix) {
+				case "s": {
+					var path = fUtil.getFileIndex("starter-", ".xml", suffix);
+					fs.unlinkSync(path);
+					break;
 				}
-			});
-		} else {
-			return new Promise((res, rej) => {
-				fs.unlinkSync(getStarterPath(id), (e, b) => {
-					if (e) {
-						var fXml = util.xmlFail();
-						rej(Buffer.from(fXml));
-					} else {
-						res(b);
-					}
-				});
-			});
-		}
+				default:
+					rej();
+			}
+		});
 	},
-	deleteThumb(html, id, mId) {
-		if (html) {
-			return new Promise((res, rej) => {
-				const i = mId.indexOf("-");
-				const prefix = mId.substr(0, i);
-				const suffix = mId.substr(i + 1);
-				switch (prefix) {
-					case "e": {
-						caché.clearTable(mId);
-						let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-						res(data.subarray(data.indexOf(80)));
-						break;
-					}
-					case "s":
-					case "c":
-					case "m": {
-						let numId = Number.parseInt(suffix);
-						if (isNaN(numId)) res();
-						switch (prefix) {
-							case "s": {
-								var filePath = fUtil.getFileIndex("starter-", ".png", numId);
-								break;
-							}
-							case "m": {
-								var filePath = fUtil.getFileIndex("thumb-", ".png", numId);
-								break;
-							}
-							case "c": {
-								var filePath = fUtil.getFileIndex("char-", ".png", numId);
-								break;
-							}
-						}
-						if (!fs.existsSync(filePath)) res();
-
-						fs.unlinkSync(filePath);
-					}
-					default: res();
+	/**
+	 *
+	 * @param {Buffer} movieZip
+	 * @param {string} nëwId
+	 * @param {string} oldId
+	 * @returns {Promise<string>}
+	 */
+	deleteThumb(oldId, nëwId = oldId) {
+		return new Promise(async (res, rej) => {
+			caché.transfer(oldId, nëwId);
+			var i = nëwId.indexOf("-");
+			var prefix = nëwId.substr(0, i);
+			var suffix = nëwId.substr(i + 1);
+			switch (prefix) {
+				case "s": {
+					var path = fUtil.getFileIndex("starter-", ".png", suffix);
+					fs.unlinkSync(path);
+					break;
 				}
-			});
-		} else {
-			return new Promise((res, rej) => {
-				fs.unlinkSync(getThumbPath(id), (e, b) => {
-					if (e) {
-						var fXml = util.xmlFail();
-						rej(Buffer.from(fXml));
-					} else {
-						res(b);
-					}
-				});
-			});
-		}
+				default:
+					rej();
+			}
+		});
 	},
 };
