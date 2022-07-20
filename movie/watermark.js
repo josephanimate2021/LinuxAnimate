@@ -1,4 +1,5 @@
 const header = process.env.XML_HEADER;
+const movie = require("./main");
 
 /**
  * @param {http.IncomingMessage} req
@@ -11,15 +12,20 @@ module.exports = function (req, res, url) {
 		case "POST": {
 			const match = req.url.match(/\/goapi\/assignwatermark\/movie\/([^.]+)\/([^.]+)$/);
 			if (!match) return;
-
 			var id = match[1];
 			var wId = match[2];
 			var wStyle;
-			if (wId == "undefined") {
-				wStyle = '<watermark style="visualplugin"/>';
-			} else {
-				wStyle = '<watermark style="twoLines"/>';
+			switch (wId) {
+				case "0vTLbQy9hG7k": {
+					wStyle = '<watermark style="visualplugin"/>';
+					break;
+				}
+				case "0dhteqDBt5nY": {
+					wStyle = '<watermark style="twoLines"/>';
+					break;
+				}
 			}
+			const mId = movie.save('watermark', id);
 			const xml = `${header}<watermarks><watermark id="${wId}" thumbnail="${process.env.WATERMARKS_FOLDER}/${wId}.png"/><preview>${wId}</preview></watermarks>`;
 			const wXml = `<watermakrs>${wStyle}</watermarks>`;
 			switch (url.pathname) {
@@ -32,6 +38,10 @@ module.exports = function (req, res, url) {
 					break;
 				}
 			}
+			if (url.pathname == `/goapi/assignwatermark/movie/${id}/${wId}`} {
+				res.end(mId);
+			}
+			break;
 		}
 	}
 }
