@@ -16,12 +16,12 @@ module.exports = function (req, res, url) {
 			var wId = match[2];
 			var wStyle;
 			switch (wId) {
-				case "0vTLbQy9hG7k": {
-					wStyle = '<watermark style="visualplugin"/>';
-					break;
-				}
 				case "0dhteqDBt5nY": {
 					wStyle = '<watermark style="twoLines"/>';
+					break;
+				}
+				default: {
+					wStyle = '<watermark style="visualplugin"/>';
 					break;
 				}
 			}
