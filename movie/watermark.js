@@ -27,14 +27,9 @@ module.exports = function (req, res, url) {
 			}
 			const mId = movie.save('watermark', id);
 			const xml = `${header}<watermarks><watermark id="${wId}" thumbnail="${process.env.WATERMARKS_FOLDER}/${wId}.png"/><preview>${wId}</preview></watermarks>`;
-			const wXml = `<watermakrs>${wStyle}</watermarks>`;
 			switch (url.pathname) {
 				case "/goapi/getUserWatermarks/": {
 					res.end(xml);
-					break;
-				}
-				case "/goapi/getMovieInfo/": {
-					res.end(wXml);
 					break;
 				}
 			}
