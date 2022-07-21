@@ -62,8 +62,12 @@ module.exports = function (req, res, url) {
 					let data = ''
 					readStream.on('data', function(chunk) {
 						data += chunk;
+					}).on('error', function(err) {
+						console.log('Error:', err);
 					}).on('end', function() {
-						res.end(data);
+						// read the xml on console log to tell the user what watermark they are using.
+						console.log(`<?xml encoding="UTF-8"?>${data}`);
+						res.end(`<?xml encoding="UTF-8"?>${data}`);
 					});
 					return true;
 				}
