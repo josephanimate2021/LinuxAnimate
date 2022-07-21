@@ -38,7 +38,7 @@ module.exports = function (req, res, url) {
 			break;
 		}
 		case "goproduction": {
-			ut = "25";
+			ut = "30";
 			break;
 		}
 		case "dev": {
