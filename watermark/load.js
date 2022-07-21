@@ -1,4 +1,5 @@
 const fs = require("fs");
+const folder = process.env.SAVED_FOLDER;
 
 /**
  * @param {http.IncomingMessage} req
@@ -9,11 +10,12 @@ const fs = require("fs");
 module.exports = function (req, res, url) {
 	var path = url.pathname;
 	if (req.method != "POST" || path != "/goapi/getMovieInfo/") return;
+	var mId = url.query.movieId;
+	var filePath = `${folder}/${mId}-watermark.xml`;
 	res.setHeader("Content-Type", "text/xml");
-	const wId = fs.readFileSync(`${process.env.SAVED_FOLDER}/${url.query.movieId}-watermark.xml`);
-	if (!wId) {
+	if (!fs.existsSync(filePath)) {
 		res.end('<watermarks><watermark style="freeTrial"/></watermarks>');
 	} else {
-		res.end(wId);
+		res.end(fs.readFileSync(`${folder}/${mId}-watermark.xml`));
 	}
 };
