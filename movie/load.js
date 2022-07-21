@@ -55,9 +55,14 @@ module.exports = function (req, res, url) {
 					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
 					return true;
 				}
-				case "/goapi/getMovieInfo/": {	
+				case "/goapi/getMovieInfo/": {
 					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
-					const buffer = fs.readFileSync(path);
+					var buffer;
+					if (fs.existsSync(path)) {
+						buffer = fs.readFileSync(path);
+					} else {
+						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
+					}
 					console.log(buffer);
 				        res.end(buffer);
 					return true;
