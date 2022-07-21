@@ -55,9 +55,10 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					const wId = watermark.load(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
-					res.end(wId);
-					break;
+					res.setHeader("Content-Type", "text/xml");
+					
+					watermark.load(url.query.movieId);
+					return true;
 				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
