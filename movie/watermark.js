@@ -1,4 +1,4 @@
-const movie = require("./main");
+const watermark = require("../watermark/main");
 module.exports = function (req, res, url) {
   if (req.method != "POST") return;
   const match = req.url.match(/\/goapi\/assignwatermark\/movie\/([^/]+)\/([^.]+)$/);
