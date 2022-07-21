@@ -1,5 +1,6 @@
 const movie = require("./main");
 const watermark = require("../watermark/main");
+var path = require('path');
 const base = Buffer.alloc(1, 0);
 const fs = require("fs");
 const http = require("http");
@@ -56,10 +57,16 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
-					var buffer = fs.readFile(path);
-					console.log(buffer);
-				        res.end(buffer);
+					var mId = url.query.movieId;
+					var readStream = fs.createReadStream(path.join(__dirname, "../", process.env.WATERMARKS_FOLDER) + `/${mId}.txt`, 'utf8');
+					let data = ''
+					readStream.on('data', function(chunk) {
+						data += chunk;
+					}).on('end', function() {
+						console.log(data);
+						res.end(data);
+					});
+					return true;
 				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
