@@ -16,45 +16,39 @@ module.exports = {
 			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
 			var wXml;
 			if (wId == "0dhteqDBt5nY") {
-				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="visualplugin"/></watermarks>';
+				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
 			} else {
-				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="twoLines"/></watermarks>';
+				wXml = '<watermarks></watermarks>';
 			}
 			fs.writeFileSync(path, wXml);
 			res(suffix);
 		});
 	},
 	load(mId) {
-		return new Promise(async (res, rej) => {
+		return new Promise((res) => {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
-			let numId = Number.parseInt(suffix);
-			if (isNaN(numId)) res();
-			switch (prefix) {
-				case "m": {
-					const fn = fUtil.getFileIndex("watermark-", ".xml", numId);
-					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
-					else fs.readSync('<?xml encoding="UTF-8"?><watermarks><watermark style="freeTrial"/></watermarks>');
+			if (prefix == "m") {
+				let numId = Number.parseInt(suffix);
+				if (isNaN(numId)) res();
+				let filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
+				if (!fs.existsSync(filePath)) res();
+
+				const buffer = fs.readFileSync(filePath);
+				if (!buffer || buffer.length == 0) res();
+
+				try {
+					parse.packMovie(buffer, mId).then((pack) => {
+						caché.saveTable(mId, pack.caché);
+						res(pack.zipBuf);
+					});
 					break;
+				} catch (e) {
+					res();
 				}
-				case "s": {
-					const fn = fUtil.getFileIndex("starter-", ".xml", suffix);
-					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
-					else rej();
-					break;
-				}
-				case "e": {
-					const fn = `${exFolder}/${suffix}.zip`;
-					if (!fs.existsSync(fn)) return rej();
-					parse
-						.unpackMovie(nodezip.unzip(fn))
-						.then((v) => res(v))
-						.catch((e) => rej(e));
-					break;
-				}
-				default:
-					rej();
+			} else {
+				res();
 			}
 		});
 	},
