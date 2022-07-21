@@ -18,10 +18,10 @@ module.exports = function (req, res, url) {
 			} else {
 				content = `<watermark id="${v.id} thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/>`;
 			}
-			xmlString = `${header}<watermarks>${content}</watermarks>`;
-			res.setHeader('Content-Type', 'text/xml');
-			res.end(xmlString);
 		});
+		xmlString = `${header}<watermarks>${content}</watermarks>`;
+		res.setHeader('Content-Type', 'text/xml');
+		res.end(xmlString);
 	};
 	return true;
 }
