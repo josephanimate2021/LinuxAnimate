@@ -65,6 +65,7 @@ module.exports = function (req, res, url) {
 					} else {
 						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
 					}
+					console.log(buffer);
 				        res.end(buffer);
 					return true;
 				}
