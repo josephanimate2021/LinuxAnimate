@@ -5,7 +5,7 @@ module.exports = function (req, res, url) {
 	var pth = url.pathname;
 	if (req.method != "POST" || pth != "/goapi/getMovieInfo/") return;
 	var mId = url.query.movieId;
-	var filepath = path.join(folder, `${mId}-watermark.xml`);
+	var filepath = path.join(folder, `${mId}.xml`);
 	var xml = fs.readFileSync(filepath);
 	res.setHeader("Content-Type", "text/xml");
 	if (!fs.existsSync(filepath)) {
