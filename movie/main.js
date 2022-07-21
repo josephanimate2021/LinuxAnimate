@@ -282,7 +282,13 @@ module.exports = {
 			const sec = ("" + ~~(duration % 60)).padStart(2, "0");
 			const durationStr = `${min}:${sec}`;
 			
-			const watermarks = fs.readFileSync(`${process.env.SAVED_FOLDER}/${movieId}.txt`);
+			const wtrTxt = `${process.env.SAVED_FOLDER}/${movieId}.txt`;
+			var watermarks;
+			if (!fs.existsSync(wtrTxt)) {
+				watermarks = "No Logo";
+			} else {
+				watermarks = fs.createReadStream(wtrTxt).pipe(res);
+			}
 
 			fs.closeSync(fd);
 			res({
