@@ -1,5 +1,5 @@
 const cachéFolder = process.env.CACHÉ_FOLDER;
-const folder = process.env.SAVED_FOLDER;
+const folder = process.env.WATERMARKS_FOLDER;
 const exFolder = process.env.EXAMPLE_FOLDER;
 const caché = require("../asset/caché");
 const fUtil = require("../misc/file");
