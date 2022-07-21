@@ -22,7 +22,7 @@ module.exports = {
 				wXml = '<watermarks><watermark style="twoLines"/></watermarks>';
 				break;
 			}
-			default: {
+			case "82tkgqdefbw6": {
 				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 				break;
 			}
