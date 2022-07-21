@@ -58,9 +58,10 @@ module.exports = function (req, res, url) {
 					res.setHeader("Content-Type", "application/zip");
 
 					movie.loadZip(url.query.movieId).then(b => {
-						res.end(Buffer.concat([base, b])).catch(e => {
+						var buffer = Buffer.concat([base, b]));
+						buffer().catch(e => {
 							console.log(e);
-							res.end("1");
+							res.end("1" + buffer);
 						});
 					});
 					return true;
