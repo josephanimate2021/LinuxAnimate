@@ -17,25 +17,9 @@ module.exports = function (req, res, url) {
 	loadPost(req, res).then(async data => {
 		var xmlString, files;
 		files = asset.list(data.movieId, "watermark");
-		};
-
-		if (makeZip) {
-			const zip = nodezip.create();
-			fUtil.addToZip(zip, 'desc.xml', Buffer.from(xmlString));
-
-			switch (data.type) {
-				case 'bg': {
-					fUtil.addToZip(zip, 'bg/666.jpg', fs.readFileSync(`file: http://2.bp.blogspot.com/-hegG5mMd9kE/T9Y4CWZ6udI/AAAAAAAAA2I/nm-9Wlrh6a4/s1600/full-hd-wallpapers-1080p-1.jpg`));
-					break;
-				}
-			};
-			res.setHeader('Content-Type', 'application/zip');
-			res.end(Buffer.concat([base, await zip.zip()]));
-		}
-		else {
-			res.setHeader('Content-Type', 'text/xml');
-			res.end(xmlString);
-		}
-	})
+		xmlString = `${header}<watermarks>${files.map((v) => `<watermark id="${v.id}" thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/>`).join("")}</watermarks>`;
+		res.setHeader('Content-Type', 'text/xml');
+		res.end(xmlString);
+	};
 	return true;
 }
