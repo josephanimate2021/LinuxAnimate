@@ -25,38 +25,34 @@ module.exports = {
 		});
 	},
 	load(mId) {
-		return new Promise((res) => {
+		return new Promise(async (res, rej) => {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
 			switch (prefix) {
-				case "e": {
-					caché.clearTable(mId);
-					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-					res(data.subarray(data.indexOf(80)));
+				case "m": {
+					const fn = fUtil.getFileIndex("watermark-", ".xml", suffix);
+					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
+					else rej();
 					break;
 				}
-				case "m": {
-					let numId = Number.parseInt(suffix);
-					if (isNaN(numId)) res();
-					let filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
-					if (!fs.existsSync(filePath)) res();
-
-					const buffer = fs.readFileSync(filePath);
-					if (!buffer || buffer.length == 0) res();
-
-					try {
-						parse.packMovie(buffer, mId).then((pack) => {
-							caché.saveTable(mId, pack.caché);
-							res(pack.zipBuf);
-						});
-						break;
-					} catch (e) {
-						res();
-					}
+				case "s": {
+					const fn = fUtil.getFileIndex("starter-", ".xml", suffix);
+					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
+					else rej();
+					break;
+				}
+				case "e": {
+					const fn = `${exFolder}/${suffix}.zip`;
+					if (!fs.existsSync(fn)) return rej();
+					parse
+						.unpackMovie(nodezip.unzip(fn))
+						.then((v) => res(v))
+						.catch((e) => rej(e));
+					break;
 				}
 				default:
-					res();
+					rej();
 			}
 		});
 	},
