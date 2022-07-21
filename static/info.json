@@ -66,12 +66,6 @@
 			},
 			"content": "{\"status\":\"\"}"
 		},
-		"/goapi/getMovieInfo/": {
-			"headers": {
-				"Content-Type": "text/html; charset=UTF-8"
-			},
-			"content": "<?xml encoding=\"UTF-8\"?><watermarks><watermark style=\"freeTrial\"/></watermarks>"
-		},
 		"/api_v2/asset/get": {
 			"headers": {
 				"Content-Type": "text/html; charset=UTF-8"
