@@ -16,11 +16,14 @@ module.exports = function (req, res, url) {
 		if (!files.import) return;
 		var path = files.import.path;
 		var buffer = fs.readFileSync(path);
+        const tIDbeg = buffer.indexOf('" theme_id="') + 12;
+		const tIDend = buffer.indexOf('" x="');
+		const themeId = buffer.subarray(tIDbeg, tIDend).toString();
 		var numId = fUtil.getNextFileId("char-", ".xml");
 		parse.unpackXml(buffer, `c-${numId}`);
 		fs.unlinkSync(path);
 		res.statusCode = 302;
-		var url = `/html/list/characters.html`;
+		var url = `/cc?themeId=${themeId}&original_asset_id=${numId}`;
 		res.setHeader("Location", url);
 		res.end();
 	});
