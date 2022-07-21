@@ -12,10 +12,19 @@ module.exports = {
 	save(mId, wId) {
 		var path = `${folder}/${mId}.txt`;
 		var wXml;
-		if (wId == "0dhteqDBt5nY") {
-			wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
-		} else {
-			wXml = '<watermarks></watermarks>';
+		switch (wId) {
+			case "0dhteqDBt5nY": {
+				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
+				break;
+			}
+			case "0vTLbQy9hG7k": {
+				wXml = '<watermarks></watermarks>';
+				break;
+			}
+			default: {
+				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
+				break;
+			}
 		}
 		fs.writeFileSync(path, wXml);
 	},
