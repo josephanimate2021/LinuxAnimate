@@ -24,6 +24,16 @@ module.exports = {
 			res(suffix);
 		});
 	},
+	load(mId) {
+		return new Promise(async (res, rej) => {
+			const i = mId.indexOf('-');
+			const prefix = mId.substr(0, i);
+			const suffix = mId.substr(i + 1);
+			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
+			fs.readFileSync(path);
+			res(suffix);
+		});
+	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
 			if (!movieId.startsWith("w-")) return;
