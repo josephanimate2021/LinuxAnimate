@@ -95,6 +95,10 @@ module.exports = function (req, res, url) {
 					res.end('<?xml encoding=\"UTF-8\"?><watermarks><watermark style=\"freeTrial\"/></watermarks>');
 					break;
 				}
+				case "/goapi/getUserWatermarks/": {
+					res.end(process.env.XML_HEADER + '<watermarks></watermarks><preview></preview>');
+					break;
+				}
 				default:
 					return;
 			}
