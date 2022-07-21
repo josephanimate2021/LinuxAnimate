@@ -3,7 +3,7 @@ const savedFolder = process.env.SAVED_FOLDER;
 const fs = require("fs");
 
 module.exports = {
-	save(mId, wId) {
+	save(mId, wId, wTitle) {
 		var path = `${folder}/${mId}.xml`;
 		var wXml;
 		switch (wId) {
@@ -29,6 +29,7 @@ module.exports = {
 			}
 		}
 		fs.writeFileSync(path, wXml);
+		this.assign(mId, wId);
 	},
 	assign(mId, wId) {
 		var path = `${savedFolder}/${mId}.txt`;
