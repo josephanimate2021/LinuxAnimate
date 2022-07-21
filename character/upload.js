@@ -23,7 +23,7 @@ module.exports = function (req, res, url) {
 		parse.unpackXml(buffer, `c-${numId}`);
 		fs.unlinkSync(path);
 		res.statusCode = 302;
-		var url = `/cc?themeId=${themeId}&original_asset_id=${numId}`;
+		var url = `/cc?themeId=${themeId}&original_asset_id=c-${numId}`;
 		res.setHeader("Location", url);
 		res.end();
 	});
