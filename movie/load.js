@@ -1,4 +1,5 @@
 const movie = require("./main");
+const watermark = require("../watermark/main");
 const base = Buffer.alloc(1, 0);
 const http = require("http");
 
@@ -52,6 +53,11 @@ module.exports = function (req, res, url) {
 
 					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
 					return true;
+				}
+				case "/goapi/getMovieInfo/": {
+					const wId = watermark.load(url.query.movieId);
+					res.end(wId);
+					break;
 				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
