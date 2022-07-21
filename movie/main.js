@@ -13,7 +13,7 @@ module.exports = {
 	 * @param {string} oldId
 	 * @returns {Promise<string>}
 	 */
-	save(watermark, movieZip, thumb, oldId, nëwId = oldId) {
+	save(movieZip, thumb, oldId, nëwId = oldId) {
 		// Saves the thumbnail of the respective video.
 		if (thumb && nëwId.startsWith("m-")) {
 			const n = Number.parseInt(nëwId.substr(2));
@@ -29,12 +29,7 @@ module.exports = {
 			var zip = nodezip.unzip(movieZip);
 			switch (prefix) {
 				case "m": {
-					var path;
-					if (watermark) {
-						path = fUtil.getFileIndex("watermark-", ".txt", suffix);
-					} else {
-						path = fUtil.getFileIndex("movie-", ".xml", suffix);
-					}
+					var path = fUtil.getFileIndex("movie-", ".xml", suffix);
 					var writeStream = fs.createWriteStream(path);
 					var assetBuffers = caché.loadTable(nëwId);
 					parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
