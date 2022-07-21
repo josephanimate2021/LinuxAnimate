@@ -14,6 +14,6 @@ module.exports = function (req, res, url) {
 		xmlString = `${header}<watermarks><watermark id="0dhteqDBt5nY"/></watermarks>`;
 		res.setHeader('Content-Type', 'text/xml');
 		res.end(xmlString);
-	};
+	});
 	return true;
 }
