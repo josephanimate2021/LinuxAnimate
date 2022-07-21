@@ -11,15 +11,7 @@ module.exports = function (req, res, url) {
 
 	loadPost(req, res).then(async data => {
 		var xmlString, files, content;
-		files = asset.list(data.movieId, "watermark");
-		files.map(v => {
-			if (v.id == "0dhteqDBt5nY") {
-				content = `<watermark id="0dhteqDBt5nY"/>`;
-			} else {
-				content = `<watermark id="${v.id} thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/>`;
-			}
-		});
-		xmlString = `${header}<watermarks>${content}</watermarks>`;
+		xmlString = `${header}<watermarks><watermark id="0dhteqDBt5nY"/></watermarks>`;
 		res.setHeader('Content-Type', 'text/xml');
 		res.end(xmlString);
 	};
