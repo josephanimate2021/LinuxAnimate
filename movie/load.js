@@ -53,7 +53,16 @@ module.exports = function (req, res, url) {
 				case "/goapi/getMovie/": {
 					res.setHeader("Content-Type", "application/zip");
 
-					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
+					movie.loadZip(url.query.movieId).then(b => {
+						res.end(Buffer.concat([base, b]))).catch((err, e) => {
+							if (!e) {
+								console.log(err);
+							} else {
+								console.log(e);
+							}
+							res.end("1");
+						});
+					});
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
