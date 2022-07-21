@@ -58,14 +58,13 @@ module.exports = function (req, res, url) {
 				case "/goapi/getMovieInfo/": {
 					res.setHeader("Content-Type", "text/xml");
 					
-					const path = `${process.env.SAVED_FOLDER}/${url.query.movieId}.xml`;
+					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.xml`;
 					var buffer;
 					if (fs.existsSync(path)) {
-						buffer = fs.readFileSync(path);
+						buffer = fs.readFileSync(path, 'utf8');
 					} else {
 						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
 					}
-					console.log(fs.readFileSync(path));
 				        res.end(buffer);
 					return true;
 				}
