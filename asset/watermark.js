@@ -1,10 +1,3 @@
-const header = process.env.XML_HEADER;
-const fUtil = require('../fileUtil');
-const nodezip = require('node-zip');
-const base = Buffer.alloc(1, 0);
-const user = require('./main');
-const fs = require('fs');
-
 module.exports = function (req, res, url) {
 	if (req.method != 'POST') return;
 
