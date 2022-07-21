@@ -11,5 +11,9 @@ module.exports = function (req, res, url) {
 	if (req.method != "POST" || path != "/goapi/getMovieInfo/") return;
 	res.setHeader("Content-Type", "text/xml");
 	const wId = fs.readFileSync(`${process.env.SAVED_FOLDER}/${url.query.movieId}-watermark.xml`);
-	res.end(wId);
+	if (!wId) {
+		res.end('<watermarks><watermark style="freeTrial"/></watermarks>');
+	} else {
+		res.end(wId);
+	}
 };
