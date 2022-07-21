@@ -6,6 +6,6 @@ module.exports = function (req, res, url) {
 
   const mId = match[1];
   const wId = match[2];
-  const id = watermark.save('wTitle', mId, wId);
+  const id = watermark.save(mId, wId);
   res.end(id);
 }
