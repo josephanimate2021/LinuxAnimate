@@ -31,12 +31,12 @@ module.exports = {
 			const suffix = mId.substr(i + 1);
 			if (prefix == "m") {
 				let numId = Number.parseInt(suffix);
-				if (isNaN(numId)) res();
+				if (isNaN(numId)) res('<watermarks><watermark style="freeTrial"/></watermarks>');
 				let filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
-				if (!fs.existsSync(filePath)) res();
+				if (!fs.existsSync(filePath)) res('<watermarks><watermark style="freeTrial"/></watermarks>');
 
 				const buffer = fs.readFileSync(filePath);
-				if (!buffer || buffer.length == 0) res();
+				if (!buffer || buffer.length == 0) res('<watermarks><watermark style="freeTrial"/></watermarks>');
 
 				try {
 					parse.packMovie(buffer, mId).then((pack) => {
@@ -44,10 +44,10 @@ module.exports = {
 						res(pack.zipBuf);
 					});;
 				} catch (e) {
-					res();
+					res('<watermarks><watermark style="freeTrial"/></watermarks>');
 				}
 			} else {
-				res();
+				res('<watermarks><watermark style="freeTrial"/></watermarks>');
 			}
 		});
 	},
