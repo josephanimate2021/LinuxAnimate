@@ -56,10 +56,7 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
-					var buffer = fs.readFileSync(path);
-					console.log(buffer);
-				        res.end(buffer);
+					watermark.load(url.query.movieId);
 					return true;
 				}
 				case "/ajax/deleteStarter/":
