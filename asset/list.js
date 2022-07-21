@@ -50,7 +50,7 @@ async function listAssets(data, makeZip) {
 			files = asset.list(mId, "prop");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
-					(v) =>
+				        (v) =>
 						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="${process.env.PROPS_FOLDER}/${v.id}"/>`
 				)
 				.join("")}</ugc>`;

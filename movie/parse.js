@@ -575,6 +575,12 @@ module.exports = {
 				break;
 			}
 			case "c": {
+				var folder = process.env.SAVED_FOLDER;
+				var origFile = process.env.THUMB_BASE_URL + "/char-0000000.png";
+				var newFile = fUtil.getFileIndex("char-", ".png", suffix);
+				fs.copyFile(origFile, newFile, (err) => {
+					if (err) console.log(err);
+				});
 				fs.writeFileSync(fUtil.getFileIndex("char-", ".xml", suffix), xml);
 				break;
 			}

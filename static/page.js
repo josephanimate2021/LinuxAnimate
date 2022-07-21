@@ -31,29 +31,22 @@ module.exports = function (req, res, url) {
 	if (req.method != "GET") return;
 	const query = url.query;
 
-	var attrs, params, title, ut;
-    switch (process.env.PROJECT_RELEASE) {
-        case "stable": {
-            if (url.pathname == "/cc") {
-                ut = "60";
-            } else {
-                ut = "10";
-            }
-            break;
-        }
-        case "goproduction": {
-            ut = "25";
-            break;
-        }
-        case "beta": {
-            ut = "23";
-            break;
-        }
-        case "dev": {
-            ut = "60";
-            break;
-        }
-    }
+	var attrs, params, title, ut, trayQuery;
+	switch (process.env.PROJECT_RELEASE) {
+		case "stable": {
+			ut = "10";
+			break;
+		}
+		case "goproduction": {
+			ut = "25";
+			break;
+		}
+		case "dev": {
+			ut = "60";
+			break;
+		}
+	}
+	var trayQuery = query.tray;
 	switch (url.pathname) {
 		case "/cc": {
 			title = "Character Creator";
@@ -140,7 +133,6 @@ module.exports = function (req, res, url) {
 					isEmbed: 1,
 					ctc: "go",
 					ut: ut,
-					bs: "default",
 					appCode: "go",
 					page: "",
 					siteId: "go",
@@ -148,13 +140,13 @@ module.exports = function (req, res, url) {
 					isLogin: "Y",
 					retut: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-					themeId: "business",
 					tlang: "en_US",
 					presaveId: presave,
 					goteam_draft_only: 1,
 					isWide: 1,
 					collab: 0,
 					nextUrl: "/html/list.html",
+					tray: trayQuery,
 				},
 				allowScriptAccess: "always",
 			};

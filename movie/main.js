@@ -124,8 +124,9 @@ module.exports = {
 						}
 					}
 					if (!fs.existsSync(filePath)) res();
-
-					fs.unlinkSync(filePath);
+					var path = `${process.env.SAVED_FOLDER}/${mId}.xml`;
+					if (!fs.existsSync(path)) res();
+					fs.unlinkSync(filePath, path);
 				}
 				default:
 					res();

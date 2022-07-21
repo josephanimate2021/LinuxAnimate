@@ -225,15 +225,21 @@ module.exports = {
 			if (!movieId.startsWith("c-")) return;
 			const n = Number.parseInt(movieId.substr(2));
 			const fn = fUtil.getFileIndex("char-", ".xml", n);
-
+			
 			const fd = fs.openSync(fn, "r");
-			const buffer = Buffer.alloc(256);
+			const buffer = fs.readFileSync(fUtil.getFileIndex("char-", ".xml", n));
 			fs.readSync(fd, buffer, 0, 256, 0);
+// i was going to also going to add that feature to other channels. but you guys can tell me on discord if i should do that or not first.
+			const tIDbeg = buffer.indexOf('" theme_id="') + 12;
+			const tIDend = buffer.indexOf('" x="');
+			const themeId = buffer.subarray(tIDbeg, tIDend).toString();
 
+			
 			fs.closeSync(fd);
 			res({
 				date: fs.statSync(fn).mtime,
 				id: movieId,
+				tId: themeId,
 			});
 		});
 	},

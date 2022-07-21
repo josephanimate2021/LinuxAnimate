@@ -1,5 +1,8 @@
 const movie = require("./main");
+const watermark = require("../watermark/main");
+var path = require('path');
 const base = Buffer.alloc(1, 0);
+const fs = require("fs");
 const http = require("http");
 
 /**
@@ -27,6 +30,8 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
+					}).catch(e => {
+						console.log(e);
 					});
 					break;
 				default:
@@ -39,6 +44,8 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
+					}).catch(e => {
+						console.log(e);
 					});
 					break;
 			}
