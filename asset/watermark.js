@@ -1,4 +1,4 @@
-const loadPost = require('../request/post_body');
+const loadPost = require('../misc/post_body');
 const header = process.env.XML_HEADER;
 
 module.exports = function (req, res, url) {
