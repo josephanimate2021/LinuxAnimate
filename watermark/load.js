@@ -16,6 +16,6 @@ module.exports = function (req, res, url) {
 	if (!fs.existsSync(filePath)) {
 		res.end('<watermarks><watermark style="freeTrial"/></watermarks>');
 	} else {
-		res.end(fs.readFileSync(`${folder}/${mId}-watermark.xml`));
+		fs.readFileSync(filePath);
 	}
 };
