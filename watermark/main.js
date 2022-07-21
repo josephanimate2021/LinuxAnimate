@@ -32,6 +32,7 @@ module.exports = {
 			let numId = Number.parseInt(suffix);
 			var filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
 			fs.readFileSync(filePath);
+			console.log('Attempting To Read XML: ', filePath);
 			res(numId);
 		});
 	},
