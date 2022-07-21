@@ -56,8 +56,10 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					watermark.load(url.query.movieId);
-					return true;
+					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
+					var buffer = fs.readFile(path);
+					console.log(buffer);
+				        res.end(buffer);
 				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
