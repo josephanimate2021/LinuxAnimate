@@ -33,7 +33,7 @@ module.exports = function (req, res, url) {
 					break;
 				}
 			}
-			if (url.pathname == `/goapi/assignwatermark/movie/${id}/${wId}`} {
+			if (url.pathname == `/goapi/assignwatermark/movie/${id}/${wId}`) {
 				res.end(mId);
 			}
 			break;
