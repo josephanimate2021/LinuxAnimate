@@ -29,11 +29,35 @@ module.exports = {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
-			let numId = Number.parseInt(suffix);
-			var filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
-			fs.readFileSync(filePath);
-			console.log('Attempting To Read XML: ', filePath);
-			res(numId);
+			switch (prefix) {
+				case "e": {
+					caché.clearTable(mId);
+					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
+					res(data.subarray(data.indexOf(80)));
+					break;
+				}
+				case "m": {
+					let numId = Number.parseInt(suffix);
+					if (isNaN(numId)) res();
+					let filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
+					if (!fs.existsSync(filePath)) res();
+
+					const buffer = fs.readFileSync(filePath);
+					if (!buffer || buffer.length == 0) res();
+
+					try {
+						parse.packMovie(buffer, mId).then((pack) => {
+							caché.saveTable(mId, pack.caché);
+							res(pack.zipBuf);
+						});
+						break;
+					} catch (e) {
+						res();
+					}
+				}
+				default:
+					res();
+			}
 		});
 	},
 	meta(movieId) {
