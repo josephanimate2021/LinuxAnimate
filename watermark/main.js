@@ -10,7 +10,7 @@ const fs = require("fs");
 
 module.exports = {
 	save(mId, wId) {
-		var path = `${folder}/${mId}.xml`;
+		var path = `${folder}/${mId}.txt`;
 		var wXml;
 		if (wId == "0dhteqDBt5nY") {
 			wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
