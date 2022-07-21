@@ -12,6 +12,12 @@ module.exports = function (req, res, url) {
 	if (!match) return;
 	var id = match[1];
 	var wId = match[2];
+	var wd;
+	if (wId == "0dhteqDBt5nY") {
+		wd = "0dhteqDBt5nY";
+	} else {
+		wd = wId;
+	}
 	var mode;
-	watermark.save(id, wId, mode = "watermark");
+	watermark.save(id, wd, mode = "watermark");
 }
