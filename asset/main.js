@@ -12,27 +12,36 @@ module.exports = {
 		return caché.delete(mId, aId);
 	},
 	save(buffer, mId, mode, ext) {
-		var suffix;
+		var suffix, ed;
                 switch (mode) { 
-                         case "prop": { 
-                                 suffix = `-${mode}.${ext}`;
-                                 return caché.newProp(buffer, mId, "", suffix); 
-                                 break;
-                         }
-                         case "video": { 
-                                 suffix = `-${mode}.${ext}`;
-                                 if (mode == "dontimport") {
-                                         console.log;
-                                 } else {
-                                         return caché.newVideo(buffer, mId, "", suffix); 
-                                 }
-                                 break;
-                         }
-                         default: {
-                                 suffix = `-${mode}.${ext}`;
-                                 return caché.newItem(buffer, mId, "", suffix);
-                                 break;
-                         }
+			case "prop": { 
+				suffix = `-${mode}.${ext}`;
+				return caché.newProp(buffer, mId, "", suffix); 
+                                break;
+                        }
+			case "video": { 
+                                suffix = `-${mode}.${ext}`;
+                                if (mode == "dontimport") {
+                                        console.log;
+                                } else {
+                                        return caché.newVideo(buffer, mId, "", suffix); 
+                                }
+                                break;
+			}
+			case "watermark": {
+				if (ext == "undefined") {
+					ed = "txt";
+				} else {
+					ed = ext;
+				}
+				suffix = `-${mode}.${ed}`;
+				return caché.newItem(buffer, mId, "", suffix);
+			}
+			default: {
+                                suffix = `-${mode}.${ext}`;
+                                return caché.newItem(buffer, mId, "", suffix);
+                                break;
+                        }
                 }
 	},
 	list(mId, mode) {
