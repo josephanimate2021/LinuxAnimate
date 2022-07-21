@@ -45,6 +45,16 @@
 				"Content-Type": "image/png"
 			}
 		},
+		"_WATERMARKS/(.*)(jpg|JPG|jpeg|JPEG)$": {
+			"headers": {
+				"Content-Type": "image/jpg"
+			}
+		},
+		"_WATERMARKS/(.*)": {
+			"headers": {
+				"Content-Type": "image/png"
+			}
+		},
 		"/html/([^?]+html).*": {
 			"contentReplace": true,
 			"regexLink": "/html/$1",
