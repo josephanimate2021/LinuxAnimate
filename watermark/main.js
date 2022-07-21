@@ -31,7 +31,7 @@ module.exports = {
 		fs.writeFileSync(path, wXml);
 	},
 	assign(mId, wId) {
-		var path = `${savedFolder}/${mId}.xml`;
+		var path = `${savedFolder}/${mId}.txt`;
 		var wXml;
 		switch (wId) {
 			case "0dhteqDBt5nY": {
