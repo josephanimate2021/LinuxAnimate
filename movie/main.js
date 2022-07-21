@@ -287,7 +287,7 @@ module.exports = {
 			if (!fs.existsSync(wtrTxt)) {
 				watermarks = "No Logo";
 			} else {
-				watermarks = fs.createReadStream(wtrTxt).pipe(res);
+				watermarks = fs.createReadStream(wtrTxt);
 			}
 
 			fs.closeSync(fd);
