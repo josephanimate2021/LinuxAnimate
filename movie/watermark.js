@@ -14,28 +14,7 @@ module.exports = function (req, res, url) {
 			if (!match) return;
 			var id = match[1];
 			var wId = match[2];
-			var wStyle;
-			switch (wId) {
-				case "0dhteqDBt5nY": {
-					wStyle = '<watermark style="twoLines"/>';
-					break;
-				}
-				default: {
-					wStyle = '<watermark style="visualplugin"/>';
-					break;
-				}
-			}
-			const mId = movie.save('watermark', id);
-			const xml = `${header}<watermarks><watermark id="${wId}" thumbnail="${process.env.WATERMARKS_FOLDER}/${wId}.png"/><preview>${wId}</preview></watermarks>`;
-			switch (url.pathname) {
-				case "/goapi/getUserWatermarks/": {
-					res.end(xml);
-					break;
-				}
-			}
-			if (url.pathname == `/goapi/assignwatermark/movie/${id}/${wId}`) {
-				res.end(mId);
-			}
+			movie.watermark(id, wId);
 			break;
 		}
 	}
