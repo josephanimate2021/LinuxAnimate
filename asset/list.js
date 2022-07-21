@@ -50,10 +50,17 @@ async function listAssets(data, makeZip) {
 			files = asset.list(mId, "prop");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
-					(v) =>
+				        (v) =>
 						`<prop subtype="0" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="0" height="0" asset_url="${process.env.PROPS_FOLDER}/${v.id}"/>`
 				)
 				.join("")}</ugc>`;
+			break;
+		}
+		case "watermark": {
+			files = asset.list(mId, "watermark");
+			xmlString = `${header}<watermarks>${files.map(v => 
+				`<watermark id="${v.id}" thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/><preview>${v.id}</preview>`
+								     ).join("")}</watermarks>`;
 			break;
 		}
 		default: {
@@ -112,8 +119,10 @@ module.exports = function (req, res, url) {
 		case "/goapi/getUserAssets/":
 			makeZip = true;
 			break;
-		case "/goapi/getUserAssetsXml/":
+		case "/goapi/getUserWatermarks/":
+		case "/goapi/getUserAssetsXml/": {
 			break;
+		}
 		default:
 			return;
 	}
