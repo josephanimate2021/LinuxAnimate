@@ -19,10 +19,6 @@ module.exports = {
 		}
 		fs.writeFileSync(path, wXml);
 	},
-	load(mId) {
-		var path = `${folder}/${mId}-watermark.xml`;
-		fs.readFileSync(path);
-	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
 			if (!movieId.startsWith("w-")) return;
