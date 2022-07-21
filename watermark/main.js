@@ -32,27 +32,27 @@ module.exports = {
 		this.assign(mId, wId);
 	},
 	assign(mId, wId) {
-		var path = `${savedFolder}/${mId}.txt`;
+		var path = `${savedFolder}/${mId}.xml`;
 		var wXml;
 		switch (wId) {
 			case "0dhteqDBt5nY": {
-				wXml = 'No Logo';
+				wXml = '<watermark>No Logo</watermark>';
 				break;
 			}
 			case "0vTLbQy9hG7k": {
-				wXml = 'GoAnimate Logo';
+				wXml = '<watermark>GoAnimate Logo<watermark>';
 				break;
 			}
 			case "174tbqdo0cs6": {
-				wXml = 'GoAnimate For Schools Logo';
+				wXml = '<watermark>GoAnimate For Schools Logo<watermark>';
 				break;
 			}
 			case "52ht3dd60csd": {
-				wXml = 'GoAnimate - Go Make Your Own Logo';
+				wXml = '<watermark>GoAnimate - Go Make Your Own Logo<watermark>';
 				break;
 			}
 			case "82tkgqdefbw6": {
-				wXml = 'GoAnimate Free Trial Logo';
+				wXml = '<watermark>GoAnimate Free Trial Logo<watermark>';
 				break;
 			}
 		}
