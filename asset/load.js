@@ -91,6 +91,19 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
+				case "/goapi/getMovieInfo/":  {
+					loadPost(req, res).then(async ([data]) => {
+						var midXml;
+						if (data.assetId || data.enc_asset_id == "0dhteqDBt5nY") {
+							midXml = '<watermark style="twoLines"/>';
+						} else {
+							midXml = '<watermark style="visualplugin"/>';
+						}
+						var xml = `<watermarks>${midXml}</watermakrs>`;
+						res.end(xml);
+					});
+					break;
+				}
 				default:
 					return;
 			}
