@@ -91,6 +91,10 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
+				case "/goapi/getMovieInfo/": {
+					res.end('<?xml encoding=\"UTF-8\"?><watermarks><watermark style=\"freeTrial\"/></watermarks>');
+					break;
+				}
 				default:
 					return;
 			}
