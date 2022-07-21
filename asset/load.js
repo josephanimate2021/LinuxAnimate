@@ -92,7 +92,7 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					res.end('<?xml encoding=\"UTF-8\"?><watermarks>/html/logo.png</watermarks>');
+					res.end('<?xml encoding=\"UTF-8\"?><watermarks></watermarks>');
 					break;
 				}
 				case "/goapi/getUserWatermarks/": {
