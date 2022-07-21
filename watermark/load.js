@@ -1,16 +1,16 @@
-var fs = require("fs");
-var path = require("path");
-var folder = path.join(__dirname, "../../", process.env.SAVED_FOLDER);
+const folder = process.env.SAVED_FOLDER;
+
 module.exports = function (req, res, url) {
-	var pth = url.pathname;
+	var pth = url.path;
 	if (req.method != "POST" || pth != "/goapi/getMovieInfo/") return;
 	var mId = url.query.movieId;
-	var filepath = path.join(folder, `${mId}.xml`);
-	var xml = fs.readFileSync(filepath);
-	res.setHeader("Content-Type", "text/xml");
+	var filepath = `${folder}/${mId}.xml`;
+	var xml;
 	if (!fs.existsSync(filepath)) {
-		res.end('<watermarks><watermark style="freeTrial"/></watermarks>');
+		xml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 	} else {
-		res.end(xml);
+		xml = fs.readFileSync(filepath);
 	}
+	res.setHeader("Content-Type", "text/xml");
+	res.end(xml);
 };
