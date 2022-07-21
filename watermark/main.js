@@ -16,9 +16,9 @@ module.exports = {
 			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
 			var wXml;
 			if (wId == "0dhteqDBt5nY") {
-				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="twoLines"/></watermarks>';
-			} else {
 				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="visualplugin"/></watermarks>';
+			} else {
+				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="twoLines"/></watermarks>';
 			}
 			fs.writeFileSync(path, wXml);
 			res(suffix);
