@@ -288,7 +288,7 @@ module.exports = {
 				watermarks = "No Logo";
 			} else {
 				const wBuffer = fs.readFileSync(wtrTxt);
-				const begWtr = wBuffer.indexOf("<watermark>") + 12;
+				const begWtr = wBuffer.indexOf("<watermark>") + 16;
 				const endWtr = wBuffer.indexOf("</watermark>");
 				watermarks = wBuffer.subarray(begWtr, endWtr).toString();
 			}
