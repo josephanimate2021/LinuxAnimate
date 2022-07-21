@@ -54,12 +54,6 @@ module.exports = function (req, res, url) {
 					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
 					return true;
 				}
-				case "/goapi/getMovieInfo/": {
-					res.setHeader("Content-Type", "text/xml");
-					
-					watermark.load(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
-					return true;
-				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
