@@ -57,12 +57,7 @@ module.exports = function (req, res, url) {
 				}
 				case "/goapi/getMovieInfo/": {
 					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
-					var buffer;
-					if (fs.existsSync(path)) {
-						buffer = fs.readFileSync(path);
-					} else {
-						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
-					}
+					var buffer = fs.readFileSync(path);
 					console.log(buffer);
 				        res.end(buffer);
 					return true;
