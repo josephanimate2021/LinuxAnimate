@@ -282,10 +282,16 @@ module.exports = {
 			const sec = ("" + ~~(duration % 60)).padStart(2, "0");
 			const durationStr = `${min}:${sec}`;
 			
-			const wBuffer = fs.readFileSync(`${process.env.SAVED_FOLDER}/${movieId}.xml`);
-			const begWtr = wBuffer.indexOf("<watermark>") + 12;
-			const endWtr = wBuffer.indexOf("</watermark>");
-			const watermarks = wBuffer.subarray(begWtr, endWtr).toString();
+			var watermarks;
+			const wtrTxt = `${process.env.SAVED_FOLDER}/${movieId}.xml`;
+			if (!fs.existsSync(wtrTxt)) {
+				watermarks = "No Logo";
+			} else {
+				const wBuffer = fs.readFileSync(wtrTxt);
+				const begWtr = wBuffer.indexOf("<watermark>") + 12;
+				const endWtr = wBuffer.indexOf("</watermark>");
+				watermarks = wBuffer.subarray(begWtr, endWtr).toString();
+			}
 
 			fs.closeSync(fd);
 			res({
