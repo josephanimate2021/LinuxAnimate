@@ -56,6 +56,13 @@ async function listAssets(data, makeZip) {
 				.join("")}</ugc>`;
 			break;
 		}
+		case "watermark": {
+			files = asset.list(mId, "watermark");
+			xmlString = `${header}<watermarks>${files.map(v => 
+				`<watermark id="${v.id}" thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/><preview>${v.id}</preview>`
+								     ).join("")}</watermarks>`;
+			break;
+		}
 		default: {
 			xmlString = `${header}<ugc more="0"></ugc>`;
 			break;
@@ -71,13 +78,6 @@ async function listAssets(data, makeZip) {
 						`<prop subtype="video" id="${v.id}" name="${v.name}" enable="Y" holdable="0" headable="0" placeable="1" facing="left" width="10" height="10" thumbnail_url=""/>`
 				)
 				.join("")}</ugc>`;
-			break;
-		}
-		case "watermark": {
-			files = asset.list(mId, "watermark");
-			xmlString = `${header}<watermarks>${files.map(v => 
-				`<watermark id="${v.id}" thumbnail="${process.env.WATERMARKS_FOLDER}/${v.id}"/><preview>${v.id}</preview>`
-								     ).join("")}</watermarks>`;
 			break;
 		}
 	}
