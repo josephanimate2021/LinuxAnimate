@@ -55,16 +55,11 @@ module.exports = function (req, res, url) {
 					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
 					return true;
 				}
-				case "/goapi/getMovieInfo/": {
-					res.setHeader("Content-Type", "text/xml");
-					
-					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.xml`;
-					var buffer;
-					if (fs.existsSync(path)) {
-						buffer = fs.readFileSync(path, 'utf8');
-					} else {
-						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
-					}
+				case "/goapi/getMovieInfo/": {	
+					const path = `${process.env.WATERMARKS_FOLDER}/${url.query.movieId}.txt`;
+					const wtrStyle = fs.readFileSync(path);
+					const buffer = `<watermarks><watermark style="${wtrStyle}"/></watermarks>`;
+					console.log(buffer);
 				        res.end(buffer);
 					return true;
 				}
