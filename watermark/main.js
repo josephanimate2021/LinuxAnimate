@@ -1,4 +1,5 @@
 const cachéFolder = process.env.CACHÉ_FOLDER;
+const folder = process.env.SAVED_FOLDER;
 const exFolder = process.env.EXAMPLE_FOLDER;
 const caché = require("../asset/caché");
 const fUtil = require("../misc/file");
@@ -9,20 +10,18 @@ const fs = require("fs");
 
 module.exports = {
 	save(mId, wId) {
-		return new Promise(async (res, rej) => {
-			const i = mId.indexOf('-');
-			const prefix = mId.substr(0, i);
-			const suffix = mId.substr(i + 1);
-			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
-			var wXml;
-			if (wId == "0dhteqDBt5nY") {
-				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
-			} else {
-				wXml = '<watermarks></watermarks>';
-			}
-			fs.writeFileSync(path, wXml);
-			res(suffix);
-		});
+		var path = `${folder}/${mId}-watermark.xml`;
+		var wXml;
+		if (wId == "0dhteqDBt5nY") {
+			wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
+		} else {
+			wXml = '<watermarks></watermarks>';
+		}
+		fs.writeFileSync(path, wXml);
+	},
+	load(mId) {
+		var path = `${folder}/${mId}-watermark.xml`;
+		fs.readFileSync(path);
 	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
