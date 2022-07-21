@@ -34,7 +34,7 @@ module.exports = {
 			var filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
 			if (!fs.existsSync(filePath)) res();
 
-			const buffer = fs.readFileSync(filePath);
+			fs.readFileSync(filePath);
 			res(numId);
 		});
 	},
