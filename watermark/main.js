@@ -2,8 +2,8 @@ const folder = process.env.WATERMARKS_FOLDER;
 const fs = require("fs");
 
 module.exports = {
-	save(wId) {
-		var path = `${folder}/watermarks.txt`;
+	save(mId, wId) {
+		var path = `${folder}/${mId}.xml`;
 		var wXml;
 		switch (wId) {
 			case "0dhteqDBt5nY": {
