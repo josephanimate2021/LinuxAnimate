@@ -19,9 +19,6 @@ module.exports = {
 		}
 		fs.writeFileSync(path, wXml);
 	},
-	load(mId) {
-		fs.readFileSync(`${folder}/${mId}.xml`);
-	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
 			const fn = `${folder}/${movieId}.xml`;
