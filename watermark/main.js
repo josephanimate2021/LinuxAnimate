@@ -30,10 +30,7 @@ module.exports = {
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
 			let numId = Number.parseInt(suffix);
-			if (isNaN(numId)) res();
 			var filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
-			if (!fs.existsSync(filePath)) res();
-
 			fs.readFileSync(filePath);
 			res(numId);
 		});
