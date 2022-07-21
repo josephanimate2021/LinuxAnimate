@@ -1,8 +1,7 @@
 const folder = process.env.SAVED_FOLDER;
 
 module.exports = function (req, res, url) {
-	var pth = url.path;
-	if (req.method != "POST" || pth != "/goapi/getMovieInfo/") return;
+	if (req.method != "POST" || url.path != "/goapi/getMovieInfo/") return;
 	var mId = url.query.movieId;
 	var filepath = `${folder}/${mId}.xml`;
 	var xml;
