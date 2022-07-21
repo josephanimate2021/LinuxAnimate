@@ -35,7 +35,7 @@ module.exports = {
 			if (!fs.existsSync(filePath)) res();
 
 			const buffer = fs.readFileSync(filePath);
-			if (!buffer || buffer.length == 0) res();
+			res(numId);
 		});
 	},
 	meta(movieId) {
