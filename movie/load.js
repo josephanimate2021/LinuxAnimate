@@ -65,7 +65,7 @@ module.exports = function (req, res, url) {
 					} else {
 						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
 					}
-					console.log(buffer);
+					console.log(fs.readFileSync(path));
 				        res.end(buffer);
 					return true;
 				}
