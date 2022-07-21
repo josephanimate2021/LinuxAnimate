@@ -282,23 +282,7 @@ module.exports = {
 			const sec = ("" + ~~(duration % 60)).padStart(2, "0");
 			const durationStr = `${min}:${sec}`;
 			
-			function watermarks(movieId) {
-				/* by default, this will read a text called No Logo. 
-				if a user chooses a watermark in the lvm, then it will then read the user's text.
-				*/
-				var readStream = fs.createReadStream(path.join(__dirname, '../', process.env.SAVED_FOLDER) + `/${movieId}.txt`, 'utf8');
-				let data = ''
-				readStream.on('data', function(chunk) {
-					data += chunk;
-				}).on('error', function(err) {
-					res('No Logo');
-				}).on('end', function() {
-					// read the xml on console log to tell the user what watermark they are using.
-					console.log(data);
-					res(data);
-				});
-				return true;
-			}
+			const watermarks = fs.readFileSync(`${process.env.SAVED_FOLDER}/${movieId}.txt`);
 
 			fs.closeSync(fd);
 			res({
@@ -306,7 +290,7 @@ module.exports = {
 				durationString: durationStr,
 				duration: duration,
 				title: title,
-				watermark: watermarks(movieId),
+				watermark: watermarks,
 				id: movieId,
 			});
 		});
