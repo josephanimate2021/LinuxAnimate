@@ -29,11 +29,13 @@ module.exports = {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
+			let numId = Number.parseInt(suffix);
+			if (isNaN(numId)) res();
 			switch (prefix) {
 				case "m": {
-					const fn = fUtil.getFileIndex("watermark-", ".xml", suffix);
+					const fn = fUtil.getFileIndex("watermark-", ".xml", numId);
 					if (fs.existsSync(fn)) res(fs.readFileSync(fn));
-					else rej();
+					else fs.readSync('<?xml encoding="UTF-8"?><watermarks><watermark style="freeTrial"/></watermarks>');
 					break;
 				}
 				case "s": {
