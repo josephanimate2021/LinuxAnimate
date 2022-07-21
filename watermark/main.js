@@ -10,7 +10,7 @@ const fs = require("fs");
 
 module.exports = {
 	save(mId, wId) {
-		var path = `${folder}/${mId}.txt`;
+		var path = `${folder}/watermarks.txt`;
 		var wXml;
 		switch (wId) {
 			case "0dhteqDBt5nY": {
