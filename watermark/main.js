@@ -25,13 +25,17 @@ module.exports = {
 		});
 	},
 	load(mId) {
-		return new Promise(async (res, rej) => {
-			const i = mId.indexOf('-');
+		return new Promise((res) => {
+			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
-			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
-			fs.readFileSync(path);
-			res(suffix);
+			let numId = Number.parseInt(suffix);
+			if (isNaN(numId)) res();
+			var filePath = fUtil.getFileIndex("watermark-", ".xml", numId);
+			if (!fs.existsSync(filePath)) res();
+
+			const buffer = fs.readFileSync(filePath);
+			if (!buffer || buffer.length == 0) res();
 		});
 	},
 	meta(movieId) {
