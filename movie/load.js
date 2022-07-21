@@ -57,7 +57,7 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					var mId = url.query.movieId;
+					var mId = req.query.movieId;
 					var readStream = fs.createReadStream(path.join(__dirname, "../", process.env.WATERMARKS_FOLDER) + `/${mId}.txt`, 'utf8');
 					let data = ''
 					readStream.on('data', function(chunk) {
