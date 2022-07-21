@@ -88,7 +88,7 @@ module.exports = function (req, res, url) {
 				case "/goapi/deleteUserTemplate/": {
 					loadPost(req, res).then(async ([data]) => {
 						movie.delete(data.starter_id);
-					}
+					});
 					return true;
 				}
 				default:
