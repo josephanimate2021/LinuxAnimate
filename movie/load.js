@@ -58,7 +58,14 @@ module.exports = function (req, res, url) {
 				case "/goapi/getMovieInfo/": {
 					res.setHeader("Content-Type", "text/xml");
 					
-					watermark.load(url.query.movieId);
+					const path = `${process.env.SAVED_FOLDER}/${url.query.movieId}.xml`;
+					var buffer;
+					if (fs.existsSync(path)) {
+						buffer = fs.readFileSync(path);
+					} else {
+						buffer = '<watermarks><watermark style="freeTrial"/></watermarks>';
+					}
+				        res.end(buffer);
 					return true;
 				}
 				case "/ajax/deleteStarter/":
