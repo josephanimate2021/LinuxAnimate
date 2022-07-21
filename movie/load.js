@@ -57,7 +57,7 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					// by default, this will read no watermarks at all. if a user chooses to have a watermark in the lvm, then it is settled.
+					// by default, this will read the goanimate free trial watermark. if a user chooses a watermark in the lvm, then it will then read the user's watermark.
 					var readStream = fs.createReadStream(path.join(__dirname, '../', process.env.WATERMARKS_FOLDER) + '/watermarks.txt', 'utf8');
 					let data = ''
 					readStream.on('data', function(chunk) {
