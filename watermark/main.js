@@ -42,8 +42,7 @@ module.exports = {
 					parse.packMovie(buffer, mId).then((pack) => {
 						caché.saveTable(mId, pack.caché);
 						res(pack.zipBuf);
-					});
-					break;
+					});;
 				} catch (e) {
 					res();
 				}
