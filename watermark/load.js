@@ -9,8 +9,8 @@ module.exports = function (req, res, url) {
 		res.setHeader("Content-Type", "text/html; charset=UTF-8");
 		const p = `${folder}/${data.movieId}.xml`;
 		if (!fs.existsSync(p)) {
-			// load the free trial watermark instead if a user watermark does not exist.
-			res.end('<watermarks><watermark style="freeTrial"/></watermarks>');
+			// don't load any watermarks if a user watermark does not exist.
+			res.end('<watermarks><watermark style="visualplugin"/></watermarks>');
 		} else {
 			fs.createReadStream(p).pipe(res);
 		}
