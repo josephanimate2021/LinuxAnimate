@@ -30,6 +30,8 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
+					}).catch(e => {
+						console.log(e);
 					});
 					break;
 				default:
@@ -42,6 +44,8 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
+					}).catch(e => {
+						console.log(e);
 					});
 					break;
 			}
