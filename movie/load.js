@@ -1,6 +1,7 @@
 const movie = require("./main");
 const watermark = require("../watermark/main");
 const base = Buffer.alloc(1, 0);
+const fs = require("fs");
 const http = require("http");
 
 /**
