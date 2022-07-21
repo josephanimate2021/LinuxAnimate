@@ -8,40 +8,35 @@ const util = require("../misc/util");
 const fs = require("fs");
 
 module.exports = {
-	save(starterZip, thumb) {
+	save(mId, wId) {
 		return new Promise(async (res, rej) => {
-			var zip = nodezip.unzip(starterZip);
-			var id = fUtil.getNextFileId("starter-", ".xml");
-			const thumbFile = fUtil.getFileIndex("starter-", ".png", id);
-			fs.writeFileSync(thumbFile, thumb);
-			var path = fUtil.getFileIndex("starter-", ".xml", id);
-			var writeStream = fs.createWriteStream(path);
-			var assetBuffers = caché.loadTable("s-" + id);
-			parse.unpackMovie(zip, thumb, assetBuffers).then((data) => {
-				writeStream.write(data, () => {
-					writeStream.close();
-					res("s-" + id);
-				});
-			});
+			const i = mId.indexOf('-');
+			const prefix = mId.substr(0, i);
+			const suffix = mId.substr(i + 1);
+			var path = fUtil.getFileIndex("watermark-", ".xml", suffix);
+			var wXml;
+			if (wId == "0dhteqDBt5nY") {
+				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="twoLines"/></watermarks>';
+			} else {
+				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="visualplugin"/></watermarks>';
+			}
+			fs.writeFileSync(wXml, path);
+			res(suffix);
 		});
 	},
 	meta(movieId) {
 		return new Promise(async (res, rej) => {
-			if (!movieId.startsWith("s-")) return;
+			if (!movieId.startsWith("w-")) return;
 			const n = Number.parseInt(movieId.substr(2));
-			const fn = fUtil.getFileIndex("starter-", ".xml", n);
+			const fn = fUtil.getFileIndex("watermark-", ".xml", n);
 
 			const fd = fs.openSync(fn, "r");
 			const buffer = Buffer.alloc(256);
 			fs.readSync(fd, buffer, 0, 256, 0);
-			const begTitle = buffer.indexOf("<title>") + 16;
-			const endTitle = buffer.indexOf("]]></title>");
-			const title = buffer.slice(begTitle, endTitle).toString().trim();
 
 			fs.closeSync(fd);
 			res({
 				date: fs.statSync(fn).mtime,
-				title: title,
 				id: movieId,
 			});
 		});
