@@ -2,6 +2,7 @@ const fUtil = require("../misc/file");
 const base = Buffer.alloc(1, 0);
 const fs = require("fs");
 const movie = require("../movie/main");
+const watermark = require("./main");
 
 /**
  * @param {http.IncomingMessage} req
@@ -51,7 +52,7 @@ module.exports = function (req, res, url) {
 			switch (path) {
 				case "/goapi/getMovieInfo/": {
 					res.setHeader("Content-Type", "text/xml");
-					const wId = fs.readFileSync(fUtil.getFileIndex("watermark-", ".xml", url.query.movieId));
+					const wId = watermark.load(url.query.movieId);
 					res.end(wId);
 					break;
 				}
