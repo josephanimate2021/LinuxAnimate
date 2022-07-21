@@ -57,16 +57,14 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/getMovieInfo/": {
-					loadPost(req, res).then(([data]) => {
-						var mId = data.movieId;
-						var readStream = fs.createReadStream(path.join(__dirname, "../", process.env.WATERMARKS_FOLDER) + `/${mId}.txt`, 'utf8');
-						let xml = ''
-						readStream.on('xml', function(chunk) {
-							xml += chunk;
-						}).on('end', function() {
-							console.log(xml);
-							res.end(xml);
-						});
+					// by default, this will read no watermarks at all. if a user chooses to have a watermark in the lvm, then it is settled.
+					var readStream = fs.createReadStream(path.join(__dirname, '../', process.env.WATERMARKS_FOLDER) + '/watermarks.txt', 'utf8');
+					let data = ''
+					readStream.on('data', function(chunk) {
+						data += chunk;
+					}).on('end', function() {
+						console.log(data);
+						res.end(data);
 					});
 					return true;
 				}
