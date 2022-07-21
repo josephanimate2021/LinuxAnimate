@@ -1,4 +1,3 @@
-const loadPost = require('../request/post_body');
 const header = process.env.XML_HEADER;
 const fUtil = require('../fileUtil');
 const nodezip = require('node-zip');
@@ -13,7 +12,7 @@ module.exports = function (req, res, url) {
 		case '/goapi/getUserWatermarks/': break;
 		default: return;
 	}
-	var xmlString = `<watermarks><watermark id="174tbqdo0cs6" thumbnail="${process.env.WATERMARKS_FOLDER}/Go4Schools.png"/><preview>174tbqdo0cs6</preview><watermark id="52ht3dd60csd" thumbnail="${process.env.WATERMARKS_FOLDER}/GoMakeYourOwn.png"/><preview>52ht3dd60csd</preview></watermarks>`;
+	var xmlString = `<?xml encoding="UTF-8"?><watermarks><watermark id="174tbqdo0cs6" thumbnail="${process.env.WATERMARKS_FOLDER}/Go4Schools.png"/><preview>174tbqdo0cs6</preview><watermark id="52ht3dd60csd" thumbnail="${process.env.WATERMARKS_FOLDER}/GoMakeYourOwn.png"/><preview>52ht3dd60csd</preview></watermarks>`;
 	res.setHeader('Content-Type', 'text/xml');
 	res.end(xmlString);
 	return true;
