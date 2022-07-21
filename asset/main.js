@@ -28,15 +28,6 @@ module.exports = {
                                 }
                                 break;
 			}
-			case "watermark": {
-				if (ext == "undefined") {
-					ed = "txt";
-				} else {
-					ed = ext;
-				}
-				suffix = `-${mode}.${ed}`;
-				return caché.newItem(buffer, mId, "", suffix);
-			}
 			default: {
                                 suffix = `-${mode}.${ext}`;
                                 return caché.newItem(buffer, mId, "", suffix);
