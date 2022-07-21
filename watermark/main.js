@@ -14,6 +14,14 @@ module.exports = {
 				wXml = '<watermarks></watermarks>';
 				break;
 			}
+			case "174tbqdo0cs6": {
+				wXml = '<watermarks><watermark style="g4s"/></watermarks>';
+				break;
+			}
+			case "52ht3dd60csd": {
+				wXml = '<watermarks><watermark style="twoLines"/></watermarks>';
+				break;
+			}
 			default: {
 				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 				break;
