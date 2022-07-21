@@ -63,7 +63,6 @@ module.exports = function (req, res, url) {
 					readStream.on('data', function(chunk) {
 						data += chunk;
 					}).on('end', function() {
-						console.log(data);
 						res.end(data);
 					});
 					return true;
