@@ -20,7 +20,7 @@ module.exports = {
 			} else {
 				wXml = '<?xml encoding="UTF-8"?><watermarks><watermark style="visualplugin"/></watermarks>';
 			}
-			fs.writeFileSync(wXml, path);
+			fs.writeFileSync(path, wXml);
 			res(suffix);
 		});
 	},
