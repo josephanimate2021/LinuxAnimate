@@ -274,12 +274,27 @@ module.exports = {
 			const begTitle = buffer.indexOf("<title>") + 16;
 			const endTitle = buffer.indexOf("]]></title>");
 			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
-			var title;
+			
+			const descBuffer = fs.readFileSync(fn);
+			const begDesc = descBuffer.indexOf("<desc>");
+			const endDesc = descBuffer.indexOf("</desc>");
+			const desc = buffer.slice(begDesc, endDesc).toString();
+			
+			const begTag = descBuffer.indexOf("<tag>");
+			const endTag = descBuffer.indexOf("</tag>");
+			const subtag = buffer.slice(begTag, endTag).toString();
+			var title, tag;
 			
 			if (!subtitle) {
 				title = "Untitled Video";
 			} else {
 				title = subtitle;
+			}
+			
+			if (!subtag) {
+				tag = "none";
+			} else {
+				tag = subtag;
 			}
 
 			const begDuration = buffer.indexOf('duration="') + 10;
@@ -306,6 +321,8 @@ module.exports = {
 				durationString: durationStr,
 				duration: duration,
 				title: title,
+				desc: desc,
+				tag: tag,
 				watermark: watermarks,
 				id: movieId,
 			});
