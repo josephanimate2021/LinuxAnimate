@@ -12,6 +12,6 @@ module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
 	res.setHeader("Content-Type", "application/zip");
 	const path = folder + "themelist.xml";
-	fUtil.makeZip(path, "themelist.xml");
+	fUtil.makeZip(path, "themelist.xml").then((b) => res.end(b));
 	return true;
 };
