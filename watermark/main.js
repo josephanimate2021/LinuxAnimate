@@ -10,7 +10,7 @@ module.exports = {
 		var jpg = `${wId}-wtr.jpg`;
 		var png = `${wId}-wtr.png`;
 		var swf = `${wId}-wtr.swf`;
-		var id = jpg || png || swf;
+		var id = fs.readFileSync(jpg || png || swf);
 		// save watermarks
 		switch (wId) {
 			case "0dhteqDBt5nY": {
