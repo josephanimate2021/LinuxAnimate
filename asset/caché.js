@@ -32,7 +32,7 @@ module.exports = {
 		var id;
 		do id = `${pre}${("" + Math.random()).replace(".", "")}${suf}`;
 		while (table.includes(id));
-		return id;
+		return id.slice(0, -5);
 	},
 	validAssetId(aId) {
 		switch (aId) {
