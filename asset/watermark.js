@@ -16,7 +16,8 @@ module.exports = function (req, res, url) {
 			res.setHeader('Content-Type', 'text/xml');
 			return xmlString;
 		}
-		listAssets(data).then((buff) => {
+		var list = listAssets(data);
+		list().then((buff) => {
 			const type = makeZip ? "application/zip" : "text/xml";
 			res.setHeader("Content-Type", type);
 			if (makeZip) res.write(base);
