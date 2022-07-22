@@ -175,24 +175,16 @@ module.exports = function (req, res, url) {
 			};
 			break;
 		}
-		case "/goapi/getAssetTags": {
-			api = true; 
-			break;
-		}
 
 		default:
 			return;
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
-	if (api) {
-		res.end('{"status":"ok","data":[]}');
-	} else {
-		res.end(`<script>document.title='${title}',flashvars=${
-			// json flashvars
-			JSON.stringify(params.flashvars)}</script><body style="margin:0px">${
-			// object flashvars
-			toObjectString(attrs, params)}</body>${stuff.pages[url.pathname] || ""}`);
-	}
+	res.end(`<script>document.title='${title}',flashvars=${
+		// json flashvars
+		JSON.stringify(params.flashvars)}</script><body style="margin:0px">${
+		// object flashvars
+		toObjectString(attrs, params)}</body>${stuff.pages[url.pathname] || ""}`);
 	return true;
 };
