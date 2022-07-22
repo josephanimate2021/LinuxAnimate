@@ -1,4 +1,4 @@
-// initizination
+// initialization
 function server() {
   require("./server");
 }
