@@ -88,15 +88,17 @@ module.exports = {
 	 * @param {string} aId
 	 * @param {Buffer} buffer
 	 */
-	saveWatermark(mId, aId, buffer) {
+	saveWatermark(mId, aId, buffer, ext) {
 		if (!this.validAssetId(aId)) return;
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		const path = `${process.env.WATERMARKS_FOLDER}/${aId}`;
+		const newPath = `${process.env.WATERMARKS_FOLDER}/${aId.slice(0, -15)}-wtr.${ext}`;
+		fs.renameSync(path, newPath)
 
 		if (!stored.includes(aId)) stored.push(aId);
-		if (fs.existsSync(path)) size -= fs.statSync(path).size;
-		fs.writeFileSync(path, buffer);
+		if (fs.existsSync(newPath)) size -= fs.statSync(newPath).size;
+		fs.writeFileSync(newPath, buffer);
 		size += buffer.size;
 		return buffer;
 	},
@@ -174,11 +176,11 @@ module.exports = {
 	 * @param {string} prefix
 	 * @param {string} suffix
 	 */
-	newWatermark(buffer, mId, prefix = "", suffix = "") {
+	newWatermark(buffer, mId, prefix = "", suffix = "", ext) {
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		var aId = this.generateId(prefix, suffix, stored);
-		this.saveWatermark(mId, aId, buffer);
+		this.saveWatermark(mId, aId, buffer, ext);
 		this.save(mId, aId, buffer);
 		return aId;
 	},
