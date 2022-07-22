@@ -9,6 +9,7 @@ module.exports = {
 		var wXml; 
 		// save watermarks
 		switch (wId) {
+			// premade watermarks
 			case "0dhteqDBt5nY": {
 				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
 				break;
@@ -29,8 +30,9 @@ module.exports = {
 				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 				break;
 			}
+			// custom watermarks
 			default: {
-				wXml = `<watermarks><watermark style="custom"/>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
 				break;
 			}
 		}
