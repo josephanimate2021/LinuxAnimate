@@ -131,7 +131,7 @@ module.exports = {
 		this.save(mId, aId, buffer);
 		return aId;
 	},
-    /**
+	/**
 	 *
 	 * @summary Generates a new id for the props so that the fs module can read it later.
 	 * @param {Buffer} buffer
@@ -144,6 +144,22 @@ module.exports = {
 		var stored = localCaché[mId];
 		var aId = this.generateId(prefix, suffix, stored);
 		this.saveProp(mId, aId, buffer);
+		this.save(mId, aId, buffer);
+		return aId;
+	},
+	/**
+	 *
+	 * @summary Generates a new id for the props so that the fs module can read it later.
+	 * @param {Buffer} buffer
+	 * @param {string} mId
+	 * @param {string} prefix
+	 * @param {string} suffix
+	 */
+	newWatermark(buffer, mId, prefix = "", suffix = "") {
+		localCaché[mId] = localCaché[mId] || [];
+		var stored = localCaché[mId];
+		var aId = this.generateId(prefix, suffix, stored);
+		this.saveWatermark(mId, aId, buffer);
 		this.save(mId, aId, buffer);
 		return aId;
 	},
