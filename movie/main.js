@@ -273,7 +273,14 @@ module.exports = {
 			fs.readSync(fd, buffer, 0, 256, 0);
 			const begTitle = buffer.indexOf("<title>") + 16;
 			const endTitle = buffer.indexOf("]]></title>");
-			const title = buffer.slice(begTitle, endTitle).toString().trim();
+			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
+			var title;
+			
+			if (!subtitle) {
+				title = "Untitled Video";
+			} else {
+				title = subtitle;
+			}
 
 			const begDuration = buffer.indexOf('duration="') + 10;
 			const endDuration = buffer.indexOf('"', begDuration);
