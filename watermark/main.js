@@ -30,7 +30,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
+				wXml = `<watermarks><watermark style="custom"/>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
 				break;
 			}
 		}
