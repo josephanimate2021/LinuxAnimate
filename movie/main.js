@@ -275,11 +275,11 @@ module.exports = {
 			const endTitle = buffer.indexOf("]]></title>");
 			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
 			
-			const begDesc = buffer.indexOf("<desc>");
+			const begDesc = buffer.indexOf("<desc>") + 16;
 			const endDesc = buffer.indexOf("]]></desc>");
 			const desc = buffer.slice(begDesc, endDesc).toString().trim();
 			
-			const begTag = buffer.indexOf("<tag>");
+			const begTag = buffer.indexOf("<tag>") + 16;
 			const endTag = buffer.indexOf("]]></tag>");
 			const subtag = buffer.slice(begTag, endTag).toString().trim();
 			var title, tag;
