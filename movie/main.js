@@ -271,7 +271,7 @@ module.exports = {
 			const buffer = fs.readFileSync(fn);
 			const begTitle = buffer.indexOf("<title><![CDATA[");
 			const endTitle = buffer.indexOf("]]></title>");
-			const subtitle = buffer.slice(begTitle, endTitle).toString();
+			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
 			
 			const begDesc = buffer.indexOf("<desc><![CDATA[");
 			const endDesc = buffer.indexOf("]]></desc>");
