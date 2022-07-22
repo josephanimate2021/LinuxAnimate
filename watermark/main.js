@@ -27,6 +27,10 @@ module.exports = {
 				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 				break;
 			}
+			default: {
+				wXml = `<watermarks>${wId}</watermarks>`;
+				break;
+			}
 		}
 		fs.writeFileSync(path, wXml);
 		this.assign(mId, wId);
