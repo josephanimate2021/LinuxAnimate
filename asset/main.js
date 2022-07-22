@@ -21,7 +21,7 @@ module.exports = {
                         }
 			case "wtr": { 
 				suffix = `-${mode}.${ext}`;
-				return caché.newWatermark(buffer, mId, "", suffix); 
+				return caché.newWatermark(buffer, mId, "", suffix, ext); 
                                 break;
                         }
 			case "video": { 
