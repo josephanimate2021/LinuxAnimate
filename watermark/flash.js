@@ -5,7 +5,7 @@ module.exports = function (req, res) {
 	
 	var ext = match[1];
 	if (ext == "swf") {
-		res.setHeader("Content-Type", "application/zip");
+		res.setHeader("Content-Type", "application/x-shockwave-flash");
 		res.statusCode = 302;
 		res.end();
 	}
