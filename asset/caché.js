@@ -196,7 +196,11 @@ module.exports = {
 		const path = `${cachéFolder}/${mId}.${aId}`;
 		stored.time = new Date();
 		if (stored.includes(aId)) {
-			return fs.readFileSync(path);
+			if (!fs.existsSync(path)) {
+				delete localCaché[mId];
+			} else {
+				return fs.readFileSync(path);
+			}
 		}
 	},
 	/**
