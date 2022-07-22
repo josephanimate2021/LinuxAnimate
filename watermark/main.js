@@ -31,7 +31,7 @@ module.exports = {
 				break;
 			}
 			case "03wpxhco8js6": {
-				wXml = '<watermarks><watermark style="fullscreen"/></watermarks>';
+				wXml = '<watermarks><watermark>/' + folder + '/fullscreen.swf</watermark></watermarks>';
 				break;
 			}
 			// custom watermarks
