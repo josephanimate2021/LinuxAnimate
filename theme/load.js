@@ -6,9 +6,9 @@ const http = require("http");
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getTheme/") return; 
 	loadPost(req, res).then(([data]) => {
-		res.setHeader("Content-Type", "text/html; charset=UTF-8");
+		res.setHeader('Content-Type', 'application/zip');
 		const p = `${folder}/${data.themeId}.xml`;
-		fs.createReadStream(p).pipe(res);
+		fUtil.makeZip(p, 'theme.xml').then(b => res.end(b));
 	});
 	return true;
 };
