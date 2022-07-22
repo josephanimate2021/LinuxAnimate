@@ -19,7 +19,7 @@ module.exports = {
 				return caché.newProp(buffer, mId, "", suffix); 
                                 break;
                         }
-			case "watermark": { 
+			case "wtr": { 
 				suffix = `-${mode}.${ext}`;
 				return caché.newWatermark(buffer, mId, "", suffix); 
                                 break;
