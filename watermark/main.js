@@ -59,6 +59,10 @@ module.exports = {
 				wXml = '<watermark>GoAnimate Free Trial Logo<watermark>';
 				break;
 			}
+			default: {
+				wXml = '<watermark>Custom Logo<watermark>';
+				break;
+			}
 		}
 		fs.writeFileSync(path, wXml);
 	},
