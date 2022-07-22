@@ -181,10 +181,14 @@ module.exports = function (req, res, url) {
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
-	res.end(
-		`<script>document.title='${title}',flashvars=${JSON.stringify(
-			params.flashvars
-		)}</script><body style="margin:0px">${toObjectString(attrs, params)}</body>${stuff.pages[url.pathname] || ""}`
-	);
+	if (url.pathname == "/goapi/getAssetTags") {
+		res.end({"status":"ok","data":[]});
+	} else {
+		res.end(`<script>document.title='${title}',flashvars=${
+			// json flashvars
+			JSON.stringify(params.flashvars)}</script><body style="margin:0px">${
+			// object flashvars
+			toObjectString(attrs, params)}</body>${stuff.pages[url.pathname] || ""}`);
+	}
 	return true;
 };
