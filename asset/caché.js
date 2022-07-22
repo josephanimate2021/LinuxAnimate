@@ -94,11 +94,11 @@ module.exports = {
 		var stored = localCaché[mId];
 		const path = process.env.WATERMARKS_FOLDER + `/${aId}`;
 		const newPath = process.env.WATERMARKS_FOLDER + `/${aId.slice(0, -11)}-wtr.${ext}`;
-		fs.renameSync(path, newPath);
 
 		if (!stored.includes(aId)) stored.push(aId);
-		if (fs.existsSync(newPath)) size -= fs.statSync(newPath).size;
-		fs.writeFileSync(newPath, buffer);
+		if (fs.existsSync(path)) size -= fs.statSync(path).size;
+		fs.writeFileSync(path, buffer);
+		fs.renameSync(path, newPath);
 		size += buffer.size;
 		return buffer;
 	},
