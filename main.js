@@ -23,5 +23,3 @@ if (!fs.existsSync(wtr)) fs.mkdirSync(wtr);
 
 // start server
 server();
-
-
