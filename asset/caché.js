@@ -92,8 +92,8 @@ module.exports = {
 		if (!this.validAssetId(aId)) return;
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
-		const path = process.env.WATERMARKS_FOLDER + aId;
-		const newPath = process.env.WATERMARKS_FOLDER + `${aId.slice(0, -11)}-wtr.${ext}`;
+		const path = process.env.WATERMARKS_FOLDER + `/${aId}`;
+		const newPath = process.env.WATERMARKS_FOLDER + `/${aId.slice(0, -11)}-wtr.${ext}`;
 		fs.renameSync(path, newPath);
 
 		if (!stored.includes(aId)) stored.push(aId);
