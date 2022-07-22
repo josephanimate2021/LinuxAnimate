@@ -1,36 +1,16 @@
 const folder = process.env.WATERMARKS_FOLDER;
 const savedFolder = process.env.SAVED_FOLDER;
-const path = require("path");
 const fs = require("fs");
-const customWatermarks = `/${folder}`;
 
 module.exports = {
 	save(mId, wId, wTitle) {
 		// vars
 		var path = `${folder}/${mId}.xml`;
-		var wXml, id; 
+		var wXml; 
 		var jpg = `${wId}-wtr.jpg`;
 		var png = `${wId}-wtr.png`;
 		var swf = `${wId}-wtr.swf`;
-		// initization (custom watermarks)
-		if (!fs.existsSync(jpg) || !fs.existsSync(png)) {
-		    id = swf;
-		}
-		if (!fs.existsSync(png) || !fs.existsSync(swf)) {
-		    id = jpg;
-		}
-		if (!fs.existsSync(swf) || !fs.existsSync(jpg)) {
-		    id = png;
-		}
-		if (!fs.existsSync(jpg) && !fs.existsSync(png)) {
-		    id = swf;
-		}
-		if (!fs.existsSync(png) && !fs.existsSync(swf)) {
-		    id = jpg;
-		}
-		if (!fs.existsSync(swf) && !fs.existsSync(jpg)) {
-		    id = png;
-		}
+		var id = jpg || png || swf;
 		// save watermarks
 		switch (wId) {
 			case "0dhteqDBt5nY": {
@@ -54,7 +34,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>${customWatermarks}/${id}</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>/${folder}/${id}</watermark></watermarks>`;
 				break;
 			}
 		}
