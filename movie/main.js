@@ -282,11 +282,11 @@ module.exports = {
 			const descBuffer = fs.readFileSync(path);
 			const begDesc = descBuffer.indexOf("<desc><![CDATA[");
 			const endDesc = descBuffer.indexOf("]]></desc>");
-			const desc = buffer.slice(begDesc, endDesc).toString();
+			const desc = descBuffer.slice(begDesc, endDesc).toString();
 			
 			const begTag = descBuffer.indexOf("<tag><![CDATA[");
 			const endTag = descBuffer.indexOf("]]></tag>");
-			const subtag = buffer.slice(begTag, endTag).toString();
+			const subtag = descBuffer.slice(begTag, endTag).toString();
 			var title, tag;
 			
 			if (!subtitle) {
