@@ -1,14 +1,18 @@
 const folder = process.env.WATERMARKS_FOLDER;
 const savedFolder = process.env.SAVED_FOLDER;
+const path = require("path");
+const customWatermarks = path.join(__dirname, "../../", folder);
 const fs = require("fs");
 
 module.exports = {
 	save(mId, wId, wTitle) {
+		// vars
 		var path = `${folder}/${mId}.xml`;
 		var wXml, id; 
 		var jpg = `${wId}-wtr.jpg`;
 		var png = `${wId}-wtr.png`;
 		var swf = `${wId}-wtr.swf`;
+		// initization (custom watermarks)
 		if (!fs.existsSync(jpg)) {
 		    id = swf;
 		}
@@ -18,6 +22,7 @@ module.exports = {
 		if (!fs.existsSync(swf)) {
 		    id = png;
 		}
+		// save watermarks
 		switch (wId) {
 			case "0dhteqDBt5nY": {
 				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
@@ -40,7 +45,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>${folder}/${id}</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>${customWatermarks}/${id}</watermark></watermarks>`;
 				break;
 			}
 		}
