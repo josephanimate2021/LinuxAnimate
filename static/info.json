@@ -50,9 +50,9 @@
 				"Content-Type": "image/jpg"
 			}
 		},
-		"_WATERMARKS/(.*)": {
+		"_WATERMARKS/(.*)(png|PNG)$": {
 			"headers": {
-				"Content-Type": "image/jpg"
+				"Content-Type": "image/png"
 			}
 		},
 		"/html/([^?]+html).*": {
