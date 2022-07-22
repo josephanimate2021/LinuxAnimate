@@ -275,13 +275,13 @@ module.exports = {
 			const endTitle = buffer.indexOf("]]></title>");
 			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
 			
-			const begDesc = buffer.indexOf("<desc><![CDATA[") + 0;
+			const begDesc = buffer.indexOf("<desc>") + 15;
 			const endDesc = buffer.indexOf("]]></desc>");
-			const desc = buffer.slice(begDesc, endDesc).toString().trim();
+			const desc = buffer.slice(begDesc, endDesc).toString();
 			
-			const begTag = buffer.indexOf("<tag><![CDATA[") + 0;
+			const begTag = buffer.indexOf("<tag>") + 15;
 			const endTag = buffer.indexOf("]]></tag>");
-			const subtag = buffer.slice(begTag, endTag).toString().trim();
+			const subtag = buffer.slice(begTag, endTag).toString();
 			var title, tag;
 			
 			if (!subtitle) {
