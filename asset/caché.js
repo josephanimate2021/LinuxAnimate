@@ -30,7 +30,7 @@ module.exports = {
 	 */
 	generateId(pre = "", suf = "", table = []) {
 		var id;
-		do id = `${pre}${("" + Math.random()).replace(".", "").slice(0, -5)}${suf}`;
+		do id = `${pre}${("" + Math.random()).replace(".", "")}${suf}`;
 		while (table.includes(id));
 		return id;
 	},
