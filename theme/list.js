@@ -3,9 +3,10 @@ const fUtil = require("../misc/file");
 const folder = process.env.THEME_FOLDER + "/";
 
 async function makeList(req, res, url) {
-	res.setHeader("Content-Type", "application/zip");
 	const path = folder + "themelist.xml";
-	fUtil.makeZip(path, "themelist.xml").then((b) => res.end(b));
+	const zip = await fUtil.makeZip(path, "themelist.xml");
+	res.setHeader("Content-Type", "application/zip");
+	res.end(zip);
 	return true;
 }
 	
@@ -18,5 +19,5 @@ async function makeList(req, res, url) {
  */
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
-	await makeList(req, res, url);
+	makeList(req, res, url);
 };
