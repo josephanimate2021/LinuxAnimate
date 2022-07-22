@@ -6,23 +6,17 @@ module.exports = {
 	save(mId, wId, wTitle) {
 		var path = `${folder}/${mId}.xml`;
 		var wXml, id; 
-		var begId = `${wId}-wtr`;
-		switch (!fs.existsSync(begId)) {
-			case ".swf":
-			case ".jpg": {
-				id = `${wId}-wtr.png`;
-				break;
-			}
-			case ".png":
-			case ".jpg": {
-				id = `${wId}-wtr.swf`;
-				break;
-			}
-			case ".swf":
-			case ".png": {
-				id = `${wId}-wtr.jpg`;
-				break;
-			}
+		var jpg = `${wId}-wtr.jpg`;
+		var png = `${wId}-wtr.png`;
+		var swf = `${wId}-wtr.swf`;
+		if (!fs.existsSync(jpg)) {
+		    id = swf;
+		}
+		if (!fs.existsSync(png)) {
+		    id = jpg;
+		}
+		if (!fs.existsSync(swf)) {
+		    id = png;
 		}
 		switch (wId) {
 			case "0dhteqDBt5nY": {
