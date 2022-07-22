@@ -5,7 +5,16 @@ const fs = require("fs");
 module.exports = {
 	save(mId, wId, wTitle) {
 		var path = `${folder}/${mId}.xml`;
-		var wXml;
+		var wXml, id; 
+		if (!fs.existsSync(`${wId}-wtr.swf`) || !fs.existsSync(`${wId}-wtr.jpg`)) {
+			id = `${wId}-wtr.png`;
+		}
+		if (!fs.existsSync(`${wId}-wtr.png`) || !fs.existsSync(`${wId}-wtr.swf`)) {
+			id = `${wId}-wtr.jpg`;
+		}
+		if (!fs.existsSync(`${wId}-wtr.png`) || !fs.existsSync(`${wId}-wtr.jpg`)) {
+			id = `${wId}-wtr.swf`;
+		}
 		switch (wId) {
 			case "0dhteqDBt5nY": {
 				wXml = '<watermarks><watermark style="visualplugin"/></watermarks>';
@@ -28,7 +37,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>${wId}</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>${id}</watermark></watermarks>`;
 				break;
 			}
 		}
