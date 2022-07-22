@@ -62,7 +62,7 @@ module.exports = {
 		size += buffer.size;
 		return buffer;
 	},
-    /**
+	/**
 	 *
 	 * @summary Saves a buffer in the props folder with a given ID.
 	 * @param {string} mId
@@ -74,6 +74,25 @@ module.exports = {
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		const path = `${propsFolder}/${aId}`;
+
+		if (!stored.includes(aId)) stored.push(aId);
+		if (fs.existsSync(path)) size -= fs.statSync(path).size;
+		fs.writeFileSync(path, buffer);
+		size += buffer.size;
+		return buffer;
+	},
+	/**
+	 *
+	 * @summary Saves a buffer in the props folder with a given ID.
+	 * @param {string} mId
+	 * @param {string} aId
+	 * @param {Buffer} buffer
+	 */
+	saveWatermark(mId, aId, buffer) {
+		if (!this.validAssetId(aId)) return;
+		localCaché[mId] = localCaché[mId] || [];
+		var stored = localCaché[mId];
+		const path = `${process.env.WATERMARKS_FOLDER}/${aId}`;
 
 		if (!stored.includes(aId)) stored.push(aId);
 		if (fs.existsSync(path)) size -= fs.statSync(path).size;
