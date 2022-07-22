@@ -6,7 +6,7 @@ module.exports = function (req, res, url) {
 	if (req.method != 'POST') return;
 
 	var makeZip = false; switch (url.path) {
-		case '/goapi/getUserWatermarks/': makeZip true; break;
+		case '/goapi/getUserWatermarks/': makeZip = true; break;
 		default: return;
 	}
 	loadPost(req, res).then(async data => {
