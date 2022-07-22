@@ -1,4 +1,5 @@
 const loadPost = require("../misc/post_body");
+const fUtil = require("../misc/file");
 const folder = process.env.THEME_FOLDER;
 const fs = require("fs");
 const http = require("http");
