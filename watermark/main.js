@@ -13,13 +13,13 @@ module.exports = {
 		var png = `${wId}-wtr.png`;
 		var swf = `${wId}-wtr.swf`;
 		// initization (custom watermarks)
-		if (!fs.existsSync(jpg)) {
+		if (!fs.existsSync(jpg) || !fs.existsSync(png)) {
 		    id = swf;
 		}
-		if (!fs.existsSync(png)) {
+		if (!fs.existsSync(png) || !fs.existsSync(swf)) {
 		    id = jpg;
 		}
-		if (!fs.existsSync(swf)) {
+		if (!fs.existsSync(swf) || !fs.existsSync(jpg)) {
 		    id = png;
 		}
 		// save watermarks
