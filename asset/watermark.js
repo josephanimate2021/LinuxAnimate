@@ -9,7 +9,8 @@ async function listAssets(data) {
 	<?xml encoding="UTF-8"?><watermarks><watermark id="174tbqdo0cs6" thumbnail="${
 	process.env.WATERMARKS_FOLDER}/Go4Schools.png"/><preview>174tbqdo0cs6</preview><watermark id="82tkgqdefbw6" thumbnail="${
 	process.env.WATERMARKS_FOLDER}/freeTrial.png"/><preview>82tkgqdefbw6</preview><watermark id="52ht3dd60csd" thumbnail="${
-	process.env.WATERMARKS_FOLDER}/GoMakeYourOwn.png"/><preview>52ht3dd60csd</preview><watermark id="03wpxhco8js6" thumbnail="https://raw.githubusercontent.com/josephanimate2021/LinuxAnimate/goproduction/_WATERMARKS/fullscreen.png"/><preview>03wpxhco8js6</preview>${
+	process.env.WATERMARKS_FOLDER}/GoMakeYourOwn.png"/><preview>52ht3dd60csd</preview><watermark id="03wpxhco8js6" thumbnail="${
+	process.env.WATERMARKS_FOLDER}/Go!Animate.png"/><preview>03wpxhco8js6</preview>${
 	// custom watermarks
 	files.map(v => `<watermark id="${v.name}" thumbnail="${
 		  process.env.WATERMARKS_FOLDER}/${v.id}"/><preview>${v.id}</preview>`).join("")}</watermarks>`;
