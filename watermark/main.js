@@ -22,6 +22,15 @@ module.exports = {
 		if (!fs.existsSync(swf) || !fs.existsSync(jpg)) {
 		    id = png;
 		}
+		if (!fs.existsSync(jpg) && !fs.existsSync(png)) {
+		    id = swf;
+		}
+		if (!fs.existsSync(png) && !fs.existsSync(swf)) {
+		    id = jpg;
+		}
+		if (!fs.existsSync(swf) && !fs.existsSync(jpg)) {
+		    id = png;
+		}
 		// save watermarks
 		switch (wId) {
 			case "0dhteqDBt5nY": {
