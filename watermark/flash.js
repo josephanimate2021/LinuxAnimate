@@ -1,4 +1,4 @@
-module.exports = function (req, res, url) {
+module.exports = function (req, res) {
 	if (req.method != "GET") return;
 	const match = req.url.match(/\/_WATERMARKS\/(?:\.swf)?$/);
 	if (!match) return;
