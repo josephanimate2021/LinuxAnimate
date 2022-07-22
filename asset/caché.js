@@ -93,8 +93,8 @@ module.exports = {
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
 		const path = `${process.env.WATERMARKS_FOLDER}/${aId}`;
-		const newPath = `${process.env.WATERMARKS_FOLDER}/${aId.slice(0, -15)}-wtr.${ext}`;
-		fs.renameSync(path, newPath)
+		const newPath = `${process.env.WATERMARKS_FOLDER}/${aId.slice(0, -11)}-wtr.${ext}`;
+		fs.renameSync(path, newPath);
 
 		if (!stored.includes(aId)) stored.push(aId);
 		if (fs.existsSync(newPath)) size -= fs.statSync(newPath).size;
