@@ -13,7 +13,7 @@ module.exports = function (req, res, url) {
 		const p = `${folder}/${data.themeId}.xml`;
 		if (data.initcb) {
 			// search themes
-			fs.createReadStream(p).pipe(res);
+			fs.readFileSync(p);
 		} else {
 			// load lvm
 			fUtil.makeZip(p, 'theme.xml').then(b => res.end(b));
