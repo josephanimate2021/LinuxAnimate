@@ -55,7 +55,7 @@
 				"Content-Type": "image/png"
 			}
 		},
-		"_WATERMARKS/(.*)": {
+		"_WATERMARKS/(.*)(swf)": {
 			"headers": {
 				"Content-Type": "application/x-shockwave-flash"
 			}
