@@ -13,4 +13,3 @@ module.exports = function (req, res, url) {
 	fs.readFileSync(process.env.WATERMARKS_FOLDER + path.substr(path.lastIndexOf("/"))).then((v) => res.end(v));
 	return true;
 };
-Footer
