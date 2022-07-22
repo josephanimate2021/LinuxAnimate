@@ -7,10 +7,6 @@ module.exports = {
 		// vars
 		var path = `${folder}/${mId}.xml`;
 		var wXml; 
-		var jpg = `${wId}-wtr.jpg`;
-		var png = `${wId}-wtr.png`;
-		var swf = `${wId}-wtr.swf`;
-		var id = fs.readFileSync(jpg || png || swf);
 		// save watermarks
 		switch (wId) {
 			case "0dhteqDBt5nY": {
@@ -34,7 +30,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>/${folder}/${id}</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
 				break;
 			}
 		}
