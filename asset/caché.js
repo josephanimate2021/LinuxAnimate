@@ -30,9 +30,10 @@ module.exports = {
 	 */
 	generateId(pre = "", suf = "", table = []) {
 		var id;
-		do id.slice(0, -5) = `${pre}${("" + Math.random()).replace(".", "")}${suf}`;
-		while (table.includes(id));
-		return id;
+		var cacheId = id.slice(0, -5);
+		do cacheId = `${pre}${("" + Math.random()).replace(".", "")}${suf}`;
+		while (table.includes(cacheId));
+		return cacheId;
 	},
 	validAssetId(aId) {
 		switch (aId) {
