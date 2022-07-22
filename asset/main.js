@@ -72,8 +72,8 @@ module.exports = {
 			}
 
 			return new Promise(function (resolve, reject) {
-				console.log(`${process.env.CACHÉ_FOLDER}/${mId}.${aId}`);
-				mp3Duration(`${process.env.CACHÉ_FOLDER}/${mId}.${aId}`, (e, d) => {
+				console.log(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`);
+				mp3Duration(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`, (e, d) => {
 					var dur = d * 1e3;
 					console.log(dur);
 					var dot = aId.lastIndexOf(".");
