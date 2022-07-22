@@ -26,9 +26,6 @@ module.exports = function (req, res, url) {
 					case "mu":
 						mode = "music";
 						break;
-					case "wtr":
-						mode = "watermark";
-						break;
 				}
 
 				var path = files.import.path;
