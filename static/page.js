@@ -175,7 +175,10 @@ module.exports = function (req, res, url) {
 			};
 			break;
 		}
-		case "/goapi/getAssetTags": api = true; break;
+		case "/goapi/getAssetTags": {
+			api = true; 
+			break;
+		}
 
 		default:
 			return;
@@ -183,7 +186,7 @@ module.exports = function (req, res, url) {
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
 	if (api) {
-		res.end({"status":"ok","data":[]});
+		res.end('{"status":"ok","data":[]}');
 	} else {
 		res.end(`<script>document.title='${title}',flashvars=${
 			// json flashvars
