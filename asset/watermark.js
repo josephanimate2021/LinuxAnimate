@@ -1,17 +1,9 @@
 const loadPost = require("../misc/post_body");
-const header = process.env.XML_HEADER;
-const fUtil = require("../misc/file");
-const nodezip = require("node-zip");
-const movie = require("../movie/main");
-const base = Buffer.alloc(1, 0);
-const asset = require("./main");
-const http = require("http");
-const fs = require("fs");
 
 module.exports = function (req, res, url) {
 	if (req.method != 'POST') return;
 	
-	switch (url.path) {
+	switch (url.pathname) {
 		case "/goapi/getUserWatermarks/":
 			break;
 		default:
