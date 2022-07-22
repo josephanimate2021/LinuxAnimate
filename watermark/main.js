@@ -9,7 +9,7 @@ module.exports = {
 		var wXml; 
 		// custom watermarks
 		if (wImg) {
-			wXml = `<watermarks><watermark>/${folder}/${wId}</watermark></watermarks>`;
+			wXml = `<watermarks><watermark>/${folder}/${wImg}</watermark></watermarks>`;
 		} else {
 			// premade watermarks
 			switch (wId) {
