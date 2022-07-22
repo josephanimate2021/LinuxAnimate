@@ -28,7 +28,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks>${wId}</watermarks>`;
+				wXml = `<watermarks><watermark>${wId}</watermark></watermarks>`;
 				break;
 			}
 		}
