@@ -5,7 +5,7 @@ module.exports = function (req, res, url) {
   if (!match) return;
 
   const mId = match[1];
-  var wId;
+  var wId = match[2];
   var id, wImg;
   switch (wId) {
     case "0vTLbQy9hG7k":
@@ -13,7 +13,6 @@ module.exports = function (req, res, url) {
     case "52ht3dd60csd":
     case "82tkgqdefbw6":
     case "0dhteqDBt5nY": {
-      wId = match[2];
       id = watermark.save(mId, wId);
       res.end(id);
       break;
