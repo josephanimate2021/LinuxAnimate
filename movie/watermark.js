@@ -6,6 +6,12 @@ module.exports = function (req, res, url) {
 
   const mId = match[1];
   const wId = match[2];
-  const id = watermark.save(mId, wId);
-  res.end(id);
+  if (`${wId}-wtr.swf`|| `${wId}-wtr.jpg` || `${wId}-wtr.png`) {
+    var idSliced = wId.slice(0, -8);
+    const id = watermark.save(mId, wId, idSliced);
+    res.end(id);
+  } else {
+    const id = watermark.save(mId, wId);
+    res.end(id);
+  }
 }
