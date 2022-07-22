@@ -14,6 +14,7 @@ module.exports = function (req, res, url) {
 		if (!initcb) {
 			// load lvm
 			fUtil.makeZip(p, 'theme.xml').then(b => res.end(b));
+			initcb = "studioLoaded";
 		} else {
 			// search themes
 			fs.createReadStream(p).pipe(res);
