@@ -269,9 +269,9 @@ module.exports = {
 			const fn = fUtil.getFileIndex("movie-", ".xml", n);
 
 			const buffer = fs.readFileSync(fn);
-			const begTitle = buffer.indexOf("<title><![CDATA[");
+			const begTitle = buffer.indexOf("");
 			const endTitle = buffer.indexOf("]]></title>");
-			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
+			const subtitle = buffer.slice(begTitle, endTitle).toString();
 			
 			const begDesc = buffer.indexOf("<desc><![CDATA[");
 			const endDesc = buffer.indexOf("]]></desc>");
@@ -296,7 +296,7 @@ module.exports = {
 
 			const fd = fs.openSync(fn, "r");
 			const dur = Buffer.alloc(256);
-			fs.readSync(fd, buffer, 0, 256, 0);
+			fs.readSync(fd, dur, 0, 256, 0);
 			
 			const begDuration = dur.indexOf('duration="') + 10;
 			const endDuration = dur.indexOf('"', begDuration);
