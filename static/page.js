@@ -31,7 +31,7 @@ module.exports = function (req, res, url) {
 	if (req.method != "GET") return;
 	const query = url.query;
 
-	var attrs, params, title, ut, trayQuery;
+	var attrs, params, title, ut, trayQuery, api;
 	switch (process.env.PROJECT_RELEASE) {
 		case "stable": {
 			ut = "10";
@@ -175,13 +175,14 @@ module.exports = function (req, res, url) {
 			};
 			break;
 		}
+		case "/goapi/getAssetTags": api = true; break;
 
 		default:
 			return;
 	}
 	res.setHeader("Content-Type", "text/html; charset=UTF-8");
 	Object.assign(params.flashvars, query);
-	if (url.pathname == "/goapi/getAssetTags") {
+	if (api) {
 		res.end({"status":"ok","data":[]});
 	} else {
 		res.end(`<script>document.title='${title}',flashvars=${
