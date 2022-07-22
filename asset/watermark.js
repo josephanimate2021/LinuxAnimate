@@ -20,6 +20,7 @@ module.exports = function (req, res, url) {
 			const type = makeZip ? "application/zip" : "text/xml";
 			res.setHeader("Content-Type", type);
 			if (makeZip) res.write(base);
+			console.log(buff);
 			res.end(buff);
 		});
 		return true;
