@@ -5,13 +5,24 @@ module.exports = function (req, res, url) {
   if (!match) return;
 
   const mId = match[1];
-  const wId = match[2];
-  if (`${wId}-wtr.swf`|| `${wId}-wtr.jpg` || `${wId}-wtr.png`) {
-    var idSliced = wId.slice(0, -8);
-    const id = watermark.save(mId, wId, idSliced);
-    res.end(id);
-  } else {
-    const id = watermark.save(mId, wId);
-    res.end(id);
+  var wId;
+  var id, wImg;
+  switch (wId) {
+    case "0vTLbQy9hG7k":
+    case "174tbqdo0cs6":
+    case "52ht3dd60csd":
+    case "82tkgqdefbw6":
+    case "0dhteqDBt5nY": {
+      wId = match[2];
+      id = watermark.save(mId, wId);
+      res.end(id);
+      break;
+    }
+    default: {
+      wImg = match[2];
+      wId = wImg.slice(0, -8);
+      id = watermark.save(mId, wId, wImg);
+      res.end(id);
+    }
   }
 }
