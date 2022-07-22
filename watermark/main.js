@@ -3,12 +3,12 @@ const savedFolder = process.env.SAVED_FOLDER;
 const fs = require("fs");
 
 module.exports = {
-	save(mId, wId, idSliced) {
+	save(mId, wId, wImg) {
 		// vars
 		var path = `${folder}/${mId}.xml`;
 		var wXml; 
 		// custom watermarks
-		if (idSliced) {
+		if (wImg) {
 			wXml = `<watermarks><watermark>/${folder}/${wId}</watermark></watermarks>`;
 		} else {
 			// premade watermarks
@@ -36,12 +36,12 @@ module.exports = {
 			}
 		}
 		fs.writeFileSync(path, wXml);
-		this.assign(mId, wId, idSliced);
+		this.assign(mId, wId, wImg);
 	},
-	assign(mId, wId, idSliced) {
+	assign(mId, wId, wImg) {
 		var path = `${savedFolder}/${mId}.xml`;
 		var wXml;
-		if (idSliced) {
+		if (wImg) {
 			wXml = '<watermark>Custom Logo<watermark>';
 		} else {
 			switch (wId) {
