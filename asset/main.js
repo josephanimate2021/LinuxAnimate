@@ -19,6 +19,11 @@ module.exports = {
 				return caché.newProp(buffer, mId, "", suffix); 
                                 break;
                         }
+			case "watermark": { 
+				suffix = `-${mode}.${ext}`;
+				return caché.newWatermark(buffer, mId, "", suffix); 
+                                break;
+                        }
 			case "video": { 
                                 suffix = `-${mode}.${ext}`;
                                 if (mode == "dontimport") {
