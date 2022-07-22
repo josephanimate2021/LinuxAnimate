@@ -268,16 +268,18 @@ module.exports = {
 			const n = Number.parseInt(movieId.substr(2));
 			const fn = fUtil.getFileIndex("movie-", ".xml", n);
 
-			const buffer = fs.readFileSync(fn);
-			const begTitle = buffer.indexOf("");
+			const fd = fs.openSync(fn, "r");
+			const buffer = Buffer.alloc(256);
+			fs.readSync(fd, buffer, 0, 256, 0);
+			const begTitle = buffer.indexOf("<title>") + 16;
 			const endTitle = buffer.indexOf("]]></title>");
-			const subtitle = buffer.slice(begTitle, endTitle).toString();
+			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
 			
-			const begDesc = buffer.indexOf("<desc><![CDATA[");
+			const begDesc = buffer.indexOf("<desc>") + 16;
 			const endDesc = buffer.indexOf("]]></desc>");
 			const desc = buffer.slice(begDesc, endDesc).toString();
 			
-			const begTag = buffer.indexOf("<tag><![CDATA[");
+			const begTag = buffer.indexOf("<tag>") + 16;
 			const endTag = buffer.indexOf("]]></tag>");
 			const subtag = buffer.slice(begTag, endTag).toString();
 			var title, tag;
@@ -294,13 +296,9 @@ module.exports = {
 				tag = subtag;
 			}
 
-			const fd = fs.openSync(fn, "r");
-			const dur = Buffer.alloc(256);
-			fs.readSync(fd, dur, 0, 256, 0);
-			
-			const begDuration = dur.indexOf('duration="') + 10;
-			const endDuration = dur.indexOf('"', begDuration);
-			const duration = Number.parseFloat(dur.slice(begDuration, endDuration));
+			const begDuration = buffer.indexOf('duration="') + 10;
+			const endDuration = buffer.indexOf('"', begDuration);
+			const duration = Number.parseFloat(buffer.slice(begDuration, endDuration));
 			const min = ("" + ~~(duration / 60)).padStart(2, "0");
 			const sec = ("" + ~~(duration % 60)).padStart(2, "0");
 			const durationStr = `${min}:${sec}`;
