@@ -52,7 +52,7 @@
 		},
 		"_WATERMARKS/(.*)": {
 			"headers": {
-				"Content-Type": "application/x-shockwave-flash"
+				"Content-Type": "image/jpg"
 			}
 		},
 		"/html/([^?]+html).*": {
