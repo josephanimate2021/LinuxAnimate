@@ -50,7 +50,7 @@
 				"Content-Type": "image/jpg"
 			}
 		},
-		"_WATERMARKS/(.*)(png|PNG)": {
+		"_WATERMARKS/(.*)": {
 			"headers": {
 				"Content-Type": "image/png"
 			}
