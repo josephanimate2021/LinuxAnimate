@@ -11,7 +11,7 @@ async function listAssets(data) {
 	process.env.WATERMARKS_FOLDER}/freeTrial.png"/><preview>82tkgqdefbw6</preview><watermark id="52ht3dd60csd" thumbnail="${
 	process.env.WATERMARKS_FOLDER}/GoMakeYourOwn.png"/><preview>52ht3dd60csd</preview>${
 	// custom watermarks
-	files.map(v => `<watermark id="${v.name.slice(0, -5)}" thumbnail="${
+	files.map(v => `<watermark id="${v.name.slice(0, -3)}" thumbnail="${
 		  process.env.WATERMARKS_FOLDER}/${v.id}"/><preview>${v.id}</preview>`).join("")}</watermarks>`;
 	return xmlString;
 }
