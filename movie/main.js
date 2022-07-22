@@ -267,10 +267,6 @@ module.exports = {
 			if (!movieId.startsWith("m-")) return;
 			const n = Number.parseInt(movieId.substr(2));
 			const fn = fUtil.getFileIndex("movie-", ".xml", n);
-			const i = movieId.indexOf("-");
-			const prefix = movieId.substr(0, i);
-			const suffix = movieId.substr(i + 1);
-			const path = fUtil.getFileIndex("movie-", ".xml", suffix);
 
 			const fd = fs.openSync(fn, "r");
 			const buffer = Buffer.alloc(256);
@@ -279,14 +275,13 @@ module.exports = {
 			const endTitle = buffer.indexOf("]]></title>");
 			const subtitle = buffer.slice(begTitle, endTitle).toString().trim();
 			
-			const descBuffer = fs.readFileSync(path);
-			const begDesc = descBuffer.indexOf("<desc><![CDATA[");
-			const endDesc = descBuffer.indexOf("]]></desc>");
-			const desc = descBuffer.slice(begDesc, endDesc).toString();
+			const begDesc = buffer.indexOf("<desc>");
+			const endDesc = buffer.indexOf("]]></desc>");
+			const desc = buffer.slice(begDesc, endDesc).toString().trim();
 			
-			const begTag = descBuffer.indexOf("<tag><![CDATA[");
-			const endTag = descBuffer.indexOf("]]></tag>");
-			const subtag = descBuffer.slice(begTag, endTag).toString();
+			const begTag = buffer.indexOf("<tag>");
+			const endTag = buffer.indexOf("]]></tag>");
+			const subtag = buffer.slice(begTag, endTag).toString().trim();
 			var title, tag;
 			
 			if (!subtitle) {
