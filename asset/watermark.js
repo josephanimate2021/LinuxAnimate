@@ -1,4 +1,5 @@
 const loadPost = require("../misc/post_body");
+const asset = require("./main");
 
 module.exports = function (req, res, url) {
 	if (req.method != 'POST') return;
