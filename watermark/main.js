@@ -30,10 +30,6 @@ module.exports = {
 				wXml = '<watermarks><watermark style="freeTrial"/></watermarks>';
 				break;
 			}
-			case "03wpxhco8js6": {
-				wXml = '<watermarks><watermark>/' + folder + '/fullscreen.swf</watermark></watermarks>';
-				break;
-			}
 			// custom watermarks
 			default: {
 				wXml = `<watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
@@ -65,10 +61,6 @@ module.exports = {
 			}
 			case "82tkgqdefbw6": {
 				wXml = '<watermark>GoAnimate Free Trial Logo<watermark>';
-				break;
-			}
-			case "03wpxhco8js6": {
-				wXml = '<watermark>Fullscreen Logo<watermark>';
 				break;
 			}
 			default: {
