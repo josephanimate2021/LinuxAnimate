@@ -2,14 +2,7 @@ const loadPost = require("../misc/post_body");
 const asset = require("./main");
 
 module.exports = function (req, res, url) {
-	if (req.method != 'POST') return;
-	
-	switch (url.pathname) {
-		case "/goapi/getUserWatermarks/":
-			break;
-		default:
-			return;
-	}
+	if (req.method != 'POST' || url.path != '/goapi/getUserWatermarks/') return;
 	loadPost(req, res).then(async ([data]) => {
 		var mId = data.movieId;
 		var xmlString, files;
