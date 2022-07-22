@@ -2,7 +2,8 @@ const folder = process.env.WATERMARKS_FOLDER;
 const savedFolder = process.env.SAVED_FOLDER;
 const path = require("path");
 const fs = require("fs");
-const customWatermarks = fs.readdirSync(__dirname, "../", folder);
+const back = "../";
+const customWatermarks = fs.readdirSync(__dirname, back, folder);
 
 module.exports = {
 	save(mId, wId, wTitle) {
