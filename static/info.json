@@ -14,12 +14,6 @@
 			"statusCode": 302,
 			"content": ""
 		},
-		"/goapi/getAssetTags": {
-			"headers": {
-				"Content-Type": "application/json"
-			},
-			"content": "[]"
-		},
 		"/crossdomain.xml": {
 			"headers": {
 				"Content-Type": "text/x-cross-domain-policy"
