@@ -6,14 +6,23 @@ module.exports = {
 	save(mId, wId, wTitle) {
 		var path = `${folder}/${mId}.xml`;
 		var wXml, id; 
-		if (!fs.existsSync(`${wId}-wtr.swf`) || !fs.existsSync(`${wId}-wtr.jpg`)) {
-			id = `${wId}-wtr.png`;
-		}
-		if (!fs.existsSync(`${wId}-wtr.png`) || !fs.existsSync(`${wId}-wtr.swf`)) {
-			id = `${wId}-wtr.jpg`;
-		}
-		if (!fs.existsSync(`${wId}-wtr.png`) || !fs.existsSync(`${wId}-wtr.jpg`)) {
-			id = `${wId}-wtr.swf`;
+		var begId = `${wId}-wtr`;
+		switch (!fs.existsSync(begId)) {
+			case ".swf":
+			case ".jpg": {
+				id = `${wId}-wtr.png`;
+				break;
+			}
+			case ".png":
+			case ".jpg": {
+				id = `${wId}-wtr.swf`;
+				break;
+			}
+			case ".swf":
+			case ".png": {
+				id = `${wId}-wtr.jpg`;
+				break;
+			}
 		}
 		switch (wId) {
 			case "0dhteqDBt5nY": {
@@ -37,7 +46,7 @@ module.exports = {
 				break;
 			}
 			default: {
-				wXml = `<watermarks><watermark>${id}</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>${folder}/${id}</watermark></watermarks>`;
 				break;
 			}
 		}
