@@ -1,5 +1,3 @@
-const env = Object.assign(process.env, require("./env"), require("./config"));
-
 const http = require("http");
 const chr = require("./character/redirect");
 const pmc = require("./character/premade");
@@ -51,4 +49,4 @@ module.exports = http
 			res.end();
 		}
 	})
-	.listen(env.PORT || env.SERVER_PORT, console.log);
+	.listen(process.env.PORT || process.env.SERVER_PORT, console.log);
