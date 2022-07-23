@@ -60,6 +60,11 @@
 				"Content-Type": "application/x-shockwave-flash"
 			}
 		},
+		"_CACHÉ/(.*)": {
+			"headers": {
+				"Content-Type": "audio/mp3"
+			}
+		},
 		"/html/([^?]+html).*": {
 			"contentReplace": true,
 			"regexLink": "/html/$1",
