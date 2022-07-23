@@ -18,7 +18,7 @@
 			"headers": {
 				"Content-Type": "application/json"
 			},
-			"content": "{\"status\":\"ok\"}"
+			"content": "{\"status\":\"ok\",\"data\":[]}"
 		},
 		"/crossdomain.xml": {
 			"headers": {
