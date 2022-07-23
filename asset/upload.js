@@ -10,7 +10,7 @@ const { Readable } = require("stream");
 const mp3Duration = require("mp3-duration");
 const sharp = require("sharp");
 
-async function convert(oldStream, ext) {
+async function convert(oldStream, ext, stream) {
 	await new Promise((resolve, rej) => {
 		// convert the sound to an mp3
 		const command = ffmpeg(oldStream).inputFormat(ext).toFormat("mp3").on("error", (e) => rej("Error converting audio:", e));
@@ -83,7 +83,7 @@ module.exports = function (req, res, url) {
 				};
 			
 				if (ext !== "mp3") {
-					convert(oldStream, ext);
+					convert(oldStream, ext, stream);
 				} else stream = oldStream;
 
 				let buffers = [];
