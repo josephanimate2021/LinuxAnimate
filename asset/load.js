@@ -14,7 +14,7 @@ const http = require("http");
 module.exports = function (req, res, url) {
 	switch (req.method) {
 		case "GET": {
-			const match = req.url.match(/\/(assets|goapi\/getAsset)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
+			const match = req.url.match(/\/(assets|goapi\/getAssetEx)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
 			if (!match) return;
 
 			const mId = match[1];
@@ -48,17 +48,7 @@ module.exports = function (req, res, url) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
-
-						const b = asset.load(mId, aId);
-						if (b) {
-							res.setHeader("Content-Length", b.length);
-							res.setHeader("Content-Type", "audio/mp3");
-							fs.readFileSync(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`);
-							res.end(b);
-						} else {
-							res.statusCode = 404;
-							res.end();
-						}
+						setTimeout(fs.readFileSync(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`), 1500, 'funky');
 					});
 					return true;
 				}
