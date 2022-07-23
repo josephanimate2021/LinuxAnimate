@@ -30,8 +30,8 @@ module.exports = function (req, res, url) {
 			const soundMatch = req.url.match(/\/sounds\/([^/]+)$/);
 			if (!soundMatch) return;
 
-			const aId = soundMatch[1];
-			const b = fs.readFileSync(`/sounds/${aId}`);
+			const sId = soundMatch[1];
+			const b = fs.readFileSync(`/sounds/${sId}`);
 			if (b) {
 				res.statusCode = 200;
 				res.end(b);
