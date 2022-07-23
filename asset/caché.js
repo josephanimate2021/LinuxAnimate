@@ -244,6 +244,27 @@ module.exports = {
 	/**
 	 *
 	 * @param {string} mId
+	 * @param {string} aId
+	 * @returns {Buffer}
+	 */
+	loadSound(mId, aId) {
+		if (!this.validAssetId(aId)) return;
+		const stored = localCaché[mId];
+		if (!stored) return null;
+
+		const path = `${soundFolder}/${aId}`;
+		stored.time = new Date();
+		if (stored.includes(aId)) {
+			if (!fs.existsSync(path)) {
+				delete localCaché[mId];
+			} else {
+				return fs.readFileSync(path);
+			}
+		}
+	},
+	/**
+	 *
+	 * @param {string} mId
 	 * @param {boolean} setToEmpty
 	 * @returns {void}
 	 */
