@@ -48,7 +48,7 @@ module.exports = function (req, res, url) {
 			});
 			return true;
 		}
-		case "/goapi/saveSound/": // sound recording/uploading through the lvm
+		case "/goapi/saveSound/": { // sound recording/uploading through the lvm
 			loadPost(req, res).then(([data, mId]) => {
 				isRecord = data.bytes ? true : false;
 
@@ -94,12 +94,23 @@ module.exports = function (req, res, url) {
 						if (e || !duration) return;
 						meta.duration = 1e3 * duration;
 						const aId = asset.save(buf, mId, meta.subtype, "mp3");
-					res.end(
-						`0<response><asset><id>${aId}</id><enc_asset_id>${aId}</enc_asset_id><type>sound</type><subtype>${meta.subtype}</subtype><title>${meta.title}</title><published>0</published><tags></tags><duration>${meta.duration}</duration><downloadtype>progressive</downloadtype><file>${aId}</file></asset></response>`
-					);
+						res.end(`0<response><asset><id>${
+							aId
+							}</id><enc_asset_id>${
+							aId
+							}</enc_asset_id><type>sound</type><subtype>${
+							meta.subtype
+							}</subtype><title>${
+							meta.title
+							}</title><published>0</published><tags></tags><duration>${
+							meta.duration
+							}</duration><downloadtype>progressive</downloadtype><file>${
+							aId
+							}</file></asset></response>`);
+					});
+					return true;
 				});
-				return true;
-				});
-			}
+			});
+		}
 	}
 };
