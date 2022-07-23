@@ -31,8 +31,8 @@ module.exports = function (req, res, url) {
 			if (!soundMatch) return;
 
 			const sId = soundMatch[1];
-			const b = fs.readFileSync(`/sounds/${sId}`);
-			if (b) {
+			const s = fs.readFileSync(`/sounds/${sId}`);
+			if (s) {
 				res.statusCode = 200;
 				res.end(b);
 			} else {
