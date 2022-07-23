@@ -60,7 +60,7 @@
 				"Content-Type": "application/x-shockwave-flash"
 			}
 		},
-		"_CACHÉ/(.*)": {
+		"_SOUNDS/(.*)": {
 			"headers": {
 				"Content-Type": "audio/mp3"
 			}
