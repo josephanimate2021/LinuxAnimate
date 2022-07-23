@@ -46,16 +46,12 @@ module.exports = function (req, res, url, err) {
 		case "POST": {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then((data, mId, aId) => {
+					loadPost(req, res).then(data => {
 						const type = "sound"; 
-						const b = asset.load(mId, aId, type);
-						if (b) {
-							res.statusCode = 200;
-							res.end(b);
-						} else {
-							res.statusCode = 404;
-							res.end(err);
-						}
+                        const aId = data.assetId || data.enc_asset_id;
+						const b = asset.load(aId, type);
+                        console.log(b);
+                        res.end(b);
 					});
 					return true;
 				}
