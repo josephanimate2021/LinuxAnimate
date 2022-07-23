@@ -49,8 +49,8 @@ module.exports = function (req, res, url, err) {
 					loadPost(req, res).then(async ([data, mId]) => {
 						const path = `./sounds/${mId}.mp3`;
 						const b = fs.readFileSync(path);
-						res.setHeader("Content-Type", "audio/mp3");
-						console.log(b);
+						res.setHeader("Content-Length", b.length);
+						console.log(b, b.length);
 						res.end(b);
 					});
 					return true;
