@@ -5,8 +5,12 @@ const caché = require("./caché");
 
 module.exports = {
 
-	load(mId, aId) {
-		return caché.load(mId, aId);
+	load(mId, aId, type) {
+		if (type == "sound") {
+			return caché.loadSound(mId, aId);
+		} else {
+			return caché.load(mId, aId);
+		}
 	},
 	delete(mId, aId) {
 		return caché.delete(mId, aId);
