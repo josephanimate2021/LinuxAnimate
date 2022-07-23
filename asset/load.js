@@ -46,7 +46,13 @@ module.exports = function (req, res, url, err) {
 		case "POST": {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then((data, mId) => {
+					loadPost(req, res).then(data => {
+						var mId;
+						if (!data.movieId) {
+							mId = data.presaveId;
+						} else {
+							mId = data.movieId;
+						}
 						const path = `./sounds/${mId}.mp3`;
 						const b = fs.readFileSync(path);
 						res.setHeader("Content-Type", "audio/mp3");
