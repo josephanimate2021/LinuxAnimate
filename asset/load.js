@@ -27,18 +27,7 @@ module.exports = function (req, res, url) {
 				res.statusCode = 404;
 				res.end(e);
 			}
-			const soundMatch = req.url.match(/\/sounds\/([^/]+)$/);
-			if (!soundMatch) return;
-
-			const sId = soundMatch[1];
-			const s = fs.readFileSync(`/sounds/${sId}`);
-			if (s) {
-				res.statusCode = 200;
-				res.end(b);
-			} else {
-				res.statusCode = 404;
-				res.end(e);
-			}
+			);
 			const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
 			if (!charMatch) return;
 
