@@ -75,7 +75,7 @@ module.exports = function (req, res, url) {
 				};
 			
 				if (ext !== "mp3") {
-					new Promise((resolve, rej) => {
+					return new Promise((resolve, rej) => {
 						// convert the sound to an mp3
 						const command = ffmpeg(oldStream)
 						.inputFormat(ext).toFormat("mp3").on("error", (e) => rej("Error converting audio:", e));
