@@ -10,14 +10,6 @@ const { Readable } = require("stream");
 const mp3Duration = require("mp3-duration");
 const sharp = require("sharp");
 
-async function convert(oldStream, ext, stream) {
-	await new Promise((resolve, rej) => {
-		// convert the sound to an mp3
-		const command = ffmpeg(oldStream).inputFormat(ext).toFormat("mp3").on("error", (e) => rej("Error converting audio:", e));
-		stream = command.pipe();
-		resolve();
-	});
-}
 /**
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
@@ -55,24 +47,12 @@ module.exports = function (req, res, url) {
 			});
 			return true;
 		}
-		case "/goapi/saveSound/": { // sound recording/uploading through the lvm
+		case "/goapi/saveSound/": { // sound recording
 			loadPost(req, res).then(([data, mId]) => {
-				isRecord = data.bytes ? true : false;
-
-				let oldStream, stream, ext;
-				if (isRecord) {
-					const buffer = Buffer.from(data.bytes, "base64");
-					oldStream = Readable.from(buffer);
-					ext = "ogg";
-				} else {
-					// read the file
-					const path = data.Filedata.filepath
-					oldStream = fs.createReadStream(path);
-					// get the extension
-					const origName = data.Filename;
-					const dotIn = origName.lastIndexOf(".");
-					ext = origName.substring(dotIn + 1);
-				}
+				
+				const buffer = Buffer.from(data.bytes, "base64");
+				let oldStream = Readable.from(buffer);
+				let ext = "ogg";
 			
 				let meta = {
 					type: "sound",
@@ -82,9 +62,7 @@ module.exports = function (req, res, url) {
 					themeId: "ugc"
 				};
 			
-				if (ext !== "mp3") {
-					convert(oldStream, ext, stream);
-				} else stream = oldStream;
+				let stream = oldStream;
 
 				let buffers = [];
 				stream.resume();
