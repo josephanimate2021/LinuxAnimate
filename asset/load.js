@@ -51,8 +51,9 @@ module.exports = function (req, res, url, err) {
 						const b = fs.readFileSync(path);
 						res.setHeader("Content-Length", b.length);
 						res.setHeader("Content-Type", "audio/mp3");
+						// i have tried so many options. but none of them work. if this thing can't buffer. when what xml is needed?
 						console.log(b);
-						res.end(b);
+						res.end(`<response><asset><id>${mId}</id><enc_asset_id>${mId}</enc_asset_id><type>sound</type><subtype>tts</subtype><title>${mId}</title><published>0</published><tags></tags><duration>0856</duration><downloadtype>progressive</downloadtype><file>${mId}.mp3</file></asset></response>`);
 					});
 					return true;
 				}
