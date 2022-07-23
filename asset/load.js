@@ -27,18 +27,7 @@ module.exports = function (req, res, url) {
 				res.statusCode = 404;
 				res.end(e);
 			}
-			const soundMatch = req.url.match(/\/sounds\/([^/]+)$/);
-			if (!soundMatch) return;
-
-			const sId = soundMatch[1];
-			const s = fs.readFileSync(`/sounds/${sId}`);
-			if (s) {
-				res.statusCode = 200;
-				res.end(b);
-			} else {
-				res.statusCode = 404;
-				res.end(e);
-			}
+			);
 			const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
 			if (!charMatch) return;
 
@@ -59,8 +48,7 @@ module.exports = function (req, res, url) {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(([data, mId]) => {
-						const aId = data.assetId || data.enc_asset_id;
-						fs.readFileSync(`/sounds/${aId}`);
+						fs.readFileSync(`/sounds/${mId}.mp3`);
 					});
 					return true;
 				}
