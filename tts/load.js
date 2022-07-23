@@ -488,7 +488,8 @@ module.exports = function (req, res, url) {
 					}
 
 					const title = `[${voices[data.voice].desc}] ${data.text}`;
-					const id = asset.save(buffer, mId, "tts", "mp3");
+					var type = "tts";
+					const id = asset.save(buffer, mId, type, "tts", "mp3");
 					res.end(
 						`0<response><asset><id>${id}</id><enc_asset_id>${id}</enc_asset_id><type>sound</type><subtype>tts</subtype><title>${title}</title><published>0</published><tags></tags><duration>${dur}</duration><downloadtype>progressive</downloadtype><file>${id}</file></asset></response>`
 					);
