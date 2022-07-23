@@ -47,8 +47,14 @@ module.exports = function (req, res, url) {
 		case "POST": {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then(([data, mId]) => {
-						fs.readFileSync(`/sounds/${mId}.mp3`);
+					loadPost(req, res).then(mId => {
+						const path = `/sounds/${mId}.mp3`;
+						if (!fs.existsSync(path)) {
+							fs.writeFileSync(path);
+							fs.readFileSync(path);
+						} else {
+							fs.readFileSync(path);
+						}
 					});
 					return true;
 				}
