@@ -47,7 +47,7 @@ module.exports = function (req, res, url, err) {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(async ([data, mId]) => {
-						const path = `/sounds/${mId}.mp3`;
+						const path = `./sounds/${mId}.mp3`;
 						const b = fs.readFileSync(path);
 						res.setHeader("Content-Length", b.length);
 						res.setHeader("Content-Type", "audio/mp3");
