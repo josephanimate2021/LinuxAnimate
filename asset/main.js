@@ -11,7 +11,7 @@ module.exports = {
 	delete(mId, aId) {
 		return caché.delete(mId, aId);
 	},
-	save(buffer, mId, mode, ext) {
+	save(buffer, mId, mode, type, ext) {
 		var suffix, ed;
                 switch (mode) { 
 			case "prop": { 
@@ -34,8 +34,14 @@ module.exports = {
                                 break;
 			}
 			default: {
-                                suffix = `-${mode}.${ext}`;
-                                return caché.newItem(buffer, mId, "", suffix);
+				if (type == "tts") {
+					suffix = `-${mode}.${ext}`;
+					caché.newSound(buffer, mId, "", suffix);
+					return caché.newItem(buffer, mId, "", suffix);
+				} else {
+					suffix = `-${mode}.${ext}`;
+					return caché.newItem(buffer, mId, "", suffix);
+				}
                                 break;
                         }
                 }
