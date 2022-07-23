@@ -48,10 +48,12 @@ module.exports = function (req, res, url, err) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(data => {
 						const type = "sound"; 
-                        const aId = data.assetId || data.enc_asset_id;
+						const aId = data.assetId || data.enc_asset_id;
 						const b = asset.load(aId, type);
-                        console.log(b);
-                        res.end(b);
+						res.setHeader("Content-Length", b.length);
+						res.setHeader("Content-Type", "audio/mp3");
+						console.log(b);
+						res.end(b);
 					});
 					return true;
 				}
