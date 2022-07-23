@@ -27,7 +27,6 @@ module.exports = function (req, res, url) {
 				res.statusCode = 404;
 				res.end(e);
 			}
-			);
 			const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
 			if (!charMatch) return;
 
