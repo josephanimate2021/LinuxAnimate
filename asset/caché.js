@@ -247,9 +247,9 @@ module.exports = {
 	 * @param {string} aId
 	 * @returns {Buffer}
 	 */
-	loadSound(aId) {
-		const path = `/sounds/${aId}`;
-        fs.readFileSync(path);
+	loadSound(mId) {
+		const path = `/sounds/${mId}.mp3`;
+		fs.readFileSync(path);
 	},
 	/**
 	 *
