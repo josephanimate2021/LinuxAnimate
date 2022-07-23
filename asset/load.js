@@ -52,7 +52,7 @@ module.exports = function (req, res, url) {
 						if (b) {
 							res.setHeader("Content-Length", b.length);
 							res.setHeader("Content-Type", "audio/mp3");
-							console.log(b);
+							console.log(mId, aId);
 							res.end(b);
 						} else {
 							res.statusCode = 404;
