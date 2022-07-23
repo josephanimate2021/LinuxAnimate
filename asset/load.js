@@ -48,7 +48,7 @@ module.exports = function (req, res, url) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
-						setTimeout(fs.readFileSync(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`), 1500, 'funky');
+						fs.readFileSync(`/${process.env.SOUNDS_FOLDER}/${aId}`);
 					});
 					return true;
 				}
