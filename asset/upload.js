@@ -10,6 +10,14 @@ const { Readable } = require("stream");
 const mp3Duration = require("mp3-duration");
 const sharp = require("sharp");
 
+async function convert(oldStream, ext) {
+	await new Promise((resolve, rej) => {
+		// convert the sound to an mp3
+		const command = ffmpeg(oldStream).inputFormat(ext).toFormat("mp3").on("error", (e) => rej("Error converting audio:", e));
+		stream = command.pipe();
+		resolve();
+	});
+}
 /**
  * @param {http.IncomingMessage} req
  * @param {http.ServerResponse} res
@@ -75,13 +83,7 @@ module.exports = function (req, res, url) {
 				};
 			
 				if (ext !== "mp3") {
-					return new Promise((resolve, rej) => {
-						// convert the sound to an mp3
-						const command = ffmpeg(oldStream)
-						.inputFormat(ext).toFormat("mp3").on("error", (e) => rej("Error converting audio:", e));
-						stream = command.pipe();
-						resolve();
-					});
+					convert(oldStream, ext);
 				} else stream = oldStream;
 
 				let buffers = [];
