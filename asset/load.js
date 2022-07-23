@@ -48,15 +48,14 @@ module.exports = function (req, res, url) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then((data, mId, aId) => {
 						const type = "sound"; 
-						asset.load(mId, aId, type).then(b => {
+						const b = asset.load(mId, aId, type);
+						if (b) {
 							res.statusCode = 200;
 							res.end(b);
-						}).catch(e => {
+						} else {
 							res.statusCode = 404;
-							console.log(e);
 							res.end(e);
-						});
-						
+						}
 					});
 					return true;
 				}
