@@ -48,7 +48,7 @@ module.exports = function (req, res, url) {
 			});
 			return true;
 		}
-		case "/goapi/saveSound/": { // sound recording/uploading through the lvm
+		case "/goapi/saveSound/": // sound recording/uploading through the lvm
 			loadPost(req, res).then(([data, mId]) => {
 				isRecord = data.bytes ? true : false;
 
@@ -99,8 +99,7 @@ module.exports = function (req, res, url) {
 					);
 				});
 				return true;
-			});
-		}
-		default: return;
+				});
+			}
 	}
 };
