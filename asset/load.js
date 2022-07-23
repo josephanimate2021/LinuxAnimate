@@ -11,7 +11,7 @@ const http = require("http");
  * @param {import("url").UrlWithParsedQuery} url
  * @returns {boolean}
  */
-module.exports = function (req, res, url) {
+module.exports = function (req, res, url, err) {
 	switch (req.method) {
 		case "GET": {
 			const match = req.url.match(/\/(assets|goapi\/getAssetEx)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
@@ -25,7 +25,7 @@ module.exports = function (req, res, url) {
 				res.end(b);
 			} else {
 				res.statusCode = 404;
-				res.end(e);
+				res.end(err);
 			}
 			const charMatch = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
 			if (!charMatch) return;
@@ -54,7 +54,7 @@ module.exports = function (req, res, url) {
 							res.end(b);
 						} else {
 							res.statusCode = 404;
-							res.end(e);
+							res.end(err);
 						}
 					});
 					return true;
