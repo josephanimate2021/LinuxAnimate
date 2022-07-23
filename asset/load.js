@@ -46,14 +46,17 @@ module.exports = function (req, res, url) {
 		case "POST": {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then(mId => {
-						const path = `/sounds/${mId}.mp3`;
-						if (!fs.existsSync(path)) {
-							fs.writeFileSync(path);
-							fs.readFileSync(path);
-						} else {
-							fs.readFileSync(path);
-						}
+					loadPost(req, res).then((data, mId, aId) => {
+						const type = "sound"; 
+						asset.load(mId, aId, type).then(b => {
+							res.statusCode = 200;
+							res.end(b);
+						}).catch(e => {
+							res.statusCode = 404;
+							console.log(e);
+							res.end(e);
+						});
+						
 					});
 					return true;
 				}
