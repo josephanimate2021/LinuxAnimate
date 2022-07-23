@@ -7,7 +7,6 @@ const ffmpeg = require("fluent-ffmpeg");
 ffmpeg.setFfmpegPath(require("@ffmpeg-installer/ffmpeg").path);
 ffmpeg.setFfprobePath(require("@ffprobe-installer/ffprobe").path);
 const { Readable } = require("stream");
-const fs = require("fs");
 const mp3Duration = require("mp3-duration");
 const sharp = require("sharp");
 
