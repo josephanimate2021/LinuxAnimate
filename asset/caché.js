@@ -74,7 +74,7 @@ module.exports = {
 		if (!this.validAssetId(aId)) return;
 		localCaché[mId] = localCaché[mId] || [];
 		var stored = localCaché[mId];
-		const path = `${soundFolder}/${aId}`;
+		const path = `${soundFolder}/${mId}.mp3`;
 
 		if (!stored.includes(aId)) stored.push(aId);
 		if (fs.existsSync(path)) size -= fs.statSync(path).size;

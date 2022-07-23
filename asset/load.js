@@ -59,8 +59,7 @@ module.exports = function (req, res, url) {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(([data, mId]) => {
-						const aId = data.assetId || data.enc_asset_id;
-						fs.readFileSync(`/sounds/${aId}`);
+						fs.readFileSync(`/sounds/${mId}.mp3`);
 					});
 					return true;
 				}
