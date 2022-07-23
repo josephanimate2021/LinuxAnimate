@@ -46,10 +46,9 @@ module.exports = function (req, res, url, err) {
 		case "POST": {
 			switch (url.pathname) {
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then(data => {
+					loadPost(req, res).then((data, mId) => {
 						const type = "sound"; 
-						const aId = data.assetId || data.enc_asset_id;
-						const b = asset.load(aId, type);
+						const b = asset.load(mId, type);
 						res.setHeader("Content-Type", "audio/mp3");
 						console.log(b);
 						res.end(b);
