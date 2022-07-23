@@ -2,6 +2,7 @@ const loadPost = require("../misc/post_body");
 const asset = require("./main");
 const character = require("../character/main");
 const movie = require("../movie/main");
+const fs = require("fs");
 const http = require("http");
 
 /**
@@ -52,7 +53,7 @@ module.exports = function (req, res, url) {
 						if (b) {
 							res.setHeader("Content-Length", b.length);
 							res.setHeader("Content-Type", "audio/mp3");
-							console.log(mId, aId);
+							fs.readFileSync(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`);
 							res.end(b);
 						} else {
 							res.statusCode = 404;
