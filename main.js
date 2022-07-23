@@ -9,6 +9,7 @@ const env = Object.assign(process.env, require("./env"), require("./config"));
 
 // folders
 const forms = env.WAVEFORMS_FOLDER;
+const sound = env.SOUNDS_FOLDER;
 const asset = env.PROPS_FOLDER;
 const cache = env.CACHÉ_FOLDER;
 const saved = env.SAVED_FOLDER;
@@ -18,6 +19,7 @@ if (!fs.existsSync(asset)) fs.mkdirSync(asset);
 if (!fs.existsSync(cache)) fs.mkdirSync(cache);
 if (!fs.existsSync(saved)) fs.mkdirSync(saved);
 if (!fs.existsSync(forms)) fs.mkdirSync(forms);
+if (!fs.existsSync(sound)) fs.mkdirSync(sound);
 
 // start server
 server();
