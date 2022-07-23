@@ -44,7 +44,7 @@ module.exports = function (req, res, url) {
 
 		case "POST": {
 			switch (url.pathname) {
-				case "/goapi/getAsset/": {
+				case "/goapi/getAssetEx/": {
 					loadPost(req, res).then(([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
 
