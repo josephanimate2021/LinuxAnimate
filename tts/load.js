@@ -1,4 +1,5 @@
 const loadPost = require('../misc/post_body');
+const util = require('../misc/util');
 const mp3Duration = require('mp3-duration');
 const voices = require('./info').voices;
 const asset = require('../asset/main');
@@ -477,7 +478,7 @@ function tts(voiceName, text) {
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/goapi/convertTextToSoundAsset/") return;
+	if (req.method != "POST" || url.path != "/goapi/convertTextToSoundAsset/" || url.path != "/goapi/getAssetEx/") return;
 	loadPost(req, res).then(([data, mId]) => {
 		tts(data.voice, data.text)
 			.then((buffer) => {
