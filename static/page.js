@@ -136,6 +136,7 @@ module.exports = function (req, res, url) {
 					appCode: "go",
 					page: "",
 					siteId: "go",
+					userId: "4849",
 					lid: 13,
 					isLogin: "Y",
 					retut: 1,
