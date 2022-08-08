@@ -9,7 +9,7 @@ module.exports = function (req, res, url) {
 			return true;
 		} case "/goapi/getSysTemplates/": {
 			loadPost(req, res).then(([data]) => {
-				const buffer = fs.readFileSync(`${folder}/${data.themeId}.xml`);
+				const buffer = fs.readFileSync(`${folder}/business.xml`);
 				res.end(buffer);
 			});
 			return true;
