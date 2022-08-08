@@ -92,7 +92,7 @@ async function listAssets(data, makeZip) {
 					break;
 				}
 			}
-		});
+		}
 		return await zip.zip();
 	} else {
 		return Buffer.from(xmlString);
