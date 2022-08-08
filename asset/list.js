@@ -89,8 +89,7 @@ async function listAssets(data, makeZip) {
 				break;
 			} case "prop": {
 				fUtil.addToZip(zip, `${data.type}/${data.enc_asset_id || data.assetId}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${data.enc_asset_id || data.assetId}`));
-					break;
-				}
+				break;	
 			}
 		}
 		return await zip.zip();
