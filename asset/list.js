@@ -108,7 +108,10 @@ module.exports = function (req, res, url) {
 	switch (url.pathname) {
 		case "/goapi/getUserAssets/":
 		case "/goapi/getCommunityAssets/":
-		case "/goapi/searchCommunityAssets/": makeZip = true;
+		case "/goapi/searchCommunityAssets/": {
+			makeZip = true;
+			break;
+		}
 		default: return;
 	}
 
