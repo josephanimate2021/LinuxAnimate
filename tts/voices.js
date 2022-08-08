@@ -7,7 +7,7 @@ Object.keys(voices).forEach((i) => {
 	const v = voices[i],
 		l = v.language;
 	langs[l] = langs[l] || [];
-	langs[l].push(`<voice id="${i}" desc="${v.desc}" sex="${v.gender}" demo-url="" country="${v.country}" plus="N"/>`);
+	langs[l].push(`<voice id="${i}" desc="${v.desc}" sex="${v.gender}" demo-url="" country="${v.country}" plus="Y" credits="837392794"/>`);
 });
 
 const xml = `${process.env.XML_HEADER}<voices>${Object.keys(langs)
