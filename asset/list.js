@@ -107,39 +107,35 @@ async function listAssets(data, makeZip) {
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-	var makeZip = false;
-	switch (url.pathname) {
-		case "/goapi/getUserAssets/":
-			if (!req.body.data.original_asset_id) makeZip = true;
-			break;
-		default:
-			return;
-	}
-
-	switch (req.method) {
-		case "GET": {
-			var q = url.query;
-			if (q.movieId && q.type) {
-				listAssets(q, makeZip).then((buff) => {
-					const type = makeZip ? "application/zip" : "text/xml";
-					res.setHeader("Content-Type", type);
-					res.end(buff);
-				});
-				return true;
-			} else return;
+	loadPost(req, res).then(([data]) => {
+		var makeZip = false;
+		switch (url.pathname) {
+			case "/goapi/getUserAssets/": if (!data.original_asset_id) makeZip = true;
+			default: return;
 		}
-		case "POST": {
-			loadPost(req, res)
-				.then(([data]) => listAssets(data, makeZip))
-				.then((buff) => {
+		
+		switch (req.method) {
+			case "GET": {
+				var q = url.query;
+				if (q.movieId && q.type) {
+					listAssets(q, makeZip).then((buff) => {
+						const type = makeZip ? "application/zip" : "text/xml";
+						res.setHeader("Content-Type", type);
+						res.end(buff);
+					});
+					return true;
+				} else return;
+			}
+			case "POST": {
+				listAssets(data, makeZip)).then((buff) => {
 					const type = makeZip ? "application/zip" : "text/xml";
 					res.setHeader("Content-Type", type);
 					if (makeZip) res.write(base);
 					res.end(buff);
 				});
-			return true;
+				return true;
+			}
+			default: return;
 		}
-		default:
-			return;
-	}
+	});
 };
