@@ -8,7 +8,7 @@ const asset = require("./main");
 const http = require("http");
 const fs = require("fs");
 
-async function listAssets(data) {
+async function listAssets(data, makeZip) {
 	var mId = data.movieId;
 	var xmlString, files;
 	switch (data.type) {
@@ -74,6 +74,30 @@ async function listAssets(data) {
 			break;
 		}
 	}
+
+	if (makeZip) {
+		const zip = nodezip.create();
+		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
+
+		files.forEach((file) => {
+			switch (file.mode) {
+				case "bg":
+				case "movie": 
+				case "sound": {
+					const buffer = asset.load(mId, file.id);
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
+					break;
+				}
+				case "prop": {
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`));
+					break;
+				}
+			}
+		});
+		return await zip.zip();
+	} else {
+		return Buffer.from(xmlString);
+	}
 }
 
 /**
@@ -86,6 +110,9 @@ module.exports = function (req, res, url) {
 	var makeZip = false;
 	switch (url.pathname) {
 		case "/goapi/getUserAssets/":
+			makeZip = true;
+			break;
+		case "/goapi/getUserAssetsXml/":
 			break;
 		default:
 			return;
@@ -96,20 +123,22 @@ module.exports = function (req, res, url) {
 			var q = url.query;
 			if (q.movieId && q.type) {
 				listAssets(q, makeZip).then((buff) => {
-					res.setHeader("Content-Type", "text/xml");
+					const type = makeZip ? "application/zip" : "text/xml";
+					res.setHeader("Content-Type", type);
 					res.end(buff);
 				});
 				return true;
 			} else return;
 		}
 		case "POST": {
-			loadPost(req, res).then(([data]) => {
-				console.log(data);
-				listAssets(data, makeZip).then((buff) => {
-					res.setHeader("Content-Type", "text/xml");
+			loadPost(req, res)
+				.then(([data]) => listAssets(data, makeZip))
+				.then((buff) => {
+					const type = makeZip ? "application/zip" : "text/xml";
+					res.setHeader("Content-Type", type);
+					if (makeZip) res.write(base);
 					res.end(buff);
 				});
-			});
 			return true;
 		}
 		default:
