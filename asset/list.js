@@ -8,7 +8,7 @@ const asset = require("./main");
 const http = require("http");
 const fs = require("fs");
 
-async function listAssets(data, makeZip) {
+async function listAssets(data) {
 	var mId = data.movieId;
 	var xmlString, files;
 	switch (data.type) {
@@ -74,27 +74,6 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 	}
-
-	if (makeZip) {
-		const zip = nodezip.create();
-		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
-		switch (data.type) {
-			case "bg":
-			case "movie": 
-			case "sound": {
-				const buffer = asset.load(mId, data.assetId);
-				fUtil.addToZip(zip, `${data.type}/${data.assetId}`, buffer);
-				break;
-			}
-			case "prop": {
-				fUtil.addToZip(zip, `${data.type}/${data.assetId}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${data.assetId}`));
-				break;
-			}
-		}
-		return await zip.zip();
-	} else {
-		return Buffer.from(xmlString);
-	}
 }
 
 /**
@@ -107,12 +86,9 @@ module.exports = function (req, res, url) {
 	var makeZip = false;
 	switch (url.pathname) {
 		case "/goapi/getUserAssets/":
-		case "/goapi/getCommunityAssets/":
-		case "/goapi/searchCommunityAssets/": {
-			makeZip = true;
 			break;
-		}
-		default: return;
+		default:
+			return;
 	}
 
 	switch (req.method) {
@@ -120,22 +96,20 @@ module.exports = function (req, res, url) {
 			var q = url.query;
 			if (q.movieId && q.type) {
 				listAssets(q, makeZip).then((buff) => {
-					const type = makeZip ? "application/zip" : "text/xml";
-					res.setHeader("Content-Type", type);
+					res.setHeader("Content-Type", "text/xml");
 					res.end(buff);
 				});
 				return true;
 			} else return;
 		}
 		case "POST": {
-			loadPost(req, res)
-				.then(([data]) => listAssets(data, makeZip))
-				.then((buff) => {
-					const type = makeZip ? "application/zip" : "text/xml";
-					res.setHeader("Content-Type", type);
-					if (makeZip) res.write(base);
+			loadPost(req, res).then(([data]) => {
+				console.log(data);
+				listAssets(data, makeZip).then((buff) => {
+					res.setHeader("Content-Type", "text/xml");
 					res.end(buff);
 				});
+			});
 			return true;
 		}
 		default:
