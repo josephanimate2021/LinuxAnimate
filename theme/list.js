@@ -2,7 +2,7 @@ const http = require("http");
 const fUtil = require("../misc/file");
 const folder = process.env.THEME_FOLDER + "/";
 
-async function makeList(req, res, url) {
+async function makeList(res) {
 	const path = folder + "themelist.xml";
 	const zip = await fUtil.makeZip(path, "themelist.xml");
 	res.setHeader("Content-Type", "application/zip");
@@ -17,7 +17,15 @@ async function makeList(req, res, url) {
  * @param {import("url").UrlWithParsedQuery} url
  * @returns {boolean}
  */
-module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
-	makeList(req, res, url);
-};
+if (process.env.OLD_VIDEOMAKER == "false") {
+	module.exports = function (res, req, url) {
+		if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
+		makeList(res);
+	};
+} else {
+	// make the list for old videomakers via using localhost
+	module.exports = function (res, req, url) {
+		if (req.method != "POST" || url.path != "/goapi/getThemeList/?") return;
+		makeList(res);
+	};
+}
