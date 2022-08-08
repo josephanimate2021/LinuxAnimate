@@ -17,15 +17,15 @@ async function makeList(res) {
  * @param {import("url").UrlWithParsedQuery} url
  * @returns {boolean}
  */
-if (process.env.OLD_VIDEOMAKER == "false") {
-	module.exports = function (res, req, url) {
-		if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
-		makeList(res);
-	};
-} else {
+if (process.env.OLD_VIDEOMAKER) {
 	// make the list for old videomakers via using localhost
 	module.exports = function (res, req, url) {
 		if (req.method != "POST" || url.path != "/goapi/getThemeList/?") return;
+		makeList(res);
+	};
+} else {
+	module.exports = function (res, req, url) {
+		if (req.method != "POST" || url.path != "/goapi/getThemeList/") return;
 		makeList(res);
 	};
 }
