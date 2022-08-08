@@ -69,8 +69,7 @@ module.exports = function (req, res, url) {
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
-					movie.delete(url.query.movieId);
-					movie.deleteThumb(url.query.movieId);
+					movie.delete(url.query.movieId).catch(e => console.log("Error:", e));
 					return true;
 				}
 			}
