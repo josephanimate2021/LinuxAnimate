@@ -3,6 +3,7 @@ const header = process.env.XML_HEADER;
 const fUtil = require("../misc/file");
 const nodezip = require("node-zip");
 const movie = require("../movie/main");
+const character = require("../character/main");
 const base = Buffer.alloc(1, 0);
 const asset = require("./main");
 const http = require("http");
@@ -107,35 +108,37 @@ async function listAssets(data, makeZip) {
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-	loadPost(req, res).then(([data]) => {
-		var makeZip = false;
-		switch (url.pathname) {
-			case "/goapi/getUserAssets/": if (!data.original_asset_id) makeZip = true;
-			default: return;
+	var makeZip = false;
+	switch (req.method) {
+		case "GET": {
+			const match = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
+			if (!match) return;
+
+			var id = match[1];
+			res.setHeader("Content-Type", "text/xml");
+			character
+				.load(id)
+				.then((v) => {
+					(res.statusCode = 200), res.end(v);
+				})
+				.catch((e) => {
+					(res.statusCode = 404), res.end(e);
+				});
+			return true;
 		}
-		
-		switch (req.method) {
-			case "GET": {
-				var q = url.query;
-				if (q.movieId && q.type) {
-					listAssets(q, makeZip).then((buff) => {
-						const type = makeZip ? "application/zip" : "text/xml";
-						res.setHeader("Content-Type", type);
-						res.end(buff);
-					});
-					return true;
-				} else return;
-			}
-			case "POST": {
+		case "POST": {
+			if (req.url != "/goapi/getUserAssets/") return;
+			loadPost(req, res).then(([data]) => {
+				if (!data.assetId || !data.original_asset_id) makeZip = true;
 				listAssets(data, makeZip).then((buff) => {
 					const type = makeZip ? "application/zip" : "text/xml";
 					res.setHeader("Content-Type", type);
 					if (makeZip) res.write(base);
 					res.end(buff);
 				});
-				return true;
-			}
-			default: return;
+			});
+			return true;
 		}
+		default: return;
 	});
 };
