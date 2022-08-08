@@ -3,7 +3,6 @@ const header = process.env.XML_HEADER;
 const fUtil = require("../misc/file");
 const nodezip = require("node-zip");
 const movie = require("../movie/main");
-const character = require("../character/main");
 const base = Buffer.alloc(1, 0);
 const asset = require("./main");
 const http = require("http");
@@ -79,19 +78,22 @@ async function listAssets(data, makeZip) {
 	if (makeZip) {
 		const zip = nodezip.create();
 		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
-		
-		switch (data.type) {
-			case "bg":
-			case "movie": 
-			case "sound": {
-				const buffer = asset.load(mId, data.enc_asset_id || data.assetId);
-				fUtil.addToZip(zip, `${data.type}/${data.enc_asset_id || data.assetId}`, buffer);
-				break;
-			} case "prop": {
-				fUtil.addToZip(zip, `${data.type}/${data.enc_asset_id || data.assetId}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${data.enc_asset_id || data.assetId}`));
-				break;	
+
+		files.forEach((file) => {
+			switch (file.mode) {
+				case "bg":
+				case "movie": 
+				case "sound": {
+					const buffer = asset.load(mId, file.id);
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
+					break;
+				}
+				case "prop": {
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`));
+					break;
+				}
 			}
-		}
+		});
 		return await zip.zip();
 	} else {
 		return Buffer.from(xmlString);
@@ -106,48 +108,42 @@ async function listAssets(data, makeZip) {
  */
 module.exports = function (req, res, url) {
 	var makeZip = false;
+	switch (url.pathname) {
+		case "/goapi/getCommunityAssets/":
+		case "/goapi/searchCommunityAssets/": {
+			makeZip = true;
+			break;
+		}
+		case "/goapi/getUserAssets/":
+			break;
+		default:
+			return;
+	}
+
 	switch (req.method) {
 		case "GET": {
-			const match = req.url.match(/\/characters\/([^.]+)(?:\.xml)?$/);
-			if (!match) return;
-
-			var id = match[1];
-			res.setHeader("Content-Type", "text/xml");
-			characte.load(id).then(v => {
-				res.statusCode = 200; 
-				res.end(v);
-			}).catch(e => {
-				res.statusCode = 404; 
-				console.log("Error:", e);
-			});
-			const assetMatch = req.url.match(/\/(assets|goapi\/getAsset)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
-			if (!assetMatch) return;
-
-			const mId = match[1];
-			const aId = match[2];
-			const b = asset.load(mId, aId);
-			try {
-				res.statusCode = 200;
-				res.end(b);
-			} catch (e) {
-				res.statusCode = 404;
-				console.log("Error:", e);
-			}
-			return true;
+			var q = url.query;
+			if (q.movieId && q.type) {
+				listAssets(q, makeZip).then((buff) => {
+					const type = makeZip ? "application/zip" : "text/xml";
+					res.setHeader("Content-Type", type);
+					res.end(buff);
+				});
+				return true;
+			} else return;
 		}
 		case "POST": {
-			if (req.url != "/goapi/getUserAssets/") return;
-			loadPost(req, res).then(([data]) => {
-				if (!data.assetId || !data.original_asset_id) makeZip = true;
-				listAssets(data, makeZip).then((buff) => {
+			loadPost(req, res)
+				.then(([data]) => listAssets(data, makeZip))
+				.then((buff) => {
 					const type = makeZip ? "application/zip" : "text/xml";
 					res.setHeader("Content-Type", type);
 					if (makeZip) res.write(base);
 					res.end(buff);
 				});
-			});
 			return true;
 		}
-		default: return;
+		default:
+			return;
 	}
 };
