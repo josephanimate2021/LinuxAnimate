@@ -1,4 +1,3 @@
-const exFolder = process.env.EXAMPLE_FOLDER;
 const caché = require("../asset/caché");
 var path = require('path');
 const fUtil = require("../misc/file");
@@ -47,21 +46,15 @@ module.exports = {
 		});
 	},
 	loadZip(mId) {
-		return new Promise((res) => {
+		return new Promise((rej) => {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
 			switch (prefix) {
-				case "e": {
-					caché.clearTable(mId);
-					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-					res(data.subarray(data.indexOf(80)));
-					break;
-				}
 				case "s":
 				case "m": {
 					let numId = Number.parseInt(suffix);
-					if (isNaN(numId)) res();
+					if (isNaN(numId)) rej(`The ID: ${numId} Is Non Existant.`);
 					var filePath;
 					switch (prefix) {
 						case "m": {
@@ -73,10 +66,10 @@ module.exports = {
 							break;
 						}
 					}
-					if (!fs.existsSync(filePath)) res();
+					if (!fs.existsSync(filePath)) rej(`The File: ${filePath} Is Non Existant.`);
 
 					const buffer = fs.readFileSync(filePath);
-					if (!buffer || buffer.length == 0) res();
+					if (!buffer || buffer.length == 0) rej("Your Movie Has Failed To Load. one of the common reasons for this is either your movie is curupt, or there are bugs in this LVM Project that is causing the issue. if that's the case, then please contact joseph the animator#2292 on discord for help.");
 
 					try {
 						parse.packMovie(buffer, mId).then((pack) => {
@@ -85,52 +78,48 @@ module.exports = {
 						});
 						break;
 					} catch (e) {
-						res();
+						rej("Your movie has failed to pack. one of the common reasons for this is either your movie is curupt, or there are bugs in this LVM Project that is causing the issue. if that's the case, then please contact joseph the animator#2292 on discord for help.");
 					}
 				}
 				default:
-					res();
+					rej("Honestly, there is really nothing to buffer here.");
 			}
 		});
 	},
 	delete(mId) {
-		return new Promise((res, rej) => {
+		return new Promise((rej) => {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
 			switch (prefix) {
-				case "e": {
-					caché.clearTable(mId);
-					let data = fs.readFileSync(`${exFolder}/${suffix}.zip`);
-					res(data.subarray(data.indexOf(80)));
-					break;
-				}
 				case "s":
 				case "c":
 				case "m": {
 					let numId = Number.parseInt(suffix);
-					if (isNaN(numId)) res();
+					if (isNaN(numId)) rej(`The ID: ${numId} Is Non Existant.`);
+					var filePath;
 					switch (prefix) {
 						case "s": {
-							var filePath = fUtil.getFileIndex("starter-", ".xml", numId);
+							filePath = fUtil.getFileIndex("starter-", ".xml", numId);
 							break;
 						}
 						case "c": {
-							var filePath = fUtil.getFileIndex("char-", ".xml", numId);
+							filePath = fUtil.getFileIndex("char-", ".xml", numId);
 							break;
 						}
 						case "m": {
-							var filePath = fUtil.getFileIndex("movie-", ".xml", numId);
+							filePath = fUtil.getFileIndex("movie-", ".xml", numId);
 							break;
 						}
 					}
-					if (!fs.existsSync(filePath)) res();
+					if (!fs.existsSync(filePath)) rej(`The File: ${filePath} Is Non Existant.`);
+					fs.unlinkSync(filePath);
 					var path = `${process.env.SAVED_FOLDER}/${mId}.xml`;
-					if (!fs.existsSync(path)) res();
-					fs.unlinkSync(filePath, path);
+					if (!fs.existsSync(path)) rej(`The Path: ${path} Is Non Existant.`);
+					fs.unlinkSync(path);
+					fs.unlinkSync(fUtil.getFileIndex("thumb-", ".png", numId));
 				}
-				default:
-					res();
+				default: rej("THere is nothing to delete.");
 			}
 		});
 	},
