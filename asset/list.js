@@ -11,16 +11,6 @@ async function listAssets(data, makeZip) {
 	var mId = data.movieId;
 	var xmlString, files;
 	switch (data.type) {
-		case "char": {
-			const chars = await asset.chars(data.themeId);
-			xmlString = `<ugc more="0">${chars
-				.map(
-					(v) =>
-						`<char id="${v.id}" name="Untitled" cc_theme_id="${v.theme}" thumbnail_url="/char_thumbs/${v.id}.png" copyable="Y"><tags/></char>`
-				)
-				.join("")}</ugc>`;
-			break;
-		}
 		case "bg": {
 			files = asset.list(mId, "bg");
 			xmlString = `<ugc more="0">${files
@@ -56,7 +46,13 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		default: {
-			xmlString = `<ugc more="0"></ugc>`;
+			const chars = await asset.chars(data.themeId);
+			xmlString = `<ugc more="0">${chars
+				.map(
+					(v) =>
+						`<char id="${v.id}" name="Untitled" cc_theme_id="${v.theme}" thumbnail_url="/char_thumbs/${v.id}.png" copyable="Y"><tags/></char>`
+				)
+				.join("")}</ugc>`;
 			break;
 		}
 	}
