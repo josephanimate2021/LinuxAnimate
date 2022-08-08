@@ -127,7 +127,7 @@ module.exports = function (req, res, url) {
 				} else return;
 			}
 			case "POST": {
-				listAssets(data, makeZip)).then((buff) => {
+				listAssets(data, makeZip).then((buff) => {
 					const type = makeZip ? "application/zip" : "text/xml";
 					res.setHeader("Content-Type", type);
 					if (makeZip) res.write(base);
