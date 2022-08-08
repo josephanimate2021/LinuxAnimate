@@ -46,7 +46,7 @@ module.exports = {
 		});
 	},
 	loadZip(mId) {
-		return new Promise((rej) => {
+		return new Promise((res, rej) => {
 			const i = mId.indexOf("-");
 			const prefix = mId.substr(0, i);
 			const suffix = mId.substr(i + 1);
