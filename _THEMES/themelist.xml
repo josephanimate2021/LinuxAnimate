@@ -2,8 +2,6 @@
 <list version="1.0">
 	<fvm_meta theme_code="" is_biz="0" />
 	<theme id="business" name="Business Friendly" thumb="" cc_theme_id="business" />
-	<theme id="whiteboard" name="Whiteboard Animation" thumb="" cc_theme_id="whiteboard" />
-	<theme id="infographics" name="Video Infographics" thumb="" cc_theme_id="infographics" />
 	<theme id="custom" name="Comedy World" thumb="" cc_theme_id="custom" />
 	<theme id="action" name="Lil' Peepz" thumb="" cc_theme_id="action" />
 	<theme id="common" name="Common" thumb="matchboy-stand.swf" cc_theme_id="common" />
@@ -20,10 +18,7 @@
 	<theme id="anime" name="Anime" thumb="" cc_theme_id="anime" />
 	<theme id="ninjaanime" name="Ninja Anime" thumb="" cc_theme_id="ninjaanime" />
 	<theme id="christmas" name="Holiday &amp; Seasonal" thumb="santa-stand.swf" cc_theme_id="christmas" />
-	<theme id="spacecitizen" name="Space Citizens" thumb="" cc_theme_id="spacecitizen" />
-	<theme id="commoncraft" name="Common Craft" thumb="" cc_theme_id="commoncraft" />
 	<theme id="politic" name="Politics &amp; Celebrity" thumb="hilary-stand.swf" cc_theme_id="politic" />
-	<theme id="bizmodels" name="Business Models" cc_theme_id="bizmodels" />
 	<word></word>
 	<whiteword />
 	<excludeAssetIDs />
