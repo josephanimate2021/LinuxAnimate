@@ -1,6 +1,5 @@
 const loadPost = require("../misc/post_body");
 const folder = process.env.WAVEFORMS_FOLDER;
-const waveform = require("./main");
 const http = require("http");
 const fs = require("fs");
 
@@ -16,7 +15,8 @@ module.exports = function (req, res, url) {
 	switch (url.pathname) {
 		case "/goapi/saveWaveform/": {
 			loadPost(req, res).then(([data, mId]) => {
-				waveform.save(data.wfId, data.waveform).then((nId) => res.end("0" + nId));
+				const path = `${folder}/${data.wfId}.wf`;
+				fs.writeFileSync(path, data.waveform);
 			});
 			return true;
 		}
