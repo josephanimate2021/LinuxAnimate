@@ -31,7 +31,7 @@ module.exports = function (req, res, url) {
 							res.end();
 						}
 					}).catch(e => {
-						console.log(e);
+						console.log("Error:", e);
 					});
 					break;
 				default:
@@ -45,7 +45,7 @@ module.exports = function (req, res, url) {
 							res.end();
 						}
 					}).catch(e => {
-						console.log(e);
+						console.log("Error:", e);
 					});
 					break;
 			}
@@ -57,7 +57,13 @@ module.exports = function (req, res, url) {
 				case "/goapi/getMovie/": {
 					res.setHeader("Content-Type", "application/zip");
 
-					movie.loadZip(url.query.movieId).then((b) => res.end(Buffer.concat([base, b]))).catch(() => res.end("1"));
+					movie.loadZip(url.query.movieId).then(b => {
+						res.end(Buffer.concat([base, b]))
+					}).catch(e => {
+						console.log("Error:", e);
+						// display an error for retro videomakers
+						res.end(1 + e);
+					});
 					return true;
 				}
 				case "/ajax/deleteStarter/":
