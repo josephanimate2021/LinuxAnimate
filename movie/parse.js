@@ -23,8 +23,6 @@ function name2Font(font) {
 			return "FontFileTokyo";
 		case "Accidental Presidency":
 			return "FontFileAccidental";
-		case "BodoniXT":
-			return "FontFileBodoniXT";
 		case "Budmo Jiggler":
 			return "FontFileBJiggler";
 		case "Budmo Jigglish":
@@ -37,97 +35,23 @@ function name2Font(font) {
 			return "FontFileHoney";
 		case "I hate Comic Sans":
 			return "FontFileIHate";
-		case "Impact Label":
-			return "FontFileImpactLabel";
 		case "loco tv":
 			return "FontFileLocotv";
 		case "Mail Ray Stuff":
 			return "FontFileMailRay";
-		case "Mia's Scribblings ~":
+		case "Mia\'s Scribblings ~":
 			return "FontFileMia";
-		case "Shanghai":
-			return "FontFileShanghai";
-		case "Comic Book":
-			return "FontFileComicBook";
-		case "Wood Stamp":
-			return "FontFileWoodStamp";
-		case "Brawler":
-			return "FontFileBrawler";
 		case "Coming Soon":
 			return "FontFileCSoon";
-		case "Glegoo":
-			return "FontFileGlegoo";
 		case "Lilita One":
 			return "FontFileLOne";
 		case "Telex Regular":
 			return "FontFileTelex";
-		case "Claire Hand":
-			return "FontFileClaireHand";
-		case "Oswald":
-			return "FontFileOswald";
-		case "Poiret One":
-			return "FontFilePoiretOne";
-		case "Raleway":
-			return "FontFileRaleway";
-		case "Bangers":
-			return "FontFileBangers";
-		case "Creepster":
-			return "FontFileCreepster";
-		case "BlackoutMidnight":
-			return "FontFileBlackoutMidnight";
-		case "BlackoutSunrise":
-			return "FontFileBlackoutSunrise";
-		case "Junction":
-			return "FontFileJunction";
-		case "LeagueGothic":
-			return "FontFileLeagueGothic";
-		case "LeagueSpartan":
-			return "FontFileLeagueSpartan";
-		case "OstrichSansMedium":
-			return "FontFileOstrichSansMedium";
-		case "Prociono":
-			return "FontFileProciono";
-		case "Lato":
-			return "FontFileLato";
-		case "Alegreya Sans SC":
-			return "FontFileAlegreyaSansSC";
-		case "Barrio":
-			return "FontFileBarrio";
-		case "Bungee Inline":
-			return "FontFileBungeeInline";
-		case "Bungee Shade":
-			return "FontFileBungeeShade";
-		case "Gochi Hand":
-			return "FontFileGochiHand";
-		case "IM Fell English SC":
-			return "FontFileIMFellEnglishSC";
-		case "Josefin":
-			return "FontFileJosefin";
-		case "Kaushan":
-			return "FontFileKaushan";
-		case "Lobster":
-			return "FontFileLobster";
-		case "Montserrat":
-			return "FontFileMontserrat";
-		case "Mouse Memoirs":
-			return "FontFileMouseMemoirs";
-		case "Patrick Hand":
-			return "FontFilePatrickHand";
-		case "Permanent Marker":
-			return "FontFilePermanentMarker";
-		case "Satisfy":
-			return "FontFileSatisfy";
-		case "Sriracha":
-			return "FontFileSriracha";
-		case "Teko":
-			return "FontFileTeko";
-		case "Vidaloka":
-			return "FontFileVidaloka";
 		case "":
 		case null:
-			return "";
+			return '';
 		default:
-			return `FontFile${font}`;
+			return `FontFile${font.replace(/\s/g, '')}`;
 	}
 }
 
