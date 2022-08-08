@@ -79,18 +79,16 @@ async function listAssets(data, makeZip) {
 	if (makeZip) {
 		const zip = nodezip.create();
 		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
-
-		files.forEach((file) => {
-			switch (file.mode) {
-				case "bg":
-				case "movie": 
-				case "sound": {
-					const buffer = asset.load(mId, file.id);
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
-					break;
-				}
-				case "prop": {
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`));
+		
+		switch (data.type) {
+			case "bg":
+			case "movie": 
+			case "sound": {
+				const buffer = asset.load(mId, data.enc_asset_id || data.assetId);
+				fUtil.addToZip(zip, `${data.type}/${data.enc_asset_id || data.assetId}`, buffer);
+				break;
+			} case "prop": {
+				fUtil.addToZip(zip, `${data.type}/${data.enc_asset_id || data.assetId}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${data.enc_asset_id || data.assetId}`));
 					break;
 				}
 			}
@@ -116,14 +114,26 @@ module.exports = function (req, res, url) {
 
 			var id = match[1];
 			res.setHeader("Content-Type", "text/xml");
-			character
-				.load(id)
-				.then((v) => {
-					(res.statusCode = 200), res.end(v);
-				})
-				.catch((e) => {
-					(res.statusCode = 404), res.end(e);
-				});
+			characte.load(id).then(v => {
+				res.statusCode = 200; 
+				res.end(v);
+			}).catch(e => {
+				res.statusCode = 404; 
+				console.log("Error:", e);
+			});
+			const assetMatch = req.url.match(/\/(assets|goapi\/getAsset)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
+			if (!assetMatch) return;
+
+			const mId = match[1];
+			const aId = match[2];
+			const b = asset.load(mId, aId);
+			try {
+				res.statusCode = 200;
+				res.end(b);
+			} catch (e) {
+				res.statusCode = 404;
+				console.log("Error:", e);
+			}
 			return true;
 		}
 		case "POST": {
