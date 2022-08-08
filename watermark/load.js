@@ -4,7 +4,7 @@ const fs = require("fs");
 const http = require("http");
 
 module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/goapi/getMovieInfo/") return; 
+	if (req.method != "POST" || url.path != "/fbapi/getMovieInfo/") return; 
 	loadPost(req, res).then(([data]) => {
 		res.setHeader("Content-Type", "text/html; charset=UTF-8");
 		const p = `${folder}/${data.movieId}.xml`;
