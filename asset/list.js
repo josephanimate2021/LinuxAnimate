@@ -140,5 +140,5 @@ module.exports = function (req, res, url) {
 			return true;
 		}
 		default: return;
-	});
+	}
 };
