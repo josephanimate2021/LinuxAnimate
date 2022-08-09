@@ -95,7 +95,9 @@ module.exports = function (req, res, url) {
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
 					// reject a movie delete request that someone made.
-					if (req.headers.host != "localhost:4343") console.log("A Delete Request someone has made has been rejected.");
+					if (req.headers.host != "localhost" && req.headers.host != `localhost:${process.env.SERVER_PORT}`) {
+						console.log("A Delete Request someone has made has been rejected.");
+					}
 					// accept a delete request on localhost.
 					else {
 						console.log("Warning! Deleting Movie!");
