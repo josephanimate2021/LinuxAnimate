@@ -1,4 +1,7 @@
 var themeFolder = process.env.THEME_FOLDER;
+const { SAVED_FOLDER, STARTERS_FOLDER } = process.env;
+const folder = SAVED_FOLDER;
+const starters = STARTERS_FOLDER;
 var mp3Duration = require("mp3-duration");
 var char = require("../character/main");
 var ttsInfo = require("../tts/info");
@@ -478,17 +481,17 @@ module.exports = {
 		var end = xml.lastIndexOf("</thumb>");
 		if (beg > -1 && end > -1) {
 			var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
-			fs.writeFileSync(`${process.env.SAVED_FOLDER}/${mId}.png`, sub);
+			fs.writeFileSync(`${folder}/${mId}.png`, sub);
 		}
-		fs.writeFileSync(`${process.env.SAVED_FOLDER}/${mId}.xml`, xml);
+		fs.writeFileSync(`${folder}/${mId}.xml`, xml);
 	},
 	async unpackStarterXml(xml, mId) {
 		var beg = xml.lastIndexOf("<thumb>");
 		var end = xml.lastIndexOf("</thumb>");
 		if (beg > -1 && end > -1) {
 			var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
-			fs.writeFileSync(`${process.env.STARTERS_FOLDER}/${mId}.png`, sub);
+			fs.writeFileSync(`${starters}/${mId}.png`, sub);
 		}
-		fs.writeFileSync(`${process.env.STARTERS_FOLDER}/${mId}.xml`, xml);
+		fs.writeFileSync(`${starters}/${mId}.xml`, xml);
 	},
 };
