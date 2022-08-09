@@ -12,7 +12,7 @@ module.exports = function (req, res, url) {
 					console.log(`Unable to load ${data.themeId} in the lvm. please try again later.`);
 					return res.end(1 + util.xmlFail(`Unable to load ${data.themeId} in the lvm. please try again later.`));
 				}
-			}
+			});
 		} default: return;
 	}
 };
