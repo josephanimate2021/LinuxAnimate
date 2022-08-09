@@ -5,23 +5,23 @@ const caché = require("./caché");
 
 module.exports = {
 
-	load(mId, aId) {
-		return caché.load(mId, aId);
+	load(ut, aId) {
+		return caché.load(ut, aId);
 	},
-	delete(mId, aId) {
-		return caché.delete(mId, aId);
+	delete(ut, aId) {
+		return caché.delete(ut, aId);
 	},
-	save(buffer, mId, mode, ext) {
+	save(buffer, ut, mode, ext) {
 		var suffix, ed;
                 switch (mode) { 
 			case "prop": { 
 				suffix = `-${mode}.${ext}`;
-				return caché.newProp(buffer, mId, "", suffix); 
+				return caché.newProp(buffer, ut, "", suffix); 
                                 break;
                         }
 			case "wtr": { 
 				suffix = `-${mode}.${ext}`;
-				return caché.newWatermark(buffer, mId, "", suffix, ext); 
+				return caché.newWatermark(buffer, ut, "", suffix, ext); 
                                 break;
                         }
 			case "video": { 
@@ -29,20 +29,20 @@ module.exports = {
                                 if (mode == "dontimport") {
                                         console.log;
                                 } else {
-                                        return caché.newVideo(buffer, mId, "", suffix); 
+                                        return caché.newVideo(buffer, ut, "", suffix); 
                                 }
                                 break;
 			}
 			default: {
                                 suffix = `-${mode}.${ext}`;
-                                return caché.newItem(buffer, mId, "", suffix);
+                                return caché.newItem(buffer, ut, "", suffix);
                                 break;
                         }
                 }
 	},
-	list(mId, mode) {
+	list(ut, mode) {
 		var ret = [];
-		var files = caché.list(mId);
+		var files = caché.list(ut);
 		files.forEach((aId) => {
 			var dot = aId.lastIndexOf(".");
 			var dash = aId.lastIndexOf("-");
@@ -62,6 +62,10 @@ module.exports = {
 					var fMode = 'sound';
 					var subtype = 'soundeffect';
 					break;
+				case 'tts':
+					var fMode = 'sound';
+					var subtype = 'tts';
+					break;
 			}
 			if (fMode == mode) {
 				if (fMode == 'sound') {
@@ -72,8 +76,8 @@ module.exports = {
 			}
 
 			return new Promise(function (resolve, reject) {
-				console.log(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`);
-				mp3Duration(`/${process.env.CACHÉ_FOLDER}/${mId}.${aId}`, (e, d) => {
+				console.log(`/${process.env.CACHÉ_FOLDER}/${ut}.${aId}`);
+				mp3Duration(`/${process.env.CACHÉ_FOLDER}/${ut}.${aId}`, (e, d) => {
 					var dur = d * 1e3;
 					console.log(dur);
 					var dot = aId.lastIndexOf(".");
@@ -94,20 +98,6 @@ module.exports = {
 			});
 		}
 	});
-		return ret;
-	},
-
-	listAll(mId) {
-		var ret = [];
-		var files = caché.list(mId);
-		files.forEach((aId) => {
-			var dot = aId.lastIndexOf(".");
-			var dash = aId.lastIndexOf("-");
-			var name = aId.substr(0, dash);
-			var ext = aId.substr(dot + 1);
-			var fMode = aId.substr(dash + 1, dot - dash - 1);
-			ret.push({ id: aId, ext: ext, name: name, mode: fMode });
-		});
 		return ret;
 	},
 	chars(theme) {

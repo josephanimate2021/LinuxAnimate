@@ -9,7 +9,6 @@ const http = require("http");
 const fs = require("fs");
 
 async function listAssets(data, makeZip) {
-	var mId = data.movieId;
 	var xmlString, files;
 	switch (data.type) {
 		case "char": {
@@ -23,14 +22,14 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		case "bg": {
-			files = asset.list(mId, "bg");
+			files = asset.list(data.ut, "bg");
 			xmlString = `${header}<ugc more="0">${files
 				.map((v) => `<background subtype="0" id="${v.id}" name="${v.name}" enable="Y"/>`)
 				.join("")}</ugc>`;
 			break;
 		}
 		case "sound": {
-			files = asset.list(mId, "sound");
+			files = asset.list(data.ut, "sound");
 			xmlString = `${header}<ugc more="0">${files
 				.map((v) =>`<sound subtype="${v.subtype}" id="${v.id}" name="${v.name}" enable="Y" duration="${v.duration}" downloadtype="progressive"/>`)
 				.join("")}</ugc>`;
@@ -47,7 +46,7 @@ async function listAssets(data, makeZip) {
 			break;
 		}
 		case "prop": {
-			files = asset.list(mId, "prop");
+			files = asset.list(data.ut, "prop");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 				        (v) =>
@@ -64,7 +63,7 @@ async function listAssets(data, makeZip) {
 	
 	switch (data.subtype) {
 		case "video": {
-			files = asset.list(mId, "video");
+			files = asset.list(data.ut, "video");
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
@@ -77,14 +76,14 @@ async function listAssets(data, makeZip) {
 
 	if (makeZip) {
 		const zip = nodezip.create();
-		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
+		fdata.util.addToZip(zip, "desc.xml", Buffer.from(xmlString));
 
 		files.forEach((file) => {
 			switch (file.mode) {
 				case "bg":
 				case "movie": 
 				case "sound": {
-					const buffer = asset.load(mId, file.id);
+					const buffer = asset.load(data.ut, file.id);
 					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
 					break;
 				}

@@ -15,16 +15,17 @@ module.exports = function (req, res, url) {
 	if (req.method != "POST") return;
 	switch (url.pathname) {
 		case "/goapi/saveMovie/": {
-			loadPost(req, res).then(([data, mId]) => {
+			loadPost(req, res).then(([data]) => {
 				const trigAutosave = data.is_triggered_by_autosave;
-				if (trigAutosave && !data.movieId ) {
+				if (trigAutosave && !data.movieId || trigAutosave && data.copyable == "true") {
 					thumb = fs.readFileSync(process.env.THUMB_BASE_URL + "/285747869.jpg");
 				} else {
 					thumb = data.thumbnail_large && Buffer.from(data.thumbnail_large, "base64");
 				}
 
 				var body = Buffer.from(data.body_zip, "base64");
-				movie.save(body, thumb, mId, data.presaveId).then((nId) => res.end("0" + nId));
+				movie.save(body, thumb, data.movieId).then((nId) => res.end("0" + nId)).catch(e => console.log("Error:", e));
+				 
 			});
 			return true;
 		}

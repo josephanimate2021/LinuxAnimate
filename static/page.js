@@ -139,7 +139,7 @@ module.exports = function (req, res, url) {
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
 					tlang: "en_US",
 					goteam_draft_only: 1,
-					isWide: 1,
+					isWide: 0,
 					collab: 0,
 					nextUrl: "/html/list.html",
 					tray: "retro",
@@ -160,10 +160,9 @@ module.exports = function (req, res, url) {
 			params = {
 				flashvars: {
 					apiserver: "/",
-					storePath: process.env.STORE_URL + "/<store>",
+					storePath: "https://josephanimate2021.github.io/store/3a981f5cb2739137/<store>",
 					ut: ut,
 					autostart: 1,
-					isWide: 1,
 					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
 				},
 				allowScriptAccess: "always",

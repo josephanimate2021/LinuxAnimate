@@ -478,7 +478,8 @@ function tts(voiceName, text) {
  */
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/convertTextToSoundAsset/") return;
-	loadPost(req, res).then(([data, mId]) => {
+	loadPost(req, res).then(([data]) => {
+		const mId = data.ut;
 		tts(data.voice, data.text)
 			.then((buffer) => {
 				mp3Duration(buffer, (e, d) => {

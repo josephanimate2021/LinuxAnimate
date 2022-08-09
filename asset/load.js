@@ -2,6 +2,7 @@ const loadPost = require("../misc/post_body");
 const asset = require("./main");
 const character = require("../character/main");
 const movie = require("../movie/main");
+const starter = require("../starter/main");
 const http = require("http");
 
 /**
@@ -16,9 +17,9 @@ module.exports = function (req, res, url) {
 			const match = req.url.match(/\/(assets|goapi\/getAsset)\/([^/]+)\/([^.]+)(?:\.xml)?$/);
 			if (!match) return;
 
-			const mId = match[1];
+			const ut = match[1];
 			const aId = match[2];
-			const b = asset.load(mId, aId);
+			const b = asset.load(ut, aId);
 			if (b) {
 				res.statusCode = 200;
 				res.end(b);
@@ -46,10 +47,10 @@ module.exports = function (req, res, url) {
 			switch (url.pathname) {
 				case "/goapi/getAsset/":
 				case "/goapi/getAssetEx/": {
-					loadPost(req, res).then(([data, mId]) => {
+					loadPost(req, res).then(([data]) => {
 						const aId = data.assetId || data.enc_asset_id;
-
-						const b = asset.load(mId, aId);
+						console.log(data.ut);
+						const b = asset.load(data.ut, aId);
 						if (b) {
 							res.setHeader("Content-Length", b.length);
 							res.setHeader("Content-Type", "audio/mp3");
@@ -62,15 +63,16 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/deleteAsset/": {
-					loadPost(req, res).then(async ([data, mId]) => {
+					loadPost(req, res).then(async ([data]) => {
+						const ut = data.ut;
 						const aId = data.assetId || data.enc_asset_id;
-						asset.delete(mId, aId);
+						asset.delete(ut, aId);
 					});
 					return true;
 				}
 				case "/goapi/deleteUserTemplate/": {
 					loadPost(req, res).then(async ([data]) => {
-						movie.delete(data.starter_id);
+						starter.delete();
 					});
 					return true;
 				}

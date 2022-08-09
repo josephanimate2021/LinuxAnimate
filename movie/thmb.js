@@ -1,5 +1,5 @@
-const movie = require("./main");
 const http = require("http");
+const movie = require("./main");
 
 /**
  * @param {http.IncomingMessage} req
@@ -7,24 +7,18 @@ const http = require("http");
  * @param {import("url").UrlWithParsedQuery} url
  * @returns {boolean}
  */
-module.exports = function (req, res, url) {
-	var path = url.pathname;
-	if (req.method != "GET" || !path.startsWith("/movie_thumbs")) return;
-	var beg = path.lastIndexOf("/") + 1;
-	var end = path.lastIndexOf(".");
-	var ext = path.substr(end + 1).toLowerCase();
-	if (ext != "png") return;
+ module.exports = function (req, res, url) {
+	const match = req.url.match(/\/movie_thumbs\/([^/]+)$/);
+	if (!match) return;
+	const mId = match[1];
 
-	movie
-		.loadThumb(path.substr(beg, end - beg))
-		.then((v) => {
-			res.setHeader("Content-Type", "image/png");
-			res.statusCode = 200;
-			res.end(v);
-		})
-		.catch(() => {
-			res.statusCode = 400;
-			res.end();
-		});
+	try {
+		const mThmb = movie.loadThumb(mId);
+		res.setHeader("Content-Type", "image/png");
+		res.end(mThmb);
+	} catch (err) {
+		res.statusCode = 404;
+		console.log("Error:", err);
+	}
 	return true;
-};
+}

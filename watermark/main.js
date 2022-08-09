@@ -11,7 +11,7 @@ module.exports = {
 		switch (wId) {
 			// premade watermarks
 			case "0dhteqDBt5nY": {
-				wXml = `<movie owner="NederlandComedian" id="${mId}"/><watermarks><watermark style="visualplugin"/></watermarks>`;
+				wXml = `<watermarks><watermark style="josephanimate"/></watermarks>`;
 				break;
 			}
 			case "0vTLbQy9hG7k": {
@@ -19,20 +19,20 @@ module.exports = {
 				break;
 			}
 			case "174tbqdo0cs6": {
-				wXml = `<movie owner="NederlandComedian" id="${mId}"/><watermarks><watermark style="g4s"/></watermarks>`;
+				wXml = `<watermarks><watermark style="g4s"/></watermarks>`;
 				break;
 			}
 			case "52ht3dd60csd": {
-				wXml = `<movie owner="NederlandComedian" id="${mId}"/><watermarks><watermark style="twoLines"/></watermarks>`;
+				wXml = `<watermarks><watermark style="twoLines"/></watermarks>`;
 				break;
 			}
 			case "82tkgqdefbw6": {
-				wXml = `<movie owner="NederlandComedian" id="${mId}"/><watermarks><watermark style="freeTrial"/></watermarks>`;
+				wXml = `<watermarks><watermark style="freeTrial"/></watermarks>`;
 				break;
 			}
 			// custom watermarks
 			default: {
-				wXml = `<movie owner="NederlandComedian" id="${mId}"/><watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
+				wXml = `<watermarks><watermark>/${folder}/${wId}-wtr.swf</watermark></watermarks>`;
 				break;
 			}
 		}
@@ -40,7 +40,7 @@ module.exports = {
 		this.assign(mId, wId);
 	},
 	assign(mId, wId) {
-		var path = `${savedFolder}/${mId}.xml`;
+		var path = `${savedFolder}/${mId}-watermark.xml`;
 		var wXml;
 		switch (wId) {
 			case "0dhteqDBt5nY": {
