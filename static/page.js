@@ -147,7 +147,7 @@ module.exports = function (req, res, url) {
 					isWide: 1,
 					collab: 0,
 					nextUrl: "/html/list.html",
-					tray: trayQuery,
+					tray: "retro",
 				},
 				allowScriptAccess: "always",
 			};

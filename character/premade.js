@@ -6,13 +6,6 @@ module.exports = function (req, res, url) {
 		case "/goapi/getCCPreMadeCharacters": {
 			res.end();
 			return true;
-		} case "/goapi/clientbug/": {
-			loadPost(req, res).then(data => {
-				if (data.themeId != "common") {
-					console.log(`Unable to load ${data.themeId} in the lvm. please try again later.`);
-					return res.end(1 + util.xmlFail(`Unable to load ${data.themeId} in the lvm. please try again later.`));
-				}
-			});
 		} default: return;
 	}
 };
