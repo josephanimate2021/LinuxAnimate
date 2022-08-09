@@ -21,6 +21,7 @@ module.exports = function (req, res, url) {
 				var buffer = fs.readFileSync(path);
 				const numId = fUtil.generateId();
 				if (req.headers.host == "localhost" && req.headers.host == `localhost:${process.env.SERVER_PORT}`) {
+					console.log("Test");
 					parse.unpackXml(buffer, `${numId}`);
 				}
 				fs.unlinkSync(path);
