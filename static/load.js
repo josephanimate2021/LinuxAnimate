@@ -32,7 +32,7 @@ module.exports = function (req, res, url) {
 						content = fs.readFileSync(path, "utf8");
 						content = content.replace(/VERSIÖN/g, pjson.versionStr);
 						const apiPath = `./${link}/../`;
-						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>
+						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>`;
 						res.end(content);
 					} else {
 						fs.createReadStream(path).pipe(res);
