@@ -21,18 +21,23 @@ module.exports = function (req, res, url) {
 			var path = `./${link}`;
 
 			try {
-				for (var headerName in headers || {}) {
-					res.setHeader(headerName, headers[headerName]);
-				}
+				for (var headerName in headers || {}) res.setHeader(headerName, headers[headerName]);
 				res.statusCode = t.statusCode || 200;
-				if (t.content !== undefined) {
-					res.end(t.content);
-				} else if (fs.existsSync(path)) {
+				if (t.content !== undefined) res.end(t.content);
+				else if (fs.existsSync(path)) {
 					if (t.contentReplace) {
 						content = fs.readFileSync(path, "utf8");
 						content = content.replace(/VERSIÖN/g, pjson.versionStr);
-						const apiPath = req.headers.host;
-						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=http://${apiPath}&action=create&tutorial=0&tray=retro">here</a>`);
+						// why
+						var apiPath;
+						if (req.headers.host != "localhost:4343") {
+							apiPath = `https://${req.headers.host}`;
+							content = content.replace(/NEWS/g, "LinuxAnimate now has it's own online lvm clone! if this is your first time using linuxanimate and you are not in the goanimate community, please click");
+						} else {
+							apiPath = `http://${req.headers.host}`;
+							content = content.replace(/NEWS/g, "The First Half Of LinuxAnimate Development Is Complete. Pretty soon, updating asset names, tags, and theme searching are to await. if this is your first time using linuxanimate and you are not in the goanimate community, please click");
+						}
+						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>`);
 						res.end(content);
 					} else {
 						fs.createReadStream(path).pipe(res);
