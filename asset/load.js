@@ -63,17 +63,26 @@ module.exports = function (req, res, url) {
 					return true;
 				}
 				case "/goapi/deleteAsset/": {
-					loadPost(req, res).then(async ([data]) => {
-						const ut = data.ut;
-						const aId = data.assetId || data.enc_asset_id;
-						asset.delete(ut, aId);
-					});
-					return true;
+					// only accept the request on localhost
+					switch (req.headers.host) {
+						case "localhost": 
+						case `localhost:${process.env.SERVER_PORT}`: {
+							loadPost(req, res).then(async ([data]) => {
+								const ut = data.ut;
+								const aId = data.assetId || data.enc_asset_id;
+								asset.delete(ut, aId);
+							});
+							return true;
+						}
+					}
 				}
 				case "/goapi/DeleteUserTemplate/": {
-					loadPost(req, res).then(async ([data]) => {
-						starter.delete(data.templateId);
-					});
+					const port = process.env.SERVER_PORT;
+					// only accept the request on localhost
+					switch (req.headers.host) {
+						case "localhost": loadPost(req, res).then(async ([data]) => starter.delete(data.templateId));
+						case `localhost:${port}`: loadPost(req, res).then(async ([data]) => starter.delete(data.templateId));
+					}
 					return true;
 				}
 				default:
