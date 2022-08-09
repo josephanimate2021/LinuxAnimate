@@ -8,16 +8,17 @@ const movie = require("./main");
  * @returns {boolean}
  */
  module.exports = function (req, res, url) {
-	 const match = req.url.match(/\/movie_thumbs\/([^/]+)$/);
-	 if (!match) return;
-	 const movieId = match[1];
+	const match = req.url.match(/\/movie_thumbs\/([^/]+)$/);
+	if (!match) return;
+	const mId = match[1];
 
-	 movie.loadThumb(movieId).then(mThmb => {
-		 res.setHeader("Content-Type", "image/png");
-		 res.end(mThmb);
-	 }).catch(e => {
-		 res.statusCode = 404;
-		 console.log("Error:", e);
-	 });
-	 return true;
- }
+	try {
+		const mThmb = movie.loadThumb(mId);
+		res.setHeader("Content-Type", "image/png");
+		res.end(mThmb);
+	} catch (e) {
+		res.statusCode = 404;
+		console.log("Error:", e);
+	}
+	return true;
+}
