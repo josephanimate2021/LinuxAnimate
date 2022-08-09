@@ -57,8 +57,10 @@ module.exports = {
 		});
 	},
 	loadThumb(movieId) {
-		const match = fs.readdirSync(folder).find(file => file.includes(`${movieId}.png`));
-		return match ? fs.readFileSync(`${folder}/${match}`) : null;
+		return new Promise((res, rej) => {
+			const match = fs.readdirSync(folder).find(file => file.includes(`${movieId}.png`));
+			match ? fs.readFileSync(`${folder}/${match}`) : rej(`${match} Is Non Exsistant`);
+		});
 	},
 	list() {
 		const array = [];
