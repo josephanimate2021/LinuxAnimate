@@ -8,13 +8,12 @@ const asset = require("./main");
 const http = require("http");
 const fs = require("fs");
 
-async function listAssets() {
+function listAssets() {
 	var xmlString, files;
 	var files = starter.list();
-	var xmlString = `${header}<ugc more="0">${
+	return `${header}<ugc more="0">${
 	files.map(v =>`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${ v.id}" numScene="1" title="Untitled" thumbnail_url="/starter_thumbs/${
-		  v.id}"><tags></tags></movie>`).join("")}</ugc>`
-	return Buffer.from(xmlString)
+		  v.id}"><tags></tags></movie>`).join("")}</ugc>`;
 }
 
 /**
@@ -31,9 +30,9 @@ module.exports = function (req, res, url) {
 		default:
 			return;
 	}
-	loadPost(req, res).then(([data]) => listAssets()).then((buff) => {
+	listAssets().then((buff) => {
 		res.setHeader("Content-Type", "text/xml");
 		res.end(buff);
-	});
+	}).catch(e => console.log("Error:", e));
 	return true;
 };
