@@ -85,6 +85,30 @@ module.exports = {
 			return table;
 		}
 	},
+	get() {
+		const array = [];
+		fs.readdirSync(folder).forEach(fn => {
+			if (!fn.includes(".xml")) return;
+			// check if the movie and thumbnail exists
+			const mId = fn.substring(0, fn.length - 4);
+			const movie = fs.existsSync(`${folder}/${mId}.xml`);
+			const thumb = fs.existsSync(`${folder}/${mId}.png`);
+			if (movie && thumb) array.get(mId);
+		});
+		return array;
+	},
+	update() {
+		const array = [];
+		fs.readdirSync(folder).forEach(fn => {
+			if (!fn.includes(".xml")) return;
+			// check if the movie and thumbnail exists
+			const mId = fn.substring(0, fn.length - 4);
+			const movie = fs.existsSync(`${folder}/${mId}.xml`);
+			const thumb = fs.existsSync(`${folder}/${mId}.png`);
+			if (movie && thumb) array.update(mId);
+		});
+		return array;
+	},
 	meta(movieId) {
 		const filepath = `${folder}/${movieId}.xml`;
 		const buffer = fs.readFileSync(filepath);
