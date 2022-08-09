@@ -64,24 +64,7 @@ module.exports = function (req, res, url) {
 				case "/goapi/deleteAsset/": {
 					loadPost(req, res).then(async ([data, mId]) => {
 						const aId = data.assetId || data.enc_asset_id;
-						const c = character.delete(data.assetId || data.original_asset_id);
-						const ct = character.deleteThumb(data.assetId || data.original_asset_id);
-						const b = asset.delete(mId, aId);
-						if (data.original_asset_id) {
-							if (c, ct) {
-								res.end(c, ct);
-							} else {
-								res.statusCode = 404;
-								res.end();
-							}
-						} else {
-							if (b) {
-								res.end(b);
-							} else {
-								res.statusCode = 404;
-								res.end();
-							}
-						}
+						asset.delete(mId, aId);
 					});
 					return true;
 				}

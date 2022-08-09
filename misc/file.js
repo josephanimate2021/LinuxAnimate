@@ -45,6 +45,16 @@ module.exports = {
 	/**
 	 * @param {string} s
 	 * @param {string} suf
+	 * @param {number} l
+	 * @returns {number}
+	 */
+	 getNextFileId(s, suf = ".xml", l = 7) {
+		const indicies = this.getValidFileIndicies(s, suf, l);
+		return indicies.length ? indicies[indicies.length - 1] : 0;
+	},
+	/**
+	 * @param {string} s
+	 * @param {string} suf
 	 * @param {Buffer} data
 	 * @param {number} l
 	 * @returns {number}
