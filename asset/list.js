@@ -76,7 +76,7 @@ async function listAssets(data, makeZip) {
 
 	if (makeZip) {
 		const zip = nodezip.create();
-		fdata.util.addToZip(zip, "desc.xml", Buffer.from(xmlString));
+		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
 
 		files.forEach((file) => {
 			switch (file.mode) {
