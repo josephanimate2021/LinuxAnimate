@@ -1,6 +1,4 @@
 const loadPost = require("../misc/post_body");
-const fs = require("fs");
-const folder = process.env.STARTERS_FOLDER;
 const util = require("../misc/util");
 module.exports = function (req, res, url) {
 	if (req.method != "POST") return;
@@ -9,7 +7,12 @@ module.exports = function (req, res, url) {
 			res.end();
 			return true;
 		} case "/goapi/clientbug/": {
-			res.end("1" + util.xmlFail("Unable to load some data. please try again later."));
+			loadPost(req, res).then(data => {
+				if (data.themeId != "common") {
+					console.log(`Unable to load ${data.themeId} in the lvm. please try again later.`);
+					return res.end(1 + util.xmlFail(`Unable to load ${data.themeId} in the lvm. please try again later.`));
+				}
+			}
 		} default: return;
 	}
 };
