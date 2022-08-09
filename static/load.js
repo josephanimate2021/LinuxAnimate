@@ -31,7 +31,7 @@ module.exports = function (req, res, url) {
 					if (t.contentReplace) {
 						content = fs.readFileSync(path, "utf8");
 						content = content.replace(/VERSIÖN/g, pjson.versionStr);
-						const apiPath = req.url;
+						const apiPath = req.headers.host;
 						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>`);
 						res.end(content);
 					} else {
