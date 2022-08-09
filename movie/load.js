@@ -94,9 +94,16 @@ module.exports = function (req, res, url) {
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
-					movie.delete(url.query.movieId).catch(e => { // try starter
-						starter.delete(url.query.movieId).catch(e => console.log("Error:", e));
-					});
+					// reject a movie delete request that someone made.
+					if (req.headers.host != "localhost:4343") console.log("A Delete Request someone has made has been rejected.");
+					// accept a delete request on localhost.
+					else {
+						console.log("Warning! Deleting Movie!");
+						movie.delete(url.query.movieId).catch(e => { // try starter
+							console.log("Warning! Deleting Starter");
+							starter.delete(url.query.movieId).catch(e => console.log("Error:", e));
+						});
+					}
 					return true;
 				}
 			}
