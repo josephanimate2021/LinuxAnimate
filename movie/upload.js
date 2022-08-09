@@ -23,7 +23,6 @@ module.exports = function (req, res, url) {
 				switch (req.headers.host) {
 					case "localhost": 
 					case `localhost:${process.env.SERVER_PORT}`: {
-						console.log("Test");
 						parse.unpackXml(buffer, `${numId}`);
 						break;
 					}
