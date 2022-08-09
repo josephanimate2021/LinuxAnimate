@@ -1,5 +1,6 @@
 const formidable = require("formidable");
 const fUtil = require("../misc/file");
+const loadPost = require("../misc/post_body");
 const parse = require("./parse");
 const http = require("http");
 const fs = require("fs");
@@ -18,23 +19,28 @@ module.exports = function (req, res, url) {
 				if (!files.import) return;
 				var path = files.import.path;
 				var buffer = fs.readFileSync(path);
-				var numId = fUtil.getNextFileId("movie-", ".xml");
-				parse.unpackXml(buffer, `m-${numId}`);
+				fUtil.generateId();
+				parse.unpackXml(buffer, `${numId}`);
 				fs.unlinkSync(path);
 
 				res.statusCode = 302;
-				var url = `/go_full?movieId=m-${numId}`;
+				// why
+				var apiPath, url;
+				if (req.headers.host != "localhost:4343") {
+					apiPath = `https://${req.headers.host}`;
+					url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
+				} else {
+					apiPath = `http://${req.headers.host}`;
+					url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
+				}
 				res.setHeader("Location", url);
 				res.end();
 			});
 			return true;
 		}
 		case "/goapi/getInitParams/": {
-			var redir = "https://github.com/josephanimate2021/Animium-Installer/tree/chromeos";
-			res.statusCode = 302;
-			res.setHeader("Location", redir);
-			res.end();
-			break;
+			loadPost(req, res).then(([data]) => console.log(data));
+			return true;
 		}
 		default: return true;
 	}

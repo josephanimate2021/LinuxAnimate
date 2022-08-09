@@ -474,34 +474,21 @@ module.exports = {
 	 * @param {mId} mId
 	 */
 	async unpackXml(xml, mId) {
-		var i = mId.indexOf("-");
-		var prefix = mId.substr(0, i);
-		var suffix = mId.substr(i + 1);
-		switch (prefix) { 
-			case "m": {
-				var beg = xml.lastIndexOf("<thumb>");
-				var end = xml.lastIndexOf("</thumb>");
-				if (beg > -1 && end > -1) {
-					var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
-					fs.writeFileSync(fUtil.getFileIndex("thumb-", ".png", suffix), sub);
-				}
-				fs.writeFileSync(fUtil.getFileIndex("movie-", ".xml", suffix), xml);
-				break;
-			}
-			case "s": {
-				var beg = xml.lastIndexOf("<thumb>");
-				var end = xml.lastIndexOf("</thumb>");
-				if (beg > -1 && end > -1) {
-					var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
-					fs.writeFileSync(fUtil.getFileIndex("starter-", ".png", suffix), sub);
-				}
-				fs.writeFileSync(fUtil.getFileIndex("starter-", ".xml", suffix), xml);
-				break;
-			}
-			case "c": {
-				fs.writeFileSync(fUtil.getFileIndex("char-", ".xml", suffix), xml);
-				break;
-			}
+		var beg = xml.lastIndexOf("<thumb>");
+		var end = xml.lastIndexOf("</thumb>");
+		if (beg > -1 && end > -1) {
+			var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
+			fs.writeFileSync(`${process.env.SAVED_FOLDER}/${mId}.png`, sub);
 		}
+		fs.writeFileSync(`${process.env.SAVED_FOLDER}/${mId}.xml`, xml);
+	},
+	async unpackStarterXml(xml, mId) {
+		var beg = xml.lastIndexOf("<thumb>");
+		var end = xml.lastIndexOf("</thumb>");
+		if (beg > -1 && end > -1) {
+			var sub = Buffer.from(xml.subarray(beg + 7, end).toString(), "base64");
+			fs.writeFileSync(`${process.env.STARTERS_FOLDER}/${mId}.png`, sub);
+		}
+		fs.writeFileSync(`${process.env.STARTERS_FOLDER}/${mId}.xml`, xml);
 	},
 };
