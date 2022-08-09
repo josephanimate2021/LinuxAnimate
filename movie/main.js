@@ -59,7 +59,7 @@ module.exports = {
 	loadThumb(movieId) {
 		return new Promise((rej) => {
 			const match = fs.readdirSync(folder).find(file => file.includes(`${movieId}.png`));
-			match ? fs.readFileSync(`${folder}/${match}`) : rej(`${match} Is Non Exsistant`);
+			return match ? fs.readFileSync(`${folder}/${match}`) : rej(`${match} Is Non Exsistant`);
 		});
 	},
 	list() {
