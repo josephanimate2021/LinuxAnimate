@@ -75,6 +75,9 @@
 			</tr>
 		</tfoot>
 	</table>
+	<form enctype='multipart/form-data' action='/upload_starter' method='post'>
+		<input id='file2' type="file" onchange="this.form.submit()" name='import' accept=".xml" />
+	</form>
 	<form enctype='multipart/form-data' action='/upload_movie' method='post'>
 		<input id='file' type="file" onchange="this.form.submit()" name='import' accept=".xml" />
 	</form>
