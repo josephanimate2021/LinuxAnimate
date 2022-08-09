@@ -17,7 +17,9 @@ module.exports = function (req, res, url) {
 		var path = files.import.path;
 		var buffer = fs.readFileSync(path);
 		var numId = fUtil.generateId();
-		parse.unpackStarterXml(buffer, `${numId}`);
+		if (req.headers.host == "localhost" && req.headers.host == `localhost:${process.env.SERVER_PORT}`) {
+			parse.unpackStarterXml(buffer, `${numId}`);
+		}
 		fs.unlinkSync(path);
 
 		res.statusCode = 302;
