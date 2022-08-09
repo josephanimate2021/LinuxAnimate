@@ -16,9 +16,9 @@ const movie = require("./main");
 		const mThmb = movie.loadThumb(mId);
 		res.setHeader("Content-Type", "image/png");
 		res.end(mThmb);
-	} catch (err) {
+	} catch (e) {
 		res.statusCode = 404;
-		console.log("Error:", err);
+		console.log("Error:", e);
 	}
 	return true;
 }
