@@ -16,14 +16,25 @@ module.exports = function (req, res, url) {
 		if (!files.import) return;
 		var path = files.import.path;
 		var buffer = fs.readFileSync(path);
-		var numId = fUtil.generateId();
-		if (req.headers.host == "localhost" && req.headers.host == `localhost:${process.env.SERVER_PORT}`) {
-			parse.unpackStarterXml(buffer, `${numId}`);
+		const numId = fUtil.generateId();
+		switch (req.headers.host) {
+			case "localhost": 
+			case `localhost:${process.env.SERVER_PORT}`: {
+				parse.unpackStarterXml(buffer, `${numId}`);
+				break;
+			}
 		}
 		fs.unlinkSync(path);
-
 		res.statusCode = 302;
-		res.setHeader("Location", "/");
+		// why
+		var apiPath, url;
+		if (req.headers.host != "localhost" && req.headers.host != `localhost:${process.env.SERVER_PORT}`) {
+			url = `/`;
+		} else {
+			apiPath = `http://${req.headers.host}`;
+			url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
+		}
+		res.setHeader("Location", url);
 		res.end();
 	});
 	return true;
