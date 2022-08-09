@@ -13,7 +13,7 @@ module.exports = {
 	 * @param {string} oldId
 	 * @returns {Promise<string>}
 	 */
-	 save(movieZip, thumb, mId) {
+	 save(movieZip, thumb) {
 		return new Promise(async (res, rej) => {
 			var zip = nodezip.unzip(movieZip);
 			var id;
