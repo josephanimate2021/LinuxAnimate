@@ -12,7 +12,7 @@ const stl = require("./static/load");
 const stp = require("./static/page");
 const asl = require("./asset/load");
 const asL = require("./asset/list");
-const SvL = require("./asset/starter");
+const listStarters = require("./asset/starter");
 const ast = require("./asset/thmb");
 const mvl = require("./movie/load");
 const mvL = require("./movie/list");
@@ -32,7 +32,7 @@ const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const url = require("url");
 
-const functions = [mvL, chu, Svl, stu, wtr, WTr, WTR, Wtr, Chl, pmc, asl, Mvt, MvL, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
+const functions = [mvL, chu, listStarters, stu, wtr, WTr, WTR, Wtr, Chl, pmc, asl, Mvt, MvL, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
 
 module.exports = http
 	.createServer((req, res) => {
