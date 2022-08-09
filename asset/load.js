@@ -70,9 +70,9 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
-				case "/goapi/deleteUserTemplate/": {
+				case "/goapi/DeleteUserTemplate/": {
 					loadPost(req, res).then(async ([data]) => {
-						starter.delete();
+						starter.delete(data.templateId);
 					});
 					return true;
 				}

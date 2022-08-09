@@ -1,5 +1,6 @@
 const movie = require("./main");
 const watermark = require("../watermark/main");
+const starter = require("../starter/main");
 var path = require('path');
 const base = Buffer.alloc(1, 0);
 const fs = require("fs");
@@ -30,8 +31,18 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
-					}).catch(e => {
-						console.log("Error:", e);
+					}).catch(e => { // try starter
+						starter.loadZip(id).then((v) => {
+							if (v) {
+								res.statusCode = 200;
+								res.end(v);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
+						}).catch(e => { // after two tries, just throw the error.
+							console.log("Error:", e);
+						});
 					});
 					break;
 				default:
@@ -44,8 +55,18 @@ module.exports = function (req, res, url) {
 							res.statusCode = 404;
 							res.end();
 						}
-					}).catch(e => {
-						console.log("Error:", e);
+					}).catch(e => { // try starter
+						starter.loadXml(id).then((v) => {
+							if (v) {
+								res.statusCode = 200;
+								res.end(v);
+							} else {
+								res.statusCode = 404;
+								res.end();
+							}
+						}).catch(e => { // after two tries, just throw the error.
+							console.log("Error:", e);
+						});
 					});
 					break;
 			}
@@ -59,17 +80,23 @@ module.exports = function (req, res, url) {
 
 					movie.loadZip(url.query.movieId).then(b => {
 						res.end(Buffer.concat([base, b]))
-					}).catch(e => {
-						console.log("Error:", e);
-						// display an error for retro videomakers
-						res.end(1 + e);
+					}).catch(e => { // try starter
+						starter.loadZip(url.query.movieId).then(b => {
+							res.end(Buffer.concat([base, b]))
+						}).catch(e => { // after two tries, just throw the error.
+							console.log("Error:", e);
+							// display an error for retro videomakers
+							res.end(1 + e);
+						});
 					});
 					return true;
 				}
 				case "/ajax/deleteStarter/":
 				case "/ajax/deleteChar/":
 				case "/ajax/deleteMovie/": {
-					movie.delete(url.query.movieId).catch(e => console.log("Error:", e));
+					movie.delete(url.query.movieId).catch(e => { // try starter
+						starter.delete(url.query.movieId).catch(e => console.log("Error:", e));
+					});
 					return true;
 				}
 			}
