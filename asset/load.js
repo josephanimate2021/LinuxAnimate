@@ -76,6 +76,12 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
+				case "/goapi/getSysTemplateAttributes/": {
+					loadPost(req, res).then(async ([data]) => {
+						console.log(data);
+					});
+					return true;
+				}
 				default:
 					return;
 			}
