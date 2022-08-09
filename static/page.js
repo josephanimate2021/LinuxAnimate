@@ -114,41 +114,6 @@ module.exports = function (req, res, url) {
 			break;
 		}
 
-		case "/go_full": {
-			title = "Video Editor";
-			attrs = {
-				data: process.env.SWF_URL + "/go_full2013.swf",
-				type: "application/x-shockwave-flash",
-				width: "100%",
-				height: "100%",
-			};
-			params = {
-				flashvars: {
-					apiserver: "/",
-					storePath: process.env.STORE_URL + "/<store>",
-					isEmbed: 1,
-					ctc: "go",
-					ut: ut,
-					appCode: "go",
-					page: "",
-					siteId: "go",
-					userId: "4849",
-					lid: 13,
-					isLogin: "Y",
-					retut: 1,
-					clientThemePath: process.env.CLIENT_URL + "/<client_theme>",
-					tlang: "en_US",
-					goteam_draft_only: 1,
-					isWide: 0,
-					collab: 0,
-					nextUrl: "/html/list.html",
-					tray: "retro",
-				},
-				allowScriptAccess: "always",
-			};
-			break;
-		}
-
 		case "/player": {
 			title = "Player";
 			attrs = {
