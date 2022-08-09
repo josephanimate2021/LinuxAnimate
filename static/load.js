@@ -37,7 +37,6 @@ module.exports = function (req, res, url) {
 							apiPath = `http://${req.headers.host}`;
 							content = content.replace(/NEWS/g, "The First Half Of LinuxAnimate Development Is Complete. Pretty soon, updating asset names, tags, and theme searching are to await. if this is your first time using linuxanimate and you are not in the goanimate community, please click");
 						}
-						const apiPath = req.headers.host;
 						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>`);
 						res.end(content);
 					} else {
