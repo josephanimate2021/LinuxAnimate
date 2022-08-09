@@ -31,6 +31,8 @@ module.exports = function (req, res, url) {
 					if (t.contentReplace) {
 						content = fs.readFileSync(path, "utf8");
 						content = content.replace(/VERSIÖN/g, pjson.versionStr);
+						const apiPath = `./${link}/../`;
+						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro">here</a>
 						res.end(content);
 					} else {
 						fs.createReadStream(path).pipe(res);
@@ -38,7 +40,7 @@ module.exports = function (req, res, url) {
 				} else throw null;
 			} catch (e) {
 				res.statusCode = t.statusCode || 404;
-				res.end();
+				console.log("Error:", e);
 			}
 			return true;
 		}
