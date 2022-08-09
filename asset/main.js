@@ -100,6 +100,19 @@ module.exports = {
 	});
 		return ret;
 	},
+	listAll(ut) {
+		var ret = [];
+		var files = caché.list(ut);
+		files.forEach((aId) => {
+			var dot = aId.lastIndexOf(".");
+			var dash = aId.lastIndexOf("-");
+			var name = aId.substr(0, dash);
+			var ext = aId.substr(dot + 1);
+			var fMode = aId.substr(dash + 1, dot - dash - 1);
+			ret.push({ id: aId, ext: ext, name: name, mode: fMode });
+		});
+		return ret;
+	},
 	chars(theme) {
 		return new Promise(async (res, rej) => {
 			switch (theme) {

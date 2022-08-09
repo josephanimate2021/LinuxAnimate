@@ -40,7 +40,7 @@ async function listAssets(data, makeZip) {
 			xmlString = `${header}<ugc more="0">${files
 				.map(
 					(v) =>
-						`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="Untitled" thumbnail_url="/starter_thumbs/${v.id}"><tags></tags></movie>`
+						`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${v.id}" numScene="1" title="Untitled" thumbnail="/starter_thumbs/${v.id}"><tags></tags></movie>`
 				)
 				.join("")}</ugc>`;
 			break;
@@ -76,19 +76,22 @@ async function listAssets(data, makeZip) {
 
 	if (makeZip) {
 		const zip = nodezip.create();
+		const files = asset.listAll(data.ut);
 		fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
 
 		files.forEach((file) => {
 			switch (file.mode) {
 				case "bg":
 				case "movie": 
+				case "effect":
 				case "sound": {
 					const buffer = asset.load(data.ut, file.id);
 					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
 					break;
 				}
 				case "prop": {
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`));
+					const buffer = fs.readFileSync(`${process.env.PROPS_FOLDER}/${file.id}`);
+					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
 					break;
 				}
 			}
@@ -130,14 +133,12 @@ module.exports = function (req, res, url) {
 			} else return;
 		}
 		case "POST": {
-			loadPost(req, res)
-				.then(([data]) => listAssets(data, makeZip))
-				.then((buff) => {
-					const type = makeZip ? "application/zip" : "text/xml";
-					res.setHeader("Content-Type", type);
-					if (makeZip) res.write(base);
-					res.end(buff);
-				});
+			loadPost(req, res).then(([data]) => listAssets(data, makeZip)).then((buff) => {
+				const type = makeZip ? "application/zip" : "text/xml";
+				res.setHeader("Content-Type", type);
+				if (makeZip) res.write(base);
+				res.end(buff);
+			});
 			return true;
 		}
 		default:

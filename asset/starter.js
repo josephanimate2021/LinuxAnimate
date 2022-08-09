@@ -8,12 +8,17 @@ const asset = require("./main");
 const http = require("http");
 const fs = require("fs");
 
-function listAssets() {
-	var xmlString, files;
+async function listAssets(data) {
 	var files = starter.list();
-	return `${header}<ugc more="0">${
-	files.map(v =>`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${ v.id}" numScene="1" title="Untitled" thumbnail_url="/starter_thumbs/${
-		  v.id}"><tags></tags></movie>`).join("")}</ugc>`;
+	var xmlString = `${header}<ugc more="0">${files.map(v =>`<movie id="${v.id}" enc_asset_id="${v.id}" path="/_SAVED/${ v.id}" numScene="1" title="Untitled" thumbnail_url="/starter_thumbs/${v.id}"><tags></tags></movie>`).join("")}</ugc>`;
+	const zip = nodezip.create();
+	fUtil.addToZip(zip, "desc.xml", Buffer.from(xmlString));
+  
+	files.forEach((file) => {
+		const buffer = asset.load(data.ut, file.id);
+		fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
+	});
+	return await zip.zip();
 }
 
 /**
@@ -30,8 +35,8 @@ module.exports = function (req, res, url) {
 		default:
 			return;
 	}
-	listAssets().then((buff) => {
-		res.setHeader("Content-Type", "text/xml");
+	loadPost(req, res).then(([data]) => listAssets(data)).then((buff) => {
+		res.setHeader("Content-Type", "application/zip");
 		res.end(buff);
 	}).catch(e => console.log("Error:", e));
 	return true;

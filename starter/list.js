@@ -8,7 +8,7 @@ const http = require("http");
  * @returns {boolean}
  */
 module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.pathname != "/goapi/getSysTemplateAttributes/") return;
+	if (req.method != "GET" || url.pathname != "/starterList") return;
 	Promise.all(starter.list('array').map(starter.meta)).then((a) => res.end(JSON.stringify(a)));
 	return true;
 };
