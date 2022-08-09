@@ -26,15 +26,7 @@ module.exports = function (req, res, url) {
 		}
 		fs.unlinkSync(path);
 		res.statusCode = 302;
-		// why
-		var apiPath, url;
-		if (req.headers.host != "localhost" && req.headers.host != `localhost:${process.env.SERVER_PORT}`) {
-			url = `/`;
-		} else {
-			apiPath = `http://${req.headers.host}`;
-			url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
-		}
-		res.setHeader("Location", url);
+		res.setHeader("Location", "/");
 		res.end();
 	});
 	return true;
