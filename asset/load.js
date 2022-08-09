@@ -76,10 +76,6 @@ module.exports = function (req, res, url) {
 					});
 					return true;
 				}
-				case "/goapi/getSysTemplateAttributes/": {
-					starter.get();
-					return true;
-				}
 				default:
 					return;
 			}
