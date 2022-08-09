@@ -19,16 +19,17 @@ module.exports = function (req, res, url) {
 				if (!files.import) return;
 				var path = files.import.path;
 				var buffer = fs.readFileSync(path);
-				fUtil.generateId();
-				parse.unpackXml(buffer, `${numId}`);
+				const numId = fUtil.generateId();
+				if (req.headers.host == "localhost" && req.headers.host == `localhost:${process.env.SERVER_PORT}`) {
+					parse.unpackXml(buffer, `${numId}`);
+				}
 				fs.unlinkSync(path);
 
 				res.statusCode = 302;
 				// why
 				var apiPath, url;
-				if (req.headers.host != "localhost:4343") {
-					apiPath = `https://${req.headers.host}`;
-					url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
+				if (req.headers.host != "localhost" && req.headers.host != `localhost:${process.env.SERVER_PORT}`) {
+					url = `/`;
 				} else {
 					apiPath = `http://${req.headers.host}`;
 					url = `https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=edit&movieId=${numId}`;
