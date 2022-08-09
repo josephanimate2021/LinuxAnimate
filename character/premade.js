@@ -1,7 +1,7 @@
 const loadPost = require("../misc/post_body");
 const fs = require("fs");
 const folder = process.env.STARTERS_FOLDER;
-const util = require("../msic/util");
+const util = require("../misc/util");
 module.exports = function (req, res, url) {
 	if (req.method != "POST") return;
 	switch (url.pathname) { 
