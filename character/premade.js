@@ -9,7 +9,7 @@ module.exports = function (req, res, url) {
 			res.end();
 			return true;
 		} case "/goapi/clientbug/": {
-			res.end(1 + util.xmlFail("Unable to load some data. please try again later."));
+			res.end("1" + util.xmlFail("Unable to load some data. please try again later."));
 		} default: return;
 	}
 };
