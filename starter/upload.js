@@ -16,13 +16,12 @@ module.exports = function (req, res, url) {
 		if (!files.import) return;
 		var path = files.import.path;
 		var buffer = fs.readFileSync(path);
-		var numId = fUtil.getNextFileId("starter-", ".xml");
-		parse.unpackXml(buffer, `s-${numId}`);
+		var numId = fUtil.generateId();
+		parse.unpackStarterXml(buffer, `${numId}`);
 		fs.unlinkSync(path);
 
 		res.statusCode = 302;
-		var url = `/html/list/starters.html`;
-		res.setHeader("Location", url);
+		res.setHeader("Location", "/");
 		res.end();
 	});
 	return true;
