@@ -6,3 +6,6 @@ N/A
 
 ## How to run
 you can get this project using the animium installer. once you have it, do cd LinuxAnimate and sudo bash run.sh in the ternimal.
+
+## Is LinuxAnimate going to crash most of the time?
+no, because i put in a lock that should prevent stupid errors from crashing the app either online or offline.
