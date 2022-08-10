@@ -17,7 +17,7 @@
 		"/static/docs/upload_guidelines_plus.pdf": {
 			"headers": {
 				"Content-Type": "application/pdf"
-			},
+			}
 		},
 		"/goapi/getAssetTags": {
 			"headers": {
