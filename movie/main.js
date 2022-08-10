@@ -124,7 +124,10 @@ module.exports = {
 			watermarks = wBuffer.subarray(begWtr, endWtr).toString();
 		}
 		
-
+		var apiPath;
+		if (headers != "localhost" && headers != `localhost:${process.env.SERVER_PORT}`) apiPath = `https://${headers}`;
+		else apiPath = `http://${headers}`;
+		
 		return {
 			date: fs.statSync(filepath).mtime,
 			durationString: durationStr,
@@ -134,6 +137,7 @@ module.exports = {
 			tag: tag,
 			wide: wideo,
 			res: res,
+			apiPath: apiPath,
 			watermark: watermarks,
 			id: movieId,
 		};
