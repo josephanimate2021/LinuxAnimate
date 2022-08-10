@@ -35,7 +35,7 @@ module.exports = {
 			var filePath = `${folder}/${mId}.xml`
 			if (!fs.existsSync(filePath)) rej(`The File: ${filePath} Is Non Existant.`);
 			const buffer = fs.readFileSync(filePath);
-			if (!buffer || buffer.length == 0) rej("Your Movie Has Failed To Load. one of the common reasons for this is either your movie is curupt, or there are bugs in this LVM Project that is causing the issue. if that's the case, then please contact joseph the animator#2292 on discord for help.");
+			if (!buffer || buffer.length == 0) rej("Your Starter Has Failed To Load. one of the common reasons for this is that there may be bugs in this LVM Project that is causing the issue. if that's the case, then please contact joseph the animator#2292 on discord for help.");
 			parse.packMovie(buffer, mId).then(pack => res(pack.zipBuf)).catch(e => rej(e));
 		});
 	},
@@ -53,61 +53,24 @@ module.exports = {
 		return new Promise(async (res, rej) => {
 			const fn = `${folder}/${movieId}.xml`;
 			if (fs.existsSync(fn)) res(fs.readFileSync(fn));
-			else rej("Your movie has failed to load via a GET request.");
+			else rej("Your starter has failed to load via a GET request.");
 		});
 	},
 	loadThumb(movieId) {
 		const match = fs.readdirSync(folder).find(file => file.includes(`${movieId}.png`));
 		return match ? fs.readFileSync(`${folder}/${match}`) : null;
 	},
-	list(array) {
-		if (array) {
-			const array = [];
-			fs.readdirSync(folder).forEach(fn => {
-				if (!fn.includes(".xml")) return;
-				// check if the movie and thumbnail exists
-				const mId = fn.substring(0, fn.length - 4);
-				const movie = fs.existsSync(`${folder}/${mId}.xml`);
-				const thumb = fs.existsSync(`${folder}/${mId}.png`);
-				if (movie && thumb) array.push(mId);
-			});
-			return array;
-		} else {
-			const table = [];
-			fs.readdirSync(folder).forEach(fn => {
-				if (!fn.includes(".xml")) return;
-				// check if the movie and thumbnail exists
-				const mId = fn.substring(0, fn.length - 4);
-				const movie = fs.existsSync(`${folder}/${mId}.xml`);
-				const thumb = fs.existsSync(`${folder}/${mId}.png`);
-				if (movie && thumb) table.unshift({ id: mId });
-			});
-			return table;
-		}
-	},
-	get() {
-		const array = [];
+	list() {
+		const table = [];
 		fs.readdirSync(folder).forEach(fn => {
 			if (!fn.includes(".xml")) return;
 			// check if the movie and thumbnail exists
 			const mId = fn.substring(0, fn.length - 4);
 			const movie = fs.existsSync(`${folder}/${mId}.xml`);
 			const thumb = fs.existsSync(`${folder}/${mId}.png`);
-			if (movie && thumb) array.get(mId);
+			if (movie && thumb) table.unshift({ id: mId });
 		});
-		return array;
-	},
-	update() {
-		const array = [];
-		fs.readdirSync(folder).forEach(fn => {
-			if (!fn.includes(".xml")) return;
-			// check if the movie and thumbnail exists
-			const mId = fn.substring(0, fn.length - 4);
-			const movie = fs.existsSync(`${folder}/${mId}.xml`);
-			const thumb = fs.existsSync(`${folder}/${mId}.png`);
-			if (movie && thumb) array.update(mId);
-		});
-		return array;
+		return table;
 	},
 	meta(movieId) {
 		const filepath = `${folder}/${movieId}.xml`;
@@ -131,7 +94,6 @@ module.exports = {
 		return {
 			date: fs.statSync(filepath).mtime,
 			title: title,
-			desc: desc,
 			tag: tag,
 			id: movieId,
 		};
