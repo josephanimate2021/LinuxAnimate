@@ -128,7 +128,7 @@ module.exports = function (req, res, url) {
 					const type = makeZip ? "application/zip" : "text/xml";
 					res.setHeader("Content-Type", type);
 					res.end(buff);
-				});
+				}).catch(e => console.log("Error:", e));
 				return true;
 			} else return;
 		}
@@ -138,7 +138,7 @@ module.exports = function (req, res, url) {
 				res.setHeader("Content-Type", type);
 				if (makeZip) res.write(base);
 				res.end(buff);
-			});
+			}).catch(e => console.log("Error:", e));
 			return true;
 		}
 		default:
