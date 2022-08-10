@@ -30,6 +30,8 @@ module.exports = function (req, res, url) {
 				res.setHeader("Content-Type", "text/xml");
 				res.end(buff);
 			});
+		} default: {
+			res.end('<?xml encoding=\"UTF-8\"?><watermarks><current/><preview/></watermarks>');
 		}
 	}
 	return true;
