@@ -101,7 +101,7 @@
 				const tbl = json[c];
 				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
 				tbody.insertAdjacentHTML('beforeend',
-					'<tr id="' + tbl.id + '"><td><img src="/movie_thumbs/' + tbl.id + '"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div><div>' + tbl.desc + '</div><div>Video Tags: ' + tbl.tag + '</div><div>Watermark: ' + tbl.watermark + '</div><div>Video Res: ' + tbl.res + '</td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\', \'' + tbl.wide + '\')"></a><a onclick="studioRedirect(\'' + tbl.id + '\', \'' + tbl.wide + '\')"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a href="javascript:deleteMovie(\'' + tbl.id + '\')"></a></td></tr>');
+					'<tr id="' + tbl.id + '"><td><img src="/movie_thumbs/' + tbl.id + '"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div><div>' + tbl.desc + '</div><div>Video Tags: ' + tbl.tag + '</div><div>Watermark: ' + tbl.watermark + '</div><div>Video Res: ' + tbl.res + '</td><td><span>' + date + '</span></td><td><a onclick="popup(\'' + tbl.id + '\', \'' + tbl.wide + '\')"></a><a onclick="studioRedirect(\'' + tbl.id + '\', \'' + tbl.wide + '\')"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a onclick="deleteMovie(\'' + tbl.id + '\')"></a></td></tr>');
 			}
 		}
 
