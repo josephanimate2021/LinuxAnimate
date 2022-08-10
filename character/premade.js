@@ -8,7 +8,7 @@ module.exports = function (req, res, url) {
 			return true;
 		} case "/goapi/getUserWatermarks/": {
 			res.end('<watermarks><current/><preview/></watermarks>');
-			return truel
+			return true;
 		} default: return;
 	}
 };
