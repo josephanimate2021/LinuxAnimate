@@ -14,6 +14,11 @@
 			"statusCode": 302,
 			"content": ""
 		},
+		"/static/docs/upload_guidelines_plus.pdf": {
+			"headers": {
+				"Content-Type": "application/pdf"
+			},
+		},
 		"/goapi/getAssetTags": {
 			"headers": {
 				"Content-Type": "text/x-cross-domain-policy"
