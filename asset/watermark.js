@@ -23,6 +23,7 @@ module.exports = function (req, res, url) {
 		case '/goapi/getUserWatermarks/': break;
 		default: return;
 	}
+	res.setHeader("Content-Type", "text/xml");
 	switch (req.headers.host) {
 		case "localhost": 
 		case `localhost:${process.env.SERVER_PORT}`: {
