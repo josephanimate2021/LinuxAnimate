@@ -12,22 +12,26 @@ const fs = require("fs");
  */
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/upload_starter") return;
-	new formidable.IncomingForm().parse(req, (e, f, files) => {
-		if (!files.import) return;
-		var path = files.import.path;
-		var buffer = fs.readFileSync(path);
-		const numId = fUtil.generateId();
-		switch (req.headers.host) {
-			case "localhost": 
-			case `localhost:${process.env.SERVER_PORT}`: {
-				parse.unpackStarterXml(buffer, `${numId}`);
-				break;
+	try {
+		new formidable.IncomingForm().parse(req, (e, f, files) => {
+			if (!files.import) return;
+			var path = files.import.path;
+			var buffer = fs.readFileSync(path);
+			const numId = fUtil.generateId();
+			switch (req.headers.host) {
+				case "localhost": 
+				case `localhost:${process.env.SERVER_PORT}`: {
+					parse.unpackStarterXml(buffer, `${numId}`);
+					break;
+				}
 			}
-		}
-		fs.unlinkSync(path);
-		res.statusCode = 302;
-		res.setHeader("Location", "/");
-		res.end();
-	});
-	return true;
+			fs.unlinkSync(path);
+			res.statusCode = 302;
+			res.setHeader("Location", "/");
+			res.end();
+		});
+		return true;
+	} catch (e) {
+		console.log("Error:", e);
+	}
 };
