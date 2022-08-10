@@ -10,6 +10,6 @@ const fs = require("fs");
 module.exports = function (req, res, url) {
 	var path = url.pathname;
 	if (req.method != "GET" || !path.startsWith("/stock_thumbs")) return;
-	fs.readFileSync(process.env.THUMB_BASE_URL + path.substr(path.lastIndexOf("/"))).then((v) => res.end(v));
+	fs.readFileSync(process.env.THUMB_BASE_URL + path.substr(path.lastIndexOf("/"))).then((v) => res.end(v)).catch(e => console.log("Error:", e));
 	return true;
 };
