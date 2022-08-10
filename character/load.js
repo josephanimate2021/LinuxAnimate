@@ -1,5 +1,5 @@
 const loadPost = require("../misc/post_body");
-const loadPost = require("../misc/util");
+const util = require("../misc/util");
 const character = require("./main");
 const http = require("http");
 
