@@ -117,7 +117,7 @@ module.exports = function (req, res, url) {
 		case "/player": {
 			title = "Player";
 			attrs = {
-				data: process.env.SWF_URL.slice(0, -20) + "/animation/477/player.swf",
+				data: process.env.SWF_URL.slice(0, -20) + "/animation/877/player.swf",
 				type: "application/x-shockwave-flash",
 				width: "100%",
 				height: "100%",
