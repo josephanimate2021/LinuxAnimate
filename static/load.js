@@ -30,7 +30,7 @@ module.exports = function (req, res, url) {
 						content = content.replace(/VERSIÖN/g, pjson.versionStr);
 						// why
 						var apiPath;
-						if (req.headers.host != "localhost:4343") {
+						if (req.headers.host != "localhost" && req.headers.host != `localhost:${process.env.SERVER_PORT}`) {
 							apiPath = `https://${req.headers.host}`;
 							content = content.replace(/NEWS/g, "LinuxAnimate now has it's own online lvm clone! if this is your first time using linuxanimate and you are not in the goanimate community, please click");
 						} else {
