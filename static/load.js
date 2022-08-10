@@ -41,22 +41,6 @@ module.exports = function (req, res, url) {
 						}
 						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro&return=${apiPath}&platform=${platform}">here</a>`);
 						content = content.replace(/BUTTON/g, `<a class="button_big" href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tray=retro&return=${apiPath}&platform=${platform}">MAKE A VIDEO</a>`);
-						content = content.replace(/SCRIPT/g, `<script>
-		var C = 0;
-		function loadRows() {
-			let c = C; C += 69;
-			for (; c < C; c++) {
-				if (c > json.length - 1) {
-					loadMore.remove();
-					break;
-				}
-
-				const tbl = json[c];
-				const date = tbl.date.substr(0, 10) + ' ' + tbl.date.substr(11);
-				tbody.insertAdjacentHTML('beforeend',
-					'<tr id="' + tbl.id + '"><td><img src="/movie_thumbs/' + tbl.id + '"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>' + tbl.durationString + '</div><div>' + tbl.desc + '</div><div>Video Tags: ' + tbl.tag + '</div><div>Watermark: ' + tbl.watermark + '</div><div>Video Res: ' + tbl.res + '</td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\', \'' + tbl.wide + '\')"></a><a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&movieId=' + tbl.id + '&isWide=' + tbl.wide + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a href="javascript:deleteMovie(\'' + tbl.id + '\')"></a></td></tr>');
-			}
-		}</script>`);
 						res.end(content);
 					} else {
 						fs.createReadStream(path).pipe(res);
