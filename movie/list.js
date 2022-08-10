@@ -10,6 +10,7 @@ const http = require("http");
 module.exports = function (req, res, url) {
 	if (req.method != "GET" || url.pathname != "/movieList") return;
 	const headers = req.headers.host;
-	Promise.all(movie.list().map(movie.meta)).then((a) => res.end(JSON.stringify(a)));
+	const meta = movie.meta(headers);
+	Promise.all(movie.list().map(meta)).then((a) => res.end(JSON.stringify(a)));
 	return true;
 };
