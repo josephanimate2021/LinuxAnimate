@@ -72,7 +72,7 @@ module.exports = {
 		});
 		return array;
 	},
-	meta(movieId) {
+	meta(movieId, headers) {
 		const filepath = `${folder}/${movieId}.xml`;
 		const buffer = fs.readFileSync(filepath);
 
@@ -123,6 +123,7 @@ module.exports = {
 			const endWtr = wBuffer.indexOf("</watermark>");
 			watermarks = wBuffer.subarray(begWtr, endWtr).toString();
 		}
+		
 
 		return {
 			date: fs.statSync(filepath).mtime,
