@@ -13,6 +13,10 @@ async function makeTheme(req, res, url, data) {
 
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getTheme/") return; 
-	loadPost(req, res).then(([data]) => makeTheme(req, res, url, data));
+	try {
+		loadPost(req, res).then(([data]) => makeTheme(req, res, url, data));
+	} catch (e) {
+		console.log("Error:", e);
+	}
 	return true;
 };
