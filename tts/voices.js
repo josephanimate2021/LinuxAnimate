@@ -27,7 +27,11 @@ const xml = `${process.env.XML_HEADER}<voices>${Object.keys(langs)
  */
 module.exports = function (req, res, url) {
 	if (req.method != "POST" || url.path != "/goapi/getTextToSpeechVoices/") return;
-	res.setHeader("Content-Type", "text/html; charset=UTF-8");
-	res.end(xml);
+	try {
+		res.setHeader("Content-Type", "text/html; charset=UTF-8");
+		res.end(xml);
+	} catch (e) {
+		console.log("Error:", e);
+	}
 	return true;
 };
