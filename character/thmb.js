@@ -15,16 +15,13 @@ module.exports = function (req, res, url) {
 	var ext = path.substr(end + 1).toLowerCase();
 	if (ext != "png") return;
 
-	char
-		.loadThumb(path.substr(beg, end - beg))
-		.then((v) => {
-			res.setHeader("Content-Type", "image/png");
-			res.statusCode = 200;
-			res.end(v);
-		})
-		.catch(() => {
-			res.statusCode = 400;
-			res.end();
-		});
+	char.loadThumb(path.substr(beg, end - beg)).then((v) => {
+		res.setHeader("Content-Type", "image/png");
+		res.statusCode = 200;
+		res.end(v);
+	}).catch(e => {
+		res.statusCode = 400;
+		console.log("Error:", e);
+	});
 	return true;
 };
