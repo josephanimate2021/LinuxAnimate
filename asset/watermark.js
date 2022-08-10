@@ -23,9 +23,14 @@ module.exports = function (req, res, url) {
 		case '/goapi/getUserWatermarks/': break;
 		default: return;
 	}
-	loadPost(req, res).then(([data]) => listAssets(data)).then((buff) => {
-		res.setHeader("Content-Type", "text/xml");
-		res.end(buff);
-	});
+	switch (req.headers.host) {
+		case "localhost": 
+		case `localhost:${process.env.SERVER_PORT}`: {
+			loadPost(req, res).then(([data]) => listAssets(data)).then((buff) => {
+				res.setHeader("Content-Type", "text/xml");
+				res.end(buff);
+			});
+		}
+	}
 	return true;
 }
