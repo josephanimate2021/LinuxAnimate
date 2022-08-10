@@ -37,7 +37,7 @@ module.exports = function (req, res, url) {
 						} else {
 							apiPath = `http://${req.headers.host}`;
 							platform = "offline";
-							content = content.replace(/NEWS/g, "The First Half Of LinuxAnimate Development Is Complete. Pretty soon, updating asset names, tags, and theme searching are to await. if this is your first time using linuxanimate and you are not in the goanimate community, please click");
+							content = content.replace(/NEWS/g, "The First Half Of LinuxAnimate Development Is Complete. Pretty soon, updating asset names, and tags are to await. if this is your first time using linuxanimate and you are not in the goanimate community, please click");
 						}
 						content = content.replace(/LINK/g, `<a href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tutorial=0&tray=retro&return=${apiPath}&platform=${platform}">here</a>`);
 						content = content.replace(/BUTTON/g, `<a class="button_big" href="https://josephanimate2021.github.io/lvm-static/2014?api=${apiPath}&action=create&tray=retro&return=${apiPath}&platform=${platform}">MAKE A VIDEO</a>`);
