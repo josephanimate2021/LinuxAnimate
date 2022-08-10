@@ -18,7 +18,6 @@ const mvL = require("./movie/list");
 const wtr = require("./movie/watermark");
 const WTr = require("./watermark/load");
 const WTR = require("./waveform/core");
-const Wtr = require("./asset/watermark");
 const stu = require("./starter/upload");
 const mvm = require("./movie/meta");
 const mvs = require("./movie/save");
@@ -30,7 +29,7 @@ const tsv = require("./tts/voices");
 const tsl = require("./tts/load");
 const url = require("url");
 
-const functions = [mvL, chu, stu, wtr, WTr, WTR, Wtr, Chl, pmc, asl, Mvt, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
+const functions = [mvL, chu, stu, wtr, WTr, WTR, Chl, pmc, asl, Mvt, chl, thl, thL, chs, cht, asL, tsl, chr, ast, mvm, mvl, mvs, mvt, tsv, asu, mvu, stp, stl];
 
 module.exports = http
 	.createServer((req, res) => {

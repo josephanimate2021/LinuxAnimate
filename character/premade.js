@@ -6,6 +6,9 @@ module.exports = function (req, res, url) {
 		case "/goapi/getCCPreMadeCharacters": {
 			res.end();
 			return true;
+		} case "/goapi/getUserWatermarks/": {
+			res.end('<watermarks><current/><preview/></watermarks>');
+			return truel
 		} default: return;
 	}
 };
