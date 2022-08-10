@@ -29,7 +29,7 @@ module.exports = function (req, res, url) {
 			loadPost(req, res).then(([data]) => listAssets(data)).then((buff) => {
 				res.setHeader("Content-Type", "text/xml");
 				res.end(buff);
-			});
+			}).catch(e => console.log("Error:", e));
 		} default: {
 			res.end('<?xml encoding=\"UTF-8\"?><watermarks><current/><preview/></watermarks>');
 		}
