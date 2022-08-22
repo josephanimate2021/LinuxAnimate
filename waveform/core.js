@@ -16,6 +16,7 @@ module.exports = function (req, res, url) {
 		case "/goapi/saveWaveform/": {
 			try {
 				loadPost(req, res).then(([data, mId]) => {
+					console.log(data);
 					const path = `${folder}/${data.wfId}.wf`;
 					fs.writeFileSync(path, data.waveform);
 				});
@@ -27,6 +28,7 @@ module.exports = function (req, res, url) {
 		case "/goapi/getWaveform/": {
 			try {
 				loadPost(req, res).then(([data]) => {
+					console.log(data);
 					const p = `${folder}/${data.wfId}.wf`;
 					const waveform = fs.readFileSync(p);
 					if (!fs.existsSync(p)) {
