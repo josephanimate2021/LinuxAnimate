@@ -17,5 +17,7 @@ module.exports = function (req, res, url) {
 			res.end(`0${id}`);
 		}).catch(e => console.log("Error:", e)));
 			return true;
+		case "/goapi/saveCCThumbs/": loadPost(req, res).then(([data]) => console.log(data));
+			return true;
 	}
 };
