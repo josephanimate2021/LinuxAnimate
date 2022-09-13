@@ -1,11 +1,9 @@
-# LinuxAnimate
-LinuxAnimate is like wrapper offline but it only works on linux and every linux distro including chromeos linux. Some features here are just about the same as wrapper offline. and this time, there are four channels on where you can get this lvm project from, they all include, the dev version (unstable) the beta version (not recomended) the goproduction version (lvm ment for goanimators) and the stable channel (for a first time goanimate user). Please have fun using LinuxAnimate on your linux machine!
+# About
+LinuxAnimate is like Wrapper: Offline, but it's made for Linux, including every distro (ChromeOS / Ubuntu Linux, etc). Some features are the same as Wrapper: Offline, and there are 3 channels of where you can get this LVM from: 2013-2014, Retro (2007-2009), and Stable.
 
-## Limitations in the goproduction release.
-N/A
-
-## How to run
-you can get this project using the animium installer. once you have it, do cd LinuxAnimate and sudo bash run.sh in the ternimal.
+# FAQ
+## How do I install LinuxAnimate?
+N/A.
 
 ## Is LinuxAnimate going to crash most of the time?
-no, because i put in a lock that should prevent stupid errors from crashing the app either online or offline.
+LinuxAnimate has a lock to prevent crashes from happening.
