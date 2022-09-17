@@ -1,35 +1,9 @@
-const caché = require("../asset/caché");
 var path = require('path');
-const fUtil = require("../misc/file");
 const nodezip = require("node-zip");
-const parse = require("../movie/parse");
 const fs = require("fs");
-const folder = process.env.STARTERS_FOLDER;
+const folder = "./files/starters";
 
 module.exports = {
-	/**
-	 *
-	 * @param {Buffer} movieZip
-	 * @param {string} nëwId
-	 * @param {string} oldId
-	 * @returns {Promise<string>}
-	 */
-	save(starterZip, thumb) {
-		return new Promise(async (res, rej) => {
-			var zip = nodezip.unzip(starterZip);
-			const mId = fUtil.generateId();
-			const thumbFile = `${folder}/${mId}.png`
-			if (thumb) fs.writeFileSync(thumbFile, thumb);
-			var path = `${folder}/${mId}.xml`
-			var writeStream = fs.createWriteStream(path);
-			parse.unpackMovie(zip, thumb).then((data) => {
-				writeStream.write(data, () => {
-					writeStream.close();
-					res(mId);
-				});
-			}).catch(e => rej(e));
-		});
-	},
 	loadZip(mId) {
 		return new Promise((res, rej) => {
 			var filePath = `${folder}/${mId}.xml`
@@ -37,16 +11,6 @@ module.exports = {
 			const buffer = fs.readFileSync(filePath);
 			if (!buffer || buffer.length == 0) rej("Your Starter Has Failed To Load. one of the common reasons for this is that there may be bugs in this LVM Project that is causing the issue. if that's the case, then please contact joseph the animator#2292 on discord for help.");
 			parse.packMovie(buffer, mId).then(pack => res(pack.zipBuf)).catch(e => rej(e));
-		});
-	},
-	delete(mId) {
-		return new Promise((rej) => {
-			var filePath = `${folder}/${mId}.xml`;
-			if (!fs.existsSync(filePath)) rej(`The File: ${filePath} Is Non Existant.`);
-			fs.unlinkSync(filePath);
-			var thumbFile = `${folder}/${mId}.png`;
-			if (!fs.existsSync(thumbFile)) rej(`The File: ${thumbFile} Is Non Existant.`);
-			fs.unlinkSync(thumbFile);
 		});
 	},
 	loadXml(movieId) {
